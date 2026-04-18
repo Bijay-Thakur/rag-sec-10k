@@ -1,0 +1,6 @@
+.env
+__pycache__
+.venv
+data/raw*.htm
+data/processed/*.csv
+notebooks/*.ipynb
