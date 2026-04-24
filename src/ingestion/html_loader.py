@@ -10,11 +10,36 @@ try:
 except ImportError:
     pass
 
-PART_PATTERN = re.compile(r"^\s*PART\s+(I{1,3}V?|IV|V)\s*\.?\s*$")
+PART_PATTERN = re.compile(r"^\s*PART\s+(I{1,3}V?|IV|V)\s*\.?\s*$", re.IGNORECASE)
+SIGNATURES_PATTERN = re.compile(r"^\s*signatures?\s*\.?\s*$", re.IGNORECASE)
+
+SYNTHETIC_ITEM_HEADINGS = {
+    "management's discussion and analysis of financial condition and results of operations": ("PART II", "Item 7"),
+    "management's discussion and analysis": ("PART II", "Item 7"),
+    "quantitative and qualitative disclosures about market risk": ("PART II", "Item 7A"),
+    "report of independent registered public accounting firm": ("PART II", "Item 8"),
+}
+SYNTHETIC_ABSORPTION_ITEMS = {"Item 15", "Item 16"}
+IBR_PATTERN = re.compile(
+    r"incorporated\s+(herein\s+)?by\s+reference|reference\s+is\s+made\s+to",
+    re.IGNORECASE,
+)
+IBR_SHORT_THRESHOLD = 500
 ITEM_PATTERN = re.compile(
     r"^\s*ITEM\s+(\d{1,2}[A-Z]?)\s*[\.\u2014\u2013\-:]",
     re.IGNORECASE,
 )
+
+
+def _normalize_heading(text):
+    return (
+        text.replace("’", "'")
+        .replace("‘", "'")
+        .lower()
+        .strip()
+        .rstrip(".:;—–-")
+        .strip()
+    )
 
 
 def _inside_anchor(node):
@@ -37,6 +62,22 @@ def _normalize_item(num):
     return f"Item {num}"
 
 
+def _canonical_part_for_item(item_label, fallback):
+    m = re.match(r"Item\s+(\d{1,2})", item_label)
+    if not m:
+        return fallback
+    n = int(m.group(1))
+    if 1 <= n <= 4:
+        return "PART I"
+    if 5 <= n <= 9:
+        return "PART II"
+    if 10 <= n <= 14:
+        return "PART III"
+    if 15 <= n <= 16:
+        return "PART IV"
+    return fallback
+
+
 def load_html(path):
     with open(path, "r", encoding="utf-8", errors="ignore") as f:
         html = f.read()
@@ -55,6 +96,8 @@ def extract_sections(soup, source_file):
     sections_by_key = {}
     parts_seen = []
     duplicates_suppressed = 0
+    synthetic_items_fired = set()
+    in_synthetic_section = False
 
     current_part = None
     current_item = None
@@ -90,6 +133,11 @@ def extract_sections(soup, source_file):
         if not text or _inside_anchor(node):
             continue
 
+        if SIGNATURES_PATTERN.match(text):
+            flush()
+            current_item = None
+            break
+
         pm = PART_PATTERN.match(text)
         if pm:
             current_part = _normalize_part(pm.group(1))
@@ -102,12 +150,27 @@ def extract_sections(soup, source_file):
         if im:
             flush()
             current_item = _normalize_item(im.group(1))
-            current_item_part = current_part
+            current_item_part = _canonical_part_for_item(current_item, current_part)
             tail = ITEM_PATTERN.sub("", text, count=1).strip()
             current_title = tail
             current_text = []
             expecting_title = not tail
+            in_synthetic_section = False
             continue
+
+        if len(text) < 150:
+            mapping = SYNTHETIC_ITEM_HEADINGS.get(_normalize_heading(text))
+            if mapping and mapping not in synthetic_items_fired and (
+                in_synthetic_section or current_item in SYNTHETIC_ABSORPTION_ITEMS
+            ):
+                synthetic_items_fired.add(mapping)
+                in_synthetic_section = True
+                flush()
+                current_item_part, current_item = mapping
+                current_title = text
+                current_text = []
+                expecting_title = False
+                continue
 
         if expecting_title and current_item is not None:
             current_title = text
@@ -119,11 +182,23 @@ def extract_sections(soup, source_file):
 
     flush()
 
+    sections = list(sections_by_key.values())
+    _mark_incorporated_by_reference(sections)
+
     stats = {
         "parts_detected": parts_seen,
         "duplicates_suppressed": duplicates_suppressed,
+        "synthetic_items": sorted(f"{p}/{i}" for (p, i) in synthetic_items_fired),
     }
-    return list(sections_by_key.values()), stats
+    return sections, stats
+
+
+def _mark_incorporated_by_reference(sections):
+    for s in sections:
+        t = s["text"]
+        s["incorporated_by_reference"] = (
+            len(t) < IBR_SHORT_THRESHOLD and bool(IBR_PATTERN.search(t))
+        )
 def flag_oversized_sections(sections, max_chars=200_000):
     for s in sections:
         s["oversized"] = len(s["text"]) > max_chars

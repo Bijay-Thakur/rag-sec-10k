@@ -87,7 +87,7 @@ No LangChain or LlamaIndex. Every component is built directly on primitive libra
 > Full install instructions coming in Week 4. For now, development setup:
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/Bijay-Thakur/rag-sec-10k
 cd rag-sec-10k
 python -m venv .venv
 source .venv/bin/activate          # Windows: .venv\Scripts\activate
@@ -159,6 +159,3 @@ rag-sec-10k/
 
 ---
 
-## License
-
-MIT
