@@ -9,11 +9,11 @@ from html_loader import clean_soup, extract_sections, load_html
 
 RAW_DIR = Path(__file__).resolve().parent.parent.parent / "data" / "raw"
 
-DEFAULT_FIXED_CHARS = 2400
-DEFAULT_FIXED_OVERLAP = 400
-DEFAULT_RECURSIVE_TARGET = 2400
-DEFAULT_SEMANTIC_MIN = 1400
-DEFAULT_SEMANTIC_MAX = 2600
+DEFAULT_FIXED_CHARS = 1200
+DEFAULT_FIXED_OVERLAP = 300
+DEFAULT_RECURSIVE_TARGET = 1200
+DEFAULT_SEMANTIC_MIN = 700
+DEFAULT_SEMANTIC_MAX = 1300
 
 SENTENCE_SPLIT_RE = re.compile(r"(?<=[.!?])\s+")
 WORD_RE = re.compile(r"\b[\w'-]+\b")
@@ -83,30 +83,70 @@ def fixed_size_chunk_section(
     overlap: int = DEFAULT_FIXED_OVERLAP,
 ) -> List[Dict]:
     text = section["text"]
-    chunks = []
-    start = 0
-    idx = 1
-    step = max(1, chunk_size - overlap)
-    while start < len(text):
-        end = min(len(text), start + chunk_size)
-        chunk_text = text[start:end].strip()
+    sentences = _split_sentences(text)
+    if not sentences:
+        return []
+
+    chunks: List[Dict] = []
+    chunk_texts: List[str] = []
+
+    cur_sentences: List[str] = []
+    cur_len = 0
+
+    for sentence in sentences:
+        # +1 for the space when joining, if not the first sentence
+        sl = len(sentence) + (1 if cur_sentences else 0)
+        if cur_len + sl <= chunk_size:
+            cur_sentences.append(sentence)
+            cur_len += sl
+        else:
+            # finalize current chunk
+            chunk_text = " ".join(cur_sentences).strip()
+            if chunk_text:
+                chunk_texts.append(chunk_text)
+
+            # build new chunk with overlap from previous chunk
+            if overlap > 0 and chunk_texts:
+                prev = chunk_texts[-1]
+                prev_sents = _split_sentences(prev)
+                tail: List[str] = []
+                tail_len = 0
+                # take sentences from the end of previous chunk until we hit overlap
+                for s in reversed(prev_sents):
+                    s_len = len(s) + (1 if tail else 0)
+                    if tail_len + s_len <= overlap:
+                        tail.insert(0, s)
+                        tail_len += s_len
+                    else:
+                        break
+                cur_sentences = tail + [sentence]
+                cur_len = sum(len(s) + (1 if i > 0 else 0) for i, s in enumerate(cur_sentences))
+            else:
+                cur_sentences = [sentence]
+                cur_len = len(sentence)
+
+    # flush last chunk
+    if cur_sentences:
+        chunk_text = " ".join(cur_sentences).strip()
         if chunk_text:
-            chunks.append(
-                _build_chunk(
-                    source_file=section["source_file"],
-                    part=section["part"],
-                    item=section["item"],
-                    section_title=section.get("title"),
-                    strategy="fixed_size",
-                    chunk_index=idx,
-                    text=chunk_text,
-                )
+            chunk_texts.append(chunk_text)
+
+    # build final chunk objects
+    out: List[Dict] = []
+    for idx, chunk_text in enumerate(chunk_texts, start=1):
+        out.append(
+            _build_chunk(
+                source_file=section["source_file"],
+                part=section["part"],
+                item=section["item"],
+                section_title=section.get("title"),
+                strategy="fixed_size",
+                chunk_index=idx,
+                text=chunk_text,
             )
-            idx += 1
-        if end == len(text):
-            break
-        start += step
-    return chunks
+        )
+    return out
+
 
 
 def _recursive_split_text(text: str, max_chars: int) -> List[str]:
