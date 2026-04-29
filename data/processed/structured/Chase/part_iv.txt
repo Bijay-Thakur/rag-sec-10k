@@ -1,0 +1,95 @@
+Item 15 - Exhibits, Financial Statement Schedules.
+1
+Financial statements
+The Consolidated Financial Statements, the Notes thereto and the report of the Independent Registered Public Accounting Firm thereon listed in Item 8 are set forth commencing on page 162.
+2
+Financial statement schedules
+3
+Exhibits
+3.1
+3.2
+3.3
+3.4
+3.5
+3.6
+3.7
+3.8
+3.9
+3.10
+3.11
+3.12
+3.13
+4.1(a)
+4.1(b)
+39
+4.2(a)
+4.2(b)
+4.3(a)
+4.3(b)
+4.4
+4.5
+4.6
+Other instruments defining the rights of holders of long-term debt securities of JPMorgan Chase & Co. and its subsidiaries are omitted pursuant to Section (b)(4)(iii)(A) of Item 601 of Regulation S-K. JPMorgan Chase & Co. agrees to furnish copies of these instruments to the SEC upon request.
+10.1
+10.2
+10.3
+10.4
+10.5
+10.6
+10.7
+10.8
+40
+10.9
+10.10
+10.11
+10.12
+10.13
+10.14
+10.15
+10.16
+10.17
+10.18
+10.19
+19
+21
+)
+22.1
+Annual Report on Form 11-K of The JPMorgan Chase 401(k) Savings Plan for the year ended December 31, 2024 (to be filed pursuant to Rule 15d-21 under the Securities Exchange Act of 1934).
+22.2
+23
+31.1
+41
+31.2
+32
+97
+101.INS
+The instance document does not appear in the interactive data file because its XBRL tags are embedded within the Inline XBRL document.
+(d)
+101.SCH
+XBRL Taxonomy Extension Schema
+Document.
+(b)
+101.CAL
+XBRL Taxonomy Extension Calculation Linkbase Document.
+(b)
+101.DEF
+XBRL Taxonomy Extension Definition Linkbase Document.
+(b)
+101.LAB
+XBRL Taxonomy Extension Label Linkbase Document.
+(b)
+101.PRE
+XBRL Taxonomy Extension Presentation Linkbase Document.
+(b)
+104
+Cover Page Interactive Data File (embedded within the Inline XBRL document and included in Exhibit 101).
+(a)    This exhibit is a management contract or compensatory plan or arrangement.
+(b)    Filed herewith.
+(c)    Furnished herewith. This exhibit shall not be deemed “filed” for purposes of Section 18 of the Securities Exchange Act of 1934, or otherwise subject to the liability of that Section. Such exhibit shall not be deemed incorporated into any filing under the Securities Act of 1933 or the Securities Exchange Act of 1934.
+(d)    Pursuant to Rule 405 of Regulation S-T, includes the following financial information included in the Firm’s Form 10-K for the year ended December 31, 2025, formatted in XBRL (eXtensible Business Reporting Language) interactive data files: (i) the Consolidated statements of income for the years ended December 31, 2025, 2024 and 2023, (ii) the Consolidated statements of comprehensive income for the years ended December 31, 2025, 2024 and 2023, (iii) the Consolidated balance sheets as of December 31, 2025 and 2024, (iv) the Consolidated statements of changes in stockholders’ equity for the years ended December 31, 2025, 2024 and 2023, (v) the Consolidated statements of cash flows for the years ended December 31, 2025, 2024 and 2023, and (vi) the Notes to Consolidated Financial Statements.
+42
+Table of contents
+Financial:
+Page
+44
+45
