@@ -6,7 +6,8 @@ from pathlib import Path
 from typing import Dict, Iterable, List, Optional, Tuple
 
 from html_loader import clean_soup, extract_sections, load_html
-
+CHUNK_DIR = Path(__file__).resolve().parent.parent.parent / "data" / "chunks"
+CHUNK_DIR.mkdir(parents=True, exist_ok=True)
 RAW_DIR = Path(__file__).resolve().parent.parent.parent / "data" / "raw"
 
 DEFAULT_FIXED_CHARS = 1200
@@ -378,6 +379,19 @@ def main() -> None:
         limit=args.max_output_per_strategy,
     )
     print_chunks("semantic", semantic_chunks, limit=args.max_output_per_strategy)
+    # --- Save chunks to disk for embedding ---
+    semantic_path = CHUNK_DIR / "semantic_chunks.jsonl"
+    recursive_path = CHUNK_DIR / "recursive_chunks.jsonl"
+    with open("semantic_chunks.jsonl", "w") as f:
+        for c in semantic_chunks:
+            f.write(json.dumps(c) + "\n")
+
+    with open("recursive_chunks.jsonl", "w") as f:
+        for c in recursive_chunks:
+            f.write(json.dumps(c) + "\n")
+
+print("Saved semantic_chunks.jsonl and recursive_chunks.jsonl")
+
 
 
 if __name__ == "__main__":
