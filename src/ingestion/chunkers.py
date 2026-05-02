@@ -324,6 +324,39 @@ def iter_filing_paths(paths: Iterable[str]) -> List[Path]:
     return sorted(RAW_DIR.glob("*.html"))
 
 
+def chunk_filing_for_strategy(
+    html_path: Path,
+    strategy: str,
+    *,
+    recursive_target: int = DEFAULT_RECURSIVE_TARGET,
+    semantic_min: int = DEFAULT_SEMANTIC_MIN,
+    semantic_max: int = DEFAULT_SEMANTIC_MAX,
+    semantic_break_threshold: float = 0.18,
+) -> List[Dict]:
+    """
+    Chunk a single 10-K HTML file with one strategy (for interactive / GUI flows).
+
+    strategy: "semantic" or "recursive" (aliases: recursive_hierarchical).
+    """
+    path = Path(html_path)
+    if not path.is_file():
+        raise FileNotFoundError(str(path))
+    key = strategy.strip().lower().replace(" ", "_")
+    sections = load_sections_for_file(path)
+    if key in ("semantic",):
+        return run_semantic(
+            sections,
+            semantic_min,
+            semantic_max,
+            semantic_break_threshold,
+        )
+    if key in ("recursive", "recursive_hierarchical"):
+        return run_recursive(sections, recursive_target)
+    raise ValueError(
+        f"Unknown strategy {strategy!r}. Use 'semantic' or 'recursive'."
+    )
+
+
 def print_chunks(label: str, chunks: List[Dict], limit: Optional[int] = None) -> None:
     print(f"\n===== {label} =====")
     to_show = chunks if limit is None else chunks[:limit]
@@ -382,15 +415,15 @@ def main() -> None:
     # --- Save chunks to disk for embedding ---
     semantic_path = CHUNK_DIR / "semantic_chunks.jsonl"
     recursive_path = CHUNK_DIR / "recursive_chunks.jsonl"
-    with open("semantic_chunks.jsonl", "w") as f:
+    with open(semantic_path, "w", encoding="utf-8") as f:
         for c in semantic_chunks:
             f.write(json.dumps(c) + "\n")
 
-    with open("recursive_chunks.jsonl", "w") as f:
+    with open(recursive_path, "w", encoding="utf-8") as f:
         for c in recursive_chunks:
             f.write(json.dumps(c) + "\n")
 
-print("Saved semantic_chunks.jsonl and recursive_chunks.jsonl")
+    print(f"Saved {semantic_path} and {recursive_path}")
 
 
 
