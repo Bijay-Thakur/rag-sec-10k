@@ -10,6 +10,19 @@ lxml>=5.0.0
 rank-bm25>=0.2.2
 sentence-transformers>=3.0.0   # cross-encoder reranker (ms-marco-MiniLM-L-6-v2)
 
+# Generation
+# (uses openai above, no extra deps)
+
+# Evaluation
+ragas>=0.4.0              # RAGAS generation eval (installs langchain-core etc.)
+datasets>=2.20.0          # HuggingFace datasets — used by ragas
+langchain-openai>=0.1.0   # LangChain OpenAI wrapper for ragas metrics
+pandas>=2.0.0             # dataframe ops in eval notebooks
+
+# UI
+streamlit>=1.35.0
+
 # Dev / testing
 pytest>=7.4.0
 jupyter>=1.0.0
+matplotlib>=3.8.0         # plots in eval notebooks
