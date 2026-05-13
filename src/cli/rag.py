@@ -55,21 +55,23 @@ def cmd_ingest(args: argparse.Namespace) -> int:
         return 1
 
     from chunkers import chunk_filing_for_strategy
-    from Embed.embed import build_index, chroma
+    from Embed.embed import build_index, collection_is_populated
+
+    name = args.collection
+    if not args.force and collection_is_populated(name):
+        print(
+            f"Collection '{name}' already exists. Skipping embedding.\n"
+            "Pass --force to re-chunk and re-embed."
+        )
+        return 0
 
     html_path = _resolve_html_path(args.html)
     print(f"Chunking {html_path.name} ({args.strategy})…")
     chunks = chunk_filing_for_strategy(html_path, args.strategy)
     print(f"  {len(chunks)} chunks")
 
-    name = args.collection
-    try:
-        chroma.delete_collection(name)
-    except Exception:
-        pass
-
     print(f"Embedding into Chroma collection {name!r}…")
-    build_index(name, chunks)
+    build_index(name, chunks, force=True)
     print("Done. Run: python -m cli.rag query \"…\" -k 5")
     return 0
 
@@ -131,6 +133,11 @@ def main() -> int:
         "--collection",
         default=DEFAULT_COLLECTION,
         help=f"Chroma collection name (default: {DEFAULT_COLLECTION})",
+    )
+    p_in.add_argument(
+        "--force",
+        action="store_true",
+        help="Delete and re-embed even if the collection already exists.",
     )
     p_in.set_defaults(func=cmd_ingest)
 

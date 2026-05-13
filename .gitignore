@@ -1,6 +1,15 @@
 .env
-__pycache__
-.venv
-data/raw*.htm
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# raw HTML filings (large, not versioned)
+data/raw/
+
+# processed CSVs
 data/processed/*.csv
-notebooks/*.ipynb
+
+# crash / debug logs
+*.log
+debug.log

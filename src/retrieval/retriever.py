@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import List, Dict, Any, Literal
+from typing import List, Dict, Any, Literal, Optional
 
 import os
 import chromadb
@@ -16,11 +16,13 @@ load_dotenv()
 # ---------------------------------------------------------
 # Paths & constants
 # ---------------------------------------------------------
-# Repo root (same layout as Embed/embed.py and retrieval/retrieve.py)
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 DB_DIR = PROJECT_ROOT / "db"
 
 EMBEDDING_MODEL = "text-embedding-3-small"
+
+# Cross-encoder model — compact (22 M params), strong MS-MARCO ranker
+RERANKER_MODEL = "cross-encoder/ms-marco-MiniLM-L-6-v2"
 
 # ---------------------------------------------------------
 # OpenAI client
@@ -31,6 +33,17 @@ client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 # Chroma client & collection
 # ---------------------------------------------------------
 chroma_client = chromadb.PersistentClient(path=str(DB_DIR))
+
+# Lazy-loaded cross-encoder (only imported when reranking is requested)
+_cross_encoder: Optional[Any] = None
+
+
+def _get_cross_encoder():
+    global _cross_encoder
+    if _cross_encoder is None:
+        from sentence_transformers import CrossEncoder  # type: ignore
+        _cross_encoder = CrossEncoder(RERANKER_MODEL)
+    return _cross_encoder
 
 
 def get_collection(name: str) -> Collection:
@@ -190,19 +203,87 @@ def hybrid_search(
 
 
 # ---------------------------------------------------------
-# High-level entry point
+# Reranker (cross-encoder over a candidate set)
 # ---------------------------------------------------------
-RetrieverStrategy = Literal["semantic", "bm25", "hybrid"]
+def rerank(
+    query: str,
+    candidates: List[Dict[str, Any]],
+    top_k: int = 5,
+) -> List[Dict[str, Any]]:
+    """
+    Score every candidate with a cross-encoder and return the top_k highest-scored chunks.
+
+    Each item in `candidates` must have an "id" and "text" key (same shape as results
+    from semantic_search / hybrid_search).  A "rerank_score" key is added to each
+    returned item.
+    """
+    if not candidates:
+        return []
+
+    cross_encoder = _get_cross_encoder()
+    pairs = [(query, c["text"]) for c in candidates]
+    scores = cross_encoder.predict(pairs)
+
+    scored = sorted(
+        zip(scores, candidates),
+        key=lambda x: float(x[0]),
+        reverse=True,
+    )
+
+    results = []
+    for score, chunk in scored[:top_k]:
+        out = dict(chunk)
+        out["rerank_score"] = float(score)
+        results.append(out)
+    return results
+
+
+def hybrid_rerank_search(
+    collection: Collection,
+    bm25_retriever: BM25Retriever,
+    query: str,
+    top_k: int = 5,
+    candidate_pool: int = 20,
+    k_rrf: int = 60,
+) -> List[Dict[str, Any]]:
+    """
+    Hybrid RRF over a wider candidate pool, then reranked with a cross-encoder.
+
+    candidate_pool: how many hybrid candidates to pass to the reranker (default 20).
+    top_k: final results to return after reranking.
+    """
+    candidates = hybrid_search(
+        collection=collection,
+        bm25_retriever=bm25_retriever,
+        query=query,
+        top_k=candidate_pool,
+        k_rrf=k_rrf,
+    )
+    return rerank(query, candidates, top_k=top_k)
+
+
+# ---------------------------------------------------------
+# High-level factory
+# ---------------------------------------------------------
+RetrieverStrategy = Literal["semantic", "bm25", "hybrid", "hybrid_rerank"]
 
 
 def get_retriever(
     collection_name: str,
     chunks: List[Dict[str, Any]],
     strategy: RetrieverStrategy = "semantic",
+    candidate_pool: int = 20,
 ):
     """
     Factory that returns a callable retriever:
-    retriever(query: str, top_k: int) -> List[Dict]
+        retriever(query: str, top_k: int) -> List[Dict]
+
+    Strategies
+    ----------
+    semantic       – dense OpenAI embeddings via Chroma
+    bm25           – lexical BM25Okapi
+    hybrid         – RRF fusion of semantic + BM25
+    hybrid_rerank  – hybrid RRF (candidate_pool docs) then cross-encoder reranker
     """
     collection = get_collection(collection_name)
     bm25_retriever = BM25Retriever(chunks)
@@ -227,4 +308,16 @@ def get_retriever(
             )
         return _retriever
 
-    raise ValueError(f"Unknown strategy: {strategy}")
+    if strategy == "hybrid_rerank":
+        def _retriever(query: str, top_k: int = 5):
+            return hybrid_rerank_search(
+                collection=collection,
+                bm25_retriever=bm25_retriever,
+                query=query,
+                top_k=top_k,
+                candidate_pool=candidate_pool,
+            )
+        return _retriever
+
+    raise ValueError(f"Unknown strategy: {strategy!r}. "
+                     f"Choose from: semantic, bm25, hybrid, hybrid_rerank")

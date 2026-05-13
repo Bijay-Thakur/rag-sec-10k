@@ -73,8 +73,35 @@ def embed_texts_batch(texts: List[str]) -> List[List[float]]:
     return [list(d.embedding) for d in data]
 
 
-def build_index(name: str, chunks: List[dict]) -> None:
-    """Create or replace a Chroma collection with OpenAI embeddings (CLI / batch files)."""
+def collection_is_populated(name: str) -> bool:
+    """Return True if a Chroma collection named `name` already exists and contains at least one document."""
+    try:
+        col = chroma.get_collection(name=name)
+        return col.count() > 0
+    except Exception:
+        return False
+
+
+def build_index(name: str, chunks: List[dict], *, force: bool = False) -> None:
+    """
+    Build a Chroma collection from `chunks`.
+
+    By default (force=False) the function is a no-op when the collection already
+    exists and is non-empty, so re-running the script never re-embeds unless you
+    pass force=True (or use the --force CLI flag).
+    """
+    if not force and collection_is_populated(name):
+        existing = chroma.get_collection(name=name).count()
+        print(f"Collection '{name}' already has {existing} vectors — skipping embedding. "
+              "Pass --force to rebuild.")
+        return
+
+    # Drop stale data so collection.add() never hits duplicate-ID errors.
+    try:
+        chroma.delete_collection(name)
+    except Exception:
+        pass
+
     collection = chroma.get_or_create_collection(
         name=name,
         metadata={"hnsw:space": "cosine"},
@@ -192,17 +219,24 @@ def build_gui_qa_index(
 
 
 def main() -> None:
-    for name in ("semantic_index", "recursive_index"):
-        try:
-            chroma.delete_collection(name)
-        except Exception:
-            pass
+    import argparse
+
+    parser = argparse.ArgumentParser(
+        description="Build Chroma indexes from pre-computed chunk JSONL files."
+    )
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help="Delete and rebuild indexes even if they already exist. "
+             "Without this flag the script is a no-op when data is already stored.",
+    )
+    args = parser.parse_args()
 
     semantic_chunks = load_chunks(CHUNK_DIR / "semantic_chunks.jsonl")
     recursive_chunks = load_chunks(CHUNK_DIR / "recursive_chunks.jsonl")
 
-    build_index("semantic_index", semantic_chunks)
-    build_index("recursive_index", recursive_chunks)
+    build_index("semantic_index", semantic_chunks, force=args.force)
+    build_index("recursive_index", recursive_chunks, force=args.force)
 
 
 if __name__ == "__main__":

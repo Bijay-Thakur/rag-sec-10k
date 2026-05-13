@@ -1,0 +1,54 @@
+[
+  {
+    "strategy": "semantic",
+    "n_questions": 50,
+    "recall@1": 0.66,
+    "recall@5": 0.86,
+    "recall@10": 0.92,
+    "mrr": 0.7412,
+    "primary_recall@1": 0.62,
+    "primary_recall@5": 0.82,
+    "primary_recall@10": 0.9,
+    "primary_mrr": 0.7041,
+    "mean_latency_ms": 3.7957
+  },
+  {
+    "strategy": "bm25",
+    "n_questions": 50,
+    "recall@1": 0.5,
+    "recall@5": 0.78,
+    "recall@10": 0.82,
+    "mrr": 0.6168,
+    "primary_recall@1": 0.5,
+    "primary_recall@5": 0.74,
+    "primary_recall@10": 0.8,
+    "primary_mrr": 0.6102,
+    "mean_latency_ms": 11.4606
+  },
+  {
+    "strategy": "hybrid",
+    "n_questions": 50,
+    "recall@1": 0.64,
+    "recall@5": 0.86,
+    "recall@10": 0.9,
+    "mrr": 0.7324,
+    "primary_recall@1": 0.62,
+    "primary_recall@5": 0.82,
+    "primary_recall@10": 0.86,
+    "primary_mrr": 0.7034,
+    "mean_latency_ms": 16.6958
+  },
+  {
+    "strategy": "hybrid_rerank",
+    "n_questions": 50,
+    "recall@1": 0.74,
+    "recall@5": 0.88,
+    "recall@10": 0.92,
+    "mrr": 0.8032,
+    "primary_recall@1": 0.72,
+    "primary_recall@5": 0.84,
+    "primary_recall@10": 0.88,
+    "primary_mrr": 0.7732,
+    "mean_latency_ms": 1056.43
+  }
+]
