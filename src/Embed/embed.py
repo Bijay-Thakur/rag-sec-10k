@@ -1,7 +1,7 @@
 import json
 import os
 from pathlib import Path
-from typing import Any, Callable, Dict, List, Optional
+from typing import Any, Dict, List
 
 import chromadb
 from dotenv import load_dotenv
@@ -19,8 +19,6 @@ load_dotenv(PROJECT_ROOT / ".env")
 EMBEDDING_MODEL = "text-embedding-3-small"
 # OpenAI allows many strings per request; smaller batches = smoother progress + fewer timeouts
 EMBED_BATCH_SIZE = 64
-
-GUI_QA_COLLECTION = "gui_qa_index"
 
 # ---------------------------------------------------------------------------
 # OpenAI + Chroma
@@ -129,93 +127,6 @@ def build_index(name: str, chunks: List[dict], *, force: bool = False) -> None:
         embeddings=embeds,
     )
     print(f"Indexed {len(ids)} chunks into collection '{name}'")
-
-
-def reset_gui_qa_collection(name: str = GUI_QA_COLLECTION) -> None:
-    try:
-        chroma.delete_collection(name)
-    except Exception:
-        pass
-
-
-def embed_query_text(text: str) -> List[float]:
-    """Same model as indexing — for retrieval in the GUI."""
-    return embed_text(text)
-
-
-def query_gui_index(
-    question: str,
-    *,
-    n_results: int = 6,
-    collection_name: str = GUI_QA_COLLECTION,
-) -> List[Dict[str, Any]]:
-    col = chroma.get_collection(collection_name)
-    q_emb = embed_query_text(question)
-    raw = col.query(
-        query_embeddings=[q_emb],
-        n_results=n_results,
-        include=["documents", "metadatas", "distances"],
-    )
-    ids = (raw.get("ids") or [[]])[0]
-    docs = (raw.get("documents") or [[]])[0]
-    metas = (raw.get("metadatas") or [[]])[0]
-    dists = (raw.get("distances") or [[]])[0]
-    hits: List[Dict[str, Any]] = []
-    for i, cid in enumerate(ids):
-        h: Dict[str, Any] = {
-            "chunk_id": cid,
-            "document": docs[i] if docs else "",
-            "metadata": dict(metas[i]) if metas and metas[i] else {},
-        }
-        if dists:
-            h["distance"] = float(dists[i])
-        hits.append(h)
-    return hits
-
-
-def build_gui_qa_index(
-    chunks: List[dict],
-    *,
-    progress_callback: Optional[Callable[[int, int], None]] = None,
-) -> int:
-    """
-    Replace gui_qa_index with embedded chunks (Streamlit).
-
-    progress_callback(done_chunks, total_chunks) after each embedding batch.
-    """
-    reset_gui_qa_collection()
-    if not chunks:
-        return 0
-
-    collection = chroma.get_or_create_collection(
-        name=GUI_QA_COLLECTION,
-        metadata={"hnsw:space": "cosine"},
-    )
-
-    ids: List[str] = []
-    docs: List[str] = []
-    metas: List[Dict[str, Any]] = []
-    for c in chunks:
-        ids.append(c["chunk_id"])
-        docs.append(c["text"])
-        metas.append(normalize_metadata(c["metadata"]))
-
-    n = len(docs)
-    all_embeds: List[List[float]] = []
-    for start in range(0, n, EMBED_BATCH_SIZE):
-        batch_docs = docs[start : start + EMBED_BATCH_SIZE]
-        batch_emb = embed_texts_batch(batch_docs)
-        all_embeds.extend(batch_emb)
-        if progress_callback:
-            progress_callback(min(start + len(batch_docs), n), n)
-
-    collection.add(
-        ids=ids,
-        documents=docs,
-        metadatas=metas,
-        embeddings=all_embeds,
-    )
-    return n
 
 
 def main() -> None:

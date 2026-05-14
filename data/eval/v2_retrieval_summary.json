@@ -1,0 +1,44 @@
+[
+  {
+    "strategy": "semantic",
+    "version": "v2",
+    "n_questions": 50,
+    "mean_latency_ms": 12.5113,
+    "mrr": 0.7412,
+    "primary_mrr": 0.7041,
+    "recall@1": 0.66,
+    "primary_recall@1": 0.62,
+    "recall@5": 0.86,
+    "primary_recall@5": 0.82,
+    "recall@10": 0.92,
+    "primary_recall@10": 0.9
+  },
+  {
+    "strategy": "bm25",
+    "version": "v2",
+    "n_questions": 50,
+    "mean_latency_ms": 28.0506,
+    "mrr": 0.6168,
+    "primary_mrr": 0.6102,
+    "recall@1": 0.5,
+    "primary_recall@1": 0.5,
+    "recall@5": 0.78,
+    "primary_recall@5": 0.74,
+    "recall@10": 0.82,
+    "primary_recall@10": 0.8
+  },
+  {
+    "strategy": "hybrid",
+    "version": "v2",
+    "n_questions": 50,
+    "mean_latency_ms": 41.6614,
+    "mrr": 0.7404,
+    "primary_mrr": 0.7147,
+    "recall@1": 0.66,
+    "primary_recall@1": 0.64,
+    "recall@5": 0.86,
+    "primary_recall@5": 0.82,
+    "recall@10": 0.9,
+    "primary_recall@10": 0.86
+  }
+]

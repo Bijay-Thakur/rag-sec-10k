@@ -1,0 +1,202 @@
+[
+  {
+    "question_id": "AAPL_2025_001_BUSINESS_OVERVIEW",
+    "question": "What business does Apple say it is engaged in?",
+    "answer": "Apple is engaged in several businesses, including the sale of accessories, which encompasses both Apple-branded and third-party products. Additionally, the Company offers services such as advertising, which includes third-party licensing arrangements and its own advertising platforms. Apple also provides a portfolio of fee-based service and support products under the AppleCare\u00ae brand, which offers priority access to technical support and repair services. Furthermore, Apple\u2019s cloud services store and keep customers\u2019 content up-to-date and available across multiple Apple devices and Windows personal computers [1][2].",
+    "latency_ms": 7886.3,
+    "scores": {
+      "faithfulness": 1.0,
+      "relevancy": 1.0
+    }
+  },
+  {
+    "question_id": "AAPL_2025_002_PRODUCT_CATEGORIES",
+    "question": "What are Apple's main product categories described in the filing?",
+    "answer": "Apple's main product categories described in the filing are:\n\n1. iPhone\n2. Mac\n3. iPad\n4. Wearables, Home and Accessories\n5. Services [1][2].",
+    "latency_ms": 2247.3,
+    "scores": {
+      "faithfulness": 0.0,
+      "relevancy": 1.0
+    }
+  },
+  {
+    "question_id": "AAPL_2025_003_IPHONE_LINE",
+    "question": "Which iPhone models are included in Apple's iPhone line in the 2025 filing?",
+    "answer": "The iPhone models included in Apple's iPhone line in the 2025 filing are iPhone 17 Pro, iPhone Air\u2122, iPhone 17, iPhone 16, and iPhone 16e [1].",
+    "latency_ms": 1292.3,
+    "scores": {
+      "faithfulness": 1.0,
+      "relevancy": 1.0
+    }
+  },
+  {
+    "question_id": "AAPL_2025_004_MAC_LINE",
+    "question": "What Mac products does Apple list in its Mac line?",
+    "answer": "Apple's Mac line includes the following products: MacBook Air\u00ae, MacBook Pro\u00ae, iMac\u00ae, Mac mini\u00ae, Mac Studio\u00ae, and Mac Pro\u00ae [1][2].",
+    "latency_ms": 1766.6,
+    "scores": {
+      "faithfulness": 1.0,
+      "relevancy": 1.0
+    }
+  },
+  {
+    "question_id": "AAPL_2025_005_WEARABLES_HOME_ACCESSORIES",
+    "question": "What products are included in Apple's Wearables, Home and Accessories category?",
+    "answer": "Apple's Wearables, Home and Accessories category includes smartwatches, wireless headphones, and spatial computers. The line of smartwatches consists of Apple Watch\u00ae Series 11, Apple Watch SE\u00ae 3, and Apple Watch Ultra\u00ae 3. The wireless headphones include AirPods\u00ae, AirPods Pro\u00ae, AirPods Max\u00ae, and Beats\u00ae products. Additionally, the category features Apple Vision Pro\u2122, a spatial computer based on its visionOS\u00ae operating system, as well as Apple TV 4K\u00ae, HomePod\u00ae, and HomePod mini\u00ae [1][2].",
+    "latency_ms": 2980.4,
+    "scores": {
+      "faithfulness": 1.0,
+      "relevancy": 1.0
+    }
+  },
+  {
+    "question_id": "AAPL_2025_006_SERVICES_OFFERINGS",
+    "question": "What service offerings does Apple describe in Item 1?",
+    "answer": "Apple describes the following service offerings in Item 1:\n\n1. **Advertising Services**: This includes third-party licensing arrangements and the Company\u2019s own advertising platforms [1].\n2. **AppleCare**: A portfolio of fee-based service and support products providing priority access to technical support, repair and replacement services, and additional coverage for accidental damage or theft, depending on the country and product type [1].\n3. **Cloud Services**: Services that store and keep customers\u2019 content up-to-date and available across multiple Apple devices and Windows personal computers [1].\n4. **Digital Content Platforms**: Various platforms, including the App Store, for discovering and downloading applications and digital content such as books, music, video, games, and podcasts [2].\n5. **Subscription-based Services**: These include Apple Arcade, Apple Fitness+, Apple Music, Apple News+, and Apple TV, offering various digital content and services [2].\n6. **Payment Services**: This includes Apple Card, a co-branded credit card, and Apple Pay, a cashless payment service [2].",
+    "latency_ms": 4503.9,
+    "scores": {
+      "faithfulness": 1.0,
+      "relevancy": 1.0
+    }
+  },
+  {
+    "question_id": "AAPL_2025_007_REPORTABLE_SEGMENTS",
+    "question": "What reportable segments does Apple use to manage its business?",
+    "answer": "Apple manages its business primarily on a geographic basis with the following reportable segments: the Americas, Europe, Greater China, Japan, and Rest of Asia Pacific. The Americas includes both North and South America, Europe includes European countries as well as India, the Middle East, and Africa, Greater China includes China mainland, Hong Kong, and Taiwan, and Rest of Asia Pacific includes Australia, New Zealand, and other Asian countries not included in the other segments [1][2].",
+    "latency_ms": 2241.0,
+    "scores": {
+      "faithfulness": 1.0,
+      "relevancy": 1.0
+    }
+  },
+  {
+    "question_id": "AAPL_2025_008_DISTRIBUTION_CHANNELS",
+    "question": "What percentage of Apple's 2025 net sales came through direct and indirect distribution channels?",
+    "answer": "In 2025, 40% of Apple's net sales came through direct distribution channels, while 60% came through indirect distribution channels [1].",
+    "latency_ms": 1935.3,
+    "scores": {
+      "faithfulness": 1.0,
+      "relevancy": 1.0
+    }
+  },
+  {
+    "question_id": "AAPL_2025_009_CUSTOMER_MARKETS",
+    "question": "Which customer markets does Apple primarily serve?",
+    "answer": "Apple primarily serves the global smartphone, personal computer, tablet, and wearables markets, where it holds a minority market share [1].",
+    "latency_ms": 1671.0,
+    "scores": {
+      "faithfulness": 1.0,
+      "relevancy": 1.0
+    }
+  },
+  {
+    "question_id": "AAPL_2025_010_COMPETITIVE_FACTORS",
+    "question": "What principal competitive factors does Apple identify as important to its business?",
+    "answer": "Apple identifies several principal competitive factors important to its business, including:\n\n1. Price\n2. Product and service features (including security features)\n3. Relative price and performance\n4. Product and service quality and reliability\n5. Design and technology innovation\n6. A strong third-party software and accessories ecosystem\n7. Marketing and distribution capability\n8. Service and support\n9. Corporate reputation\n10. The ability to effectively protect and enforce the Company\u2019s intellectual property rights [1].",
+    "latency_ms": 3039.8,
+    "scores": {
+      "faithfulness": 1.0,
+      "relevancy": 1.0
+    }
+  },
+  {
+    "question_id": "AAPL_2025_011_COMPONENT_SUPPLY_RISKS_BUSINESS",
+    "question": "What does Apple say about supply of components in its business description?",
+    "answer": "Apple states that it has entered into agreements for the supply of many components; however, it may not be able to extend or renew these agreements on similar terms, or at all. The Company may also face challenges in obtaining sufficient quantities from its suppliers in a timely manner or in identifying and obtaining sufficient quantities from alternative sources. Additionally, component suppliers may fail, consolidate within a particular industry, or decide to focus on the production of common components instead of those customized to meet Apple's requirements, which could further limit the Company's ability to obtain sufficient quantities of components on commercially reasonable terms, or at all [1][2].",
+    "latency_ms": 3705.7,
+    "scores": {
+      "faithfulness": 1.0,
+      "relevancy": 1.0
+    }
+  },
+  {
+    "question_id": "AAPL_2025_012_R_AND_D_ROLE",
+    "question": "Why does Apple say research and development is important?",
+    "answer": "Apple states that research and development (R&D) is important because the industries in which the Company competes are characterized by rapid technological advances, and its ability to compete successfully depends heavily on ensuring a continual and timely flow of competitive products, services, and technologies to the marketplace. The Company continues to develop new technologies to enhance existing products and services and to expand its offerings through R&D, licensing of intellectual property, and acquisition of third-party businesses and technology [1].",
+    "latency_ms": 2353.2,
+    "scores": {
+      "faithfulness": 1.0,
+      "relevancy": 1.0
+    }
+  },
+  {
+    "question_id": "AAPL_2025_013_MACRO_RISKS",
+    "question": "How can adverse macroeconomic conditions affect Apple according to the risk factors?",
+    "answer": "The provided context does not contain sufficient information to answer this question.",
+    "latency_ms": 1440.7,
+    "scores": {
+      "faithfulness": 0.0,
+      "relevancy": 0.0
+    }
+  },
+  {
+    "question_id": "AAPL_2025_014_TARIFFS_TRADE_RISKS",
+    "question": "What tariff and international trade risks does Apple describe?",
+    "answer": "Apple describes several tariff and international trade risks, including:\n\n1. New U.S. tariffs announced in the second quarter of 2025 on imports from various countries, including China, India, Japan, South Korea, Taiwan, Vietnam, and the EU, which could lead to reciprocal tariffs imposed by those countries on U.S. imports [2].\n2. The potential for additional tariffs to result in supply disruptions or delays, increased costs, or further retaliatory measures that could negatively impact the company's business and results of operations [1][2].\n3. The company's exposure to geopolitical tensions, trade disputes, and other international disruptions that can materially adversely affect its business, results of operations, financial condition, and stock price [1][2].",
+    "latency_ms": 3790.9,
+    "scores": {
+      "faithfulness": 1.0,
+      "relevancy": 1.0
+    }
+  },
+  {
+    "question_id": "AAPL_2025_015_OUTSOURCING_RISKS",
+    "question": "What risks arise from Apple's dependence on outsourcing partners for manufacturing and logistics?",
+    "answer": "Apple's dependence on outsourcing partners for manufacturing and logistics presents several risks. The Company relies on single-source partners in the U.S., Asia, and Europe to supply and manufacture many components, and primarily on partners located in Asia for final assembly of substantially all of its hardware products [1]. This reliance can reduce the Company\u2019s direct control over production and distribution, which has, from time to time, had and may in the future have, an adverse effect on the cost, quality, or quantity of products manufactured or services provided [2]. Additionally, the outsourcing of transportation and logistics management can further diminish control and flexibility to respond to changing conditions [3].",
+    "latency_ms": 2854.5,
+    "scores": {
+      "faithfulness": 1.0,
+      "relevancy": 1.0
+    }
+  },
+  {
+    "question_id": "AAPL_2025_016_COMPONENT_SHORTAGE_RISKS",
+    "question": "Why does Apple say component supply shortages are a material risk?",
+    "answer": "Apple states that component supply shortages are a material risk because many components used by the Company are subject to industry-wide shortages and significant commodity pricing fluctuations, which can adversely affect its business, results of operations, financial condition, and stock price [1][3]. Additionally, the Company often utilizes custom components available from only one source, which can lead to initial capacity constraints and difficulties in obtaining sufficient quantities from suppliers in a timely manner [2][3]. Furthermore, restrictions on international trade can increase costs or limit availability of products and components, compounding the risk of supply shortages [2].",
+    "latency_ms": 2369.2,
+    "scores": {
+      "faithfulness": 1.0,
+      "relevancy": 1.0
+    }
+  },
+  {
+    "question_id": "AAPL_2025_017_PRODUCT_DEFECT_AI_RISKS",
+    "question": "How can product defects and AI features create risks for Apple?",
+    "answer": "Product defects can materially adversely affect Apple's business and harm its reputation, as the company offers complex hardware and software products that may experience design and manufacturing defects [1][2]. Additionally, defects in components purchased from third parties could make Apple's products unsafe, leading to risks of environmental or property damage and personal injury [3]. The introduction of new and complex technologies, such as artificial intelligence features, can increase safety risks, including exposing users to harmful or inaccurate content and experiences [4]. Furthermore, quality issues or other defects can adversely affect the success of new product and service introductions, impacting market acceptance [5].",
+    "latency_ms": 2359.4,
+    "scores": {
+      "faithfulness": 1.0,
+      "relevancy": 1.0
+    }
+  },
+  {
+    "question_id": "AAPL_2025_018_RESELLER_RISK",
+    "question": "What reseller and carrier risks does Apple describe?",
+    "answer": "Apple describes several reseller and carrier risks, including dependence on the performance of carriers and other resellers who also distribute competitors' products and services. These resellers may offer financing, installment payment plans, or subsidies for device purchases, which can be discontinued or modified at any time. Additionally, Apple has invested in programs to enhance reseller sales, such as staffing selected resellers\u2019 stores with Company employees and contractors, improving product placement displays, and developing digital marketing assets for resellers [1][2].",
+    "latency_ms": 3001.4,
+    "scores": {
+      "faithfulness": 1.0,
+      "relevancy": 1.0
+    }
+  },
+  {
+    "question_id": "AAPL_2025_019_CYBER_INFORMATION_SYSTEM_RISK",
+    "question": "What information technology system and cybersecurity risks does Apple disclose?",
+    "answer": "Apple discloses several information technology system and cybersecurity risks, including:\n\n1. The Company is at a relatively greater risk of being targeted for malicious attacks due to its high profile and the value of the confidential information it manages, which can include personal information [1].\n2. The security measures implemented by the Company may not be sufficient for all eventualities and are vulnerable to various threats such as hacking, ransomware attacks, employee error, malfeasance, system error, and faulty password management [1].\n3. The Company and its global supply chain are dependent on complex information technology systems, which are exposed to failures or disruptions caused by natural disasters, accidents, power disruptions, telecommunications failures, acts of terrorism or war, computer viruses, physical or electronic break-ins, ransomware, or other cybersecurity incidents [2].\n4. Changes to the Company\u2019s business practices to comply with new laws and regulations can negatively impact the reputation of its products for privacy and security, potentially leading to harm to the Company\u2019s reputation and reduced demand for its products and services [3].",
+    "latency_ms": 5413.8,
+    "scores": {
+      "faithfulness": 1.0,
+      "relevancy": 1.0
+    }
+  },
+  {
+    "question_id": "AAPL_2025_020_PRIVACY_DATA_RISKS",
+    "question": "What personal data and privacy risks does Apple identify?",
+    "answer": "Apple identifies several personal data and privacy risks, including:\n\n1. Changes to business practices to comply with laws and regulations can negatively impact the reputation of the Company\u2019s products for privacy and security, potentially leading to harm to the Company's reputation, loss of competitive advantage, poor market acceptance, reduced demand for products and services, lost sales, and lower profit margins [1].\n2. The Company is subject to an increasing number of federal, state, and international laws regarding the collection, use, protection, and transfer of personal data [1].\n3. The risk of attacks against the Company and its customers can escalate during periods of geopolitical tensions, with the Company being at a relatively greater risk due to its high profile and the value of the confidential information it manages [2].\n4. There is a risk of inadvertent disclosure of personal data, which can increase with the introduction of new technologies, such as artificial intelligence features [3].\n5. The Company has specific obligations related to the collection and processing of data associated with minors and sensitive information, such as health, biometric, financial, and payment card data, which are subject to additional privacy, security, and breach notification requirements [3].\n6. Failure to comply with privacy or data protection laws could result in inquiries, proceedings, penalties, reputational impacts, ongoing audit requirements, and significant legal liability [3].",
+    "latency_ms": 5110.4,
+    "scores": {
+      "faithfulness": 1.0,
+      "relevancy": 1.0
+    }
+  }
+]

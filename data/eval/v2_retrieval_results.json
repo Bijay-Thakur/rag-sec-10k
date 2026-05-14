@@ -1,0 +1,3443 @@
+{
+  "semantic": {
+    "summary": {
+      "strategy": "semantic",
+      "version": "v2",
+      "n_questions": 50,
+      "mean_latency_ms": 12.5113,
+      "mrr": 0.7412,
+      "primary_mrr": 0.7041,
+      "recall@1": 0.66,
+      "primary_recall@1": 0.62,
+      "recall@5": 0.86,
+      "primary_recall@5": 0.82,
+      "recall@10": 0.92,
+      "primary_recall@10": 0.9
+    },
+    "per_question": [
+      {
+        "question_id": "AAPL_2025_001_BUSINESS_OVERVIEW",
+        "question": "What business does Apple say it is engaged in?",
+        "hit_ids": [
+          "apple_item1a_chunk_060",
+          "apple_item1_chunk_003",
+          "apple_item1a_chunk_040",
+          "apple_item8_chunk_008",
+          "apple_item8_chunk_036",
+          "apple_item8_chunk_006",
+          "apple_item1_chunk_008",
+          "apple_item16_chunk_001",
+          "apple_item1_chunk_001",
+          "apple_item8_chunk_004"
+        ],
+        "gold_ids": [
+          "apple_item1_chunk_001"
+        ],
+        "rr": 0.1111111111111111,
+        "latency_ms": 65.9
+      },
+      {
+        "question_id": "AAPL_2025_002_PRODUCT_CATEGORIES",
+        "question": "What are Apple's main product categories described in the filing?",
+        "hit_ids": [
+          "apple_item1_chunk_003",
+          "apple_item7_chunk_007",
+          "apple_item8_chunk_008",
+          "apple_item1_chunk_008",
+          "apple_item1_chunk_001",
+          "apple_item8_chunk_006",
+          "apple_item8_chunk_056",
+          "apple_item8_chunk_004",
+          "apple_item1a_chunk_060",
+          "apple_item16_chunk_001"
+        ],
+        "gold_ids": [
+          "apple_item1_chunk_001",
+          "apple_item1_chunk_002"
+        ],
+        "rr": 0.2,
+        "latency_ms": 10.7
+      },
+      {
+        "question_id": "AAPL_2025_003_IPHONE_LINE",
+        "question": "Which iPhone models are included in Apple's iPhone line in the 2025 filing?",
+        "hit_ids": [
+          "apple_item7_chunk_007",
+          "apple_item7_chunk_002",
+          "apple_item8_chunk_008",
+          "apple_item8_chunk_004",
+          "apple_item8_chunk_006",
+          "apple_item1_chunk_001",
+          "apple_item6_chunk_001",
+          "apple_item14_chunk_001",
+          "apple_item16_chunk_001",
+          "apple_item8_chunk_060"
+        ],
+        "gold_ids": [
+          "apple_item1_chunk_001"
+        ],
+        "rr": 0.16666666666666666,
+        "latency_ms": 10.2
+      },
+      {
+        "question_id": "AAPL_2025_004_MAC_LINE",
+        "question": "What Mac products does Apple list in its Mac line?",
+        "hit_ids": [
+          "apple_item1_chunk_002",
+          "apple_item1_chunk_001",
+          "apple_item1_chunk_003",
+          "apple_item7_chunk_007",
+          "apple_item7_chunk_002",
+          "apple_item1_chunk_008",
+          "apple_item8_chunk_036",
+          "apple_item8_chunk_008",
+          "apple_item8_chunk_056",
+          "apple_item8_chunk_006"
+        ],
+        "gold_ids": [
+          "apple_item1_chunk_001"
+        ],
+        "rr": 0.5,
+        "latency_ms": 7.1
+      },
+      {
+        "question_id": "AAPL_2025_005_WEARABLES_HOME_ACCESSORIES",
+        "question": "What products are included in Apple's Wearables, Home and Accessories category?",
+        "hit_ids": [
+          "apple_item1_chunk_002",
+          "apple_item1_chunk_003",
+          "apple_item1_chunk_001",
+          "apple_item7_chunk_007",
+          "apple_item7_chunk_008",
+          "apple_item1_chunk_004",
+          "apple_item8_chunk_036",
+          "walmart_item1_chunk_011",
+          "apple_item7_chunk_002",
+          "apple_item8_chunk_056"
+        ],
+        "gold_ids": [
+          "apple_item1_chunk_003",
+          "apple_item1_chunk_002"
+        ],
+        "rr": 1.0,
+        "latency_ms": 9.1
+      },
+      {
+        "question_id": "AAPL_2025_006_SERVICES_OFFERINGS",
+        "question": "What service offerings does Apple describe in Item 1?",
+        "hit_ids": [
+          "apple_item1_chunk_003",
+          "apple_item1_chunk_004",
+          "apple_item7_chunk_007",
+          "apple_item1_chunk_008",
+          "apple_item1a_chunk_040",
+          "apple_item8_chunk_008",
+          "apple_item8_chunk_006",
+          "apple_item8_chunk_017",
+          "apple_item8_chunk_004",
+          "apple_item1_chunk_001"
+        ],
+        "gold_ids": [
+          "apple_item1_chunk_004",
+          "apple_item1_chunk_003"
+        ],
+        "rr": 1.0,
+        "latency_ms": 7.9
+      },
+      {
+        "question_id": "AAPL_2025_007_REPORTABLE_SEGMENTS",
+        "question": "What reportable segments does Apple use to manage its business?",
+        "hit_ids": [
+          "apple_item8_chunk_056",
+          "apple_item8_chunk_059",
+          "apple_item1_chunk_005",
+          "chase_item7_chunk_068",
+          "chase_item8_chunk_560",
+          "apple_item8_chunk_008",
+          "apple_item2_chunk_001",
+          "chase_item8_chunk_570",
+          "apple_item8_chunk_010",
+          "apple_item8_chunk_020"
+        ],
+        "gold_ids": [
+          "apple_item8_chunk_056",
+          "apple_item1_chunk_005"
+        ],
+        "rr": 1.0,
+        "latency_ms": 11.1
+      },
+      {
+        "question_id": "AAPL_2025_008_DISTRIBUTION_CHANNELS",
+        "question": "What percentage of Apple's 2025 net sales came through direct and indirect distribution channels?",
+        "hit_ids": [
+          "apple_item1_chunk_006",
+          "apple_item8_chunk_019",
+          "apple_item7_chunk_007",
+          "apple_item1a_chunk_040",
+          "apple_item7_chunk_008",
+          "apple_item8_chunk_020",
+          "apple_item8_chunk_060",
+          "apple_item8_chunk_059",
+          "apple_item7_chunk_005",
+          "apple_item8_chunk_008"
+        ],
+        "gold_ids": [
+          "apple_item1_chunk_006"
+        ],
+        "rr": 1.0,
+        "latency_ms": 6.7
+      },
+      {
+        "question_id": "AAPL_2025_009_CUSTOMER_MARKETS",
+        "question": "Which customer markets does Apple primarily serve?",
+        "hit_ids": [
+          "apple_item8_chunk_036",
+          "apple_item1_chunk_003",
+          "apple_item8_chunk_056",
+          "apple_item1_chunk_001",
+          "apple_item1_chunk_008",
+          "apple_item7_chunk_007",
+          "apple_item1a_chunk_040",
+          "apple_item1_chunk_004",
+          "apple_item8_chunk_008",
+          "apple_item7_chunk_008"
+        ],
+        "gold_ids": [
+          "apple_item1_chunk_006"
+        ],
+        "rr": 0.0,
+        "latency_ms": 5.9
+      },
+      {
+        "question_id": "AAPL_2025_010_COMPETITIVE_FACTORS",
+        "question": "What principal competitive factors does Apple identify as important to its business?",
+        "hit_ids": [
+          "apple_item1_chunk_008",
+          "apple_item1a_chunk_018",
+          "apple_item1_chunk_009",
+          "apple_item1a_chunk_033",
+          "apple_item8_chunk_036",
+          "apple_item1a_chunk_026",
+          "apple_item1a_chunk_060",
+          "apple_item1_chunk_010",
+          "apple_item1_chunk_007",
+          "apple_item1a_chunk_017"
+        ],
+        "gold_ids": [
+          "apple_item1_chunk_008",
+          "apple_item1_chunk_007"
+        ],
+        "rr": 1.0,
+        "latency_ms": 10.5
+      },
+      {
+        "question_id": "AAPL_2025_011_COMPONENT_SUPPLY_RISKS_BUSINESS",
+        "question": "What does Apple say about supply of components in its business description?",
+        "hit_ids": [
+          "apple_item1a_chunk_026",
+          "apple_item1_chunk_008",
+          "apple_item8_chunk_056",
+          "apple_item1a_chunk_040",
+          "apple_item1_chunk_011",
+          "apple_item8_chunk_006",
+          "apple_item1_chunk_010",
+          "apple_item8_chunk_008",
+          "apple_item6_chunk_001",
+          "apple_item1a_chunk_022"
+        ],
+        "gold_ids": [
+          "apple_item1_chunk_012",
+          "apple_item1_chunk_011",
+          "apple_item1_chunk_010"
+        ],
+        "rr": 0.2,
+        "latency_ms": 8.6
+      },
+      {
+        "question_id": "AAPL_2025_012_R_AND_D_ROLE",
+        "question": "Why does Apple say research and development is important?",
+        "hit_ids": [
+          "apple_item1_chunk_013",
+          "elilily_item1_chunk_075",
+          "apple_item1_chunk_018",
+          "elilily_item8_chunk_008",
+          "apple_item1_chunk_008",
+          "apple_item8_chunk_036",
+          "apple_item1a_chunk_033",
+          "apple_item1a_chunk_015",
+          "elilily_item7_chunk_024",
+          "apple_item1a_chunk_026"
+        ],
+        "gold_ids": [
+          "apple_item1_chunk_013",
+          "apple_item1_chunk_008"
+        ],
+        "rr": 1.0,
+        "latency_ms": 10.1
+      },
+      {
+        "question_id": "AAPL_2025_013_MACRO_RISKS",
+        "question": "How can adverse macroeconomic conditions affect Apple according to the risk factors?",
+        "hit_ids": [
+          "apple_item1a_chunk_005",
+          "apple_item1a_chunk_026",
+          "apple_item1a_chunk_012",
+          "apple_item1a_chunk_003",
+          "apple_item1a_chunk_002",
+          "apple_item1a_chunk_004",
+          "apple_item1a_chunk_018",
+          "apple_item7_chunk_003",
+          "apple_item1a_chunk_080",
+          "apple_item1a_chunk_073"
+        ],
+        "gold_ids": [
+          "apple_item1a_chunk_002",
+          "apple_item1a_chunk_004",
+          "apple_item1a_chunk_003"
+        ],
+        "rr": 0.25,
+        "latency_ms": 8.6
+      },
+      {
+        "question_id": "AAPL_2025_014_TARIFFS_TRADE_RISKS",
+        "question": "What tariff and international trade risks does Apple describe?",
+        "hit_ids": [
+          "apple_item1a_chunk_026",
+          "apple_item7_chunk_003",
+          "elilily_item1a_chunk_065",
+          "apple_item1a_chunk_060",
+          "apple_item1a_chunk_005",
+          "elilily_item1a_chunk_074",
+          "apple_item1a_chunk_008",
+          "walmart_item1a_chunk_072",
+          "elilily_item1a_chunk_073",
+          "apple_item1a_chunk_018"
+        ],
+        "gold_ids": [
+          "apple_item1a_chunk_007",
+          "apple_item1a_chunk_008",
+          "apple_item7_chunk_004",
+          "apple_item7_chunk_003",
+          "apple_item7_chunk_005",
+          "apple_item1a_chunk_009",
+          "apple_item1a_chunk_006"
+        ],
+        "rr": 0.5,
+        "latency_ms": 11.0
+      },
+      {
+        "question_id": "AAPL_2025_015_OUTSOURCING_RISKS",
+        "question": "What risks arise from Apple's dependence on outsourcing partners for manufacturing and logistics?",
+        "hit_ids": [
+          "apple_item1a_chunk_026",
+          "apple_item1a_chunk_022",
+          "elilily_item1_chunk_084",
+          "apple_item1a_chunk_021",
+          "apple_item8_chunk_056",
+          "elilily_item1a_chunk_058",
+          "elilily_item1a_chunk_063",
+          "apple_item1a_chunk_018",
+          "apple_item1a_chunk_005",
+          "apple_item1a_chunk_006"
+        ],
+        "gold_ids": [
+          "apple_item8_chunk_056",
+          "apple_item1a_chunk_023",
+          "apple_item1a_chunk_021",
+          "apple_item1a_chunk_022"
+        ],
+        "rr": 0.5,
+        "latency_ms": 8.2
+      },
+      {
+        "question_id": "AAPL_2025_016_COMPONENT_SHORTAGE_RISKS",
+        "question": "Why does Apple say component supply shortages are a material risk?",
+        "hit_ids": [
+          "apple_item1a_chunk_026",
+          "apple_item8_chunk_054",
+          "apple_item1a_chunk_025",
+          "apple_item1a_chunk_012",
+          "apple_item1_chunk_012",
+          "apple_item1a_chunk_024",
+          "apple_item1_chunk_011",
+          "apple_item1a_chunk_005",
+          "apple_item8_chunk_053",
+          "elilily_item1a_chunk_057"
+        ],
+        "gold_ids": [
+          "apple_item1_chunk_011",
+          "apple_item1a_chunk_026",
+          "apple_item1a_chunk_024",
+          "apple_item1a_chunk_025",
+          "apple_item1_chunk_012",
+          "apple_item1_chunk_010"
+        ],
+        "rr": 1.0,
+        "latency_ms": 7.4
+      },
+      {
+        "question_id": "AAPL_2025_017_PRODUCT_DEFECT_AI_RISKS",
+        "question": "How can product defects and AI features create risks for Apple?",
+        "hit_ids": [
+          "apple_item1a_chunk_026",
+          "apple_item1a_chunk_027",
+          "elilily_item1a_chunk_069",
+          "elilily_item1a_chunk_068",
+          "elilily_item1a_chunk_067",
+          "apple_item1_chunk_008",
+          "apple_item1a_chunk_046",
+          "walmart_item1a_chunk_008",
+          "walmart_item1a_chunk_042",
+          "apple_item1a_chunk_028"
+        ],
+        "gold_ids": [
+          "apple_item1a_chunk_026",
+          "apple_item1a_chunk_027",
+          "apple_item1a_chunk_028"
+        ],
+        "rr": 1.0,
+        "latency_ms": 8.2
+      },
+      {
+        "question_id": "AAPL_2025_018_RESELLER_RISK",
+        "question": "What reseller and carrier risks does Apple describe?",
+        "hit_ids": [
+          "apple_item1a_chunk_040",
+          "apple_item1a_chunk_026",
+          "apple_item1a_chunk_018",
+          "apple_item1_chunk_003",
+          "apple_item7_chunk_021",
+          "apple_item1a_chunk_060",
+          "apple_item1a_chunk_005",
+          "apple_item1a_chunk_080",
+          "apple_item1_chunk_008",
+          "apple_item1a_chunk_066"
+        ],
+        "gold_ids": [
+          "apple_item1a_chunk_040",
+          "apple_item1a_chunk_041"
+        ],
+        "rr": 1.0,
+        "latency_ms": 6.7
+      },
+      {
+        "question_id": "AAPL_2025_019_CYBER_INFORMATION_SYSTEM_RISK",
+        "question": "What information technology system and cybersecurity risks does Apple disclose?",
+        "hit_ids": [
+          "apple_item1a_chunk_046",
+          "apple_item1a_chunk_026",
+          "apple_item1a_chunk_066",
+          "apple_item1a_chunk_060",
+          "apple_item1_chunk_008",
+          "apple_item8_chunk_006",
+          "apple_item8_chunk_008",
+          "apple_item1_chunk_020",
+          "apple_item6_chunk_001",
+          "apple_item8_chunk_067"
+        ],
+        "gold_ids": [
+          "apple_item1a_chunk_045",
+          "apple_item1a_chunk_043",
+          "apple_item1a_chunk_041",
+          "apple_item1a_chunk_047",
+          "apple_item1a_chunk_044",
+          "apple_item1a_chunk_042",
+          "apple_item1a_chunk_046"
+        ],
+        "rr": 1.0,
+        "latency_ms": 5.3
+      },
+      {
+        "question_id": "AAPL_2025_020_PRIVACY_DATA_RISKS",
+        "question": "What personal data and privacy risks does Apple identify?",
+        "hit_ids": [
+          "apple_item1a_chunk_066",
+          "apple_item1a_chunk_046",
+          "apple_item1a_chunk_060",
+          "apple_item1a_chunk_026",
+          "apple_item1a_chunk_068",
+          "apple_item1_chunk_008",
+          "apple_item8_chunk_036",
+          "apple_item8_chunk_008",
+          "apple_item8_chunk_006",
+          "elilily_item1a_chunk_051"
+        ],
+        "gold_ids": [
+          "apple_item1a_chunk_066",
+          "apple_item1a_chunk_069",
+          "apple_item1a_chunk_067",
+          "apple_item1a_chunk_068"
+        ],
+        "rr": 1.0,
+        "latency_ms": 8.4
+      },
+      {
+        "question_id": "AAPL_2025_021_REGULATORY_DMA_ANTITRUST_RISKS",
+        "question": "What risks does Apple disclose related to the Digital Markets Act and antitrust scrutiny?",
+        "hit_ids": [
+          "apple_item1a_chunk_060",
+          "apple_item1a_chunk_066",
+          "apple_item1a_chunk_061",
+          "apple_item1a_chunk_063",
+          "apple_item1a_chunk_053",
+          "apple_item1a_chunk_080",
+          "apple_item1a_chunk_026",
+          "apple_item3_chunk_001",
+          "apple_item1_chunk_008",
+          "apple_item1a_chunk_018"
+        ],
+        "gold_ids": [
+          "apple_item1a_chunk_064",
+          "apple_item1a_chunk_061",
+          "apple_item1a_chunk_062",
+          "apple_item1a_chunk_060",
+          "apple_item1a_chunk_065",
+          "apple_item1a_chunk_063"
+        ],
+        "rr": 1.0,
+        "latency_ms": 7.2
+      },
+      {
+        "question_id": "AAPL_2025_022_CYBERSECURITY_GOVERNANCE",
+        "question": "Who is responsible for managing Apple's material cybersecurity risks?",
+        "hit_ids": [
+          "apple_item1a_chunk_046",
+          "elilily_item1c_chunk_005",
+          "apple_item1c_chunk_001",
+          "apple_item1a_chunk_026",
+          "walmart_item1c_chunk_002",
+          "apple_item1_chunk_008",
+          "apple_item1c_chunk_002",
+          "apple_item1a_chunk_066",
+          "apple_item7_chunk_021",
+          "apple_item1a_chunk_060"
+        ],
+        "gold_ids": [
+          "apple_item1c_chunk_002",
+          "apple_item1c_chunk_003",
+          "apple_item1c_chunk_001"
+        ],
+        "rr": 0.3333333333333333,
+        "latency_ms": 64.2
+      },
+      {
+        "question_id": "AAPL_2025_023_DMA_LEGAL_PROCEEDINGS",
+        "question": "What legal proceedings did Apple disclose under the EU Digital Markets Act?",
+        "hit_ids": [
+          "apple_item3_chunk_001",
+          "apple_item1a_chunk_061",
+          "apple_item1a_chunk_060",
+          "apple_item1a_chunk_066",
+          "apple_item3_chunk_003",
+          "apple_item1a_chunk_063",
+          "apple_item1a_chunk_053",
+          "apple_item3_chunk_002",
+          "apple_item1a_chunk_064",
+          "apple_item8_chunk_033"
+        ],
+        "gold_ids": [
+          "apple_item3_chunk_002",
+          "apple_item3_chunk_001"
+        ],
+        "rr": 1.0,
+        "latency_ms": 19.3
+      },
+      {
+        "question_id": "AAPL_2025_024_PRODUCT_ANNOUNCEMENTS_2025",
+        "question": "What significant product, service and software announcements did Apple list for fiscal 2025?",
+        "hit_ids": [
+          "apple_item7_chunk_002",
+          "apple_item7_chunk_007",
+          "apple_item1_chunk_008",
+          "apple_item8_chunk_008",
+          "apple_item8_chunk_006",
+          "apple_item6_chunk_001",
+          "apple_item8_chunk_004",
+          "apple_item7_chunk_003",
+          "apple_item1_chunk_003",
+          "apple_item8_chunk_060"
+        ],
+        "gold_ids": [
+          "apple_item7_chunk_002"
+        ],
+        "rr": 1.0,
+        "latency_ms": 9.5
+      },
+      {
+        "question_id": "AAPL_2025_025_FISCAL_PERIODS",
+        "question": "How many weeks were in Apple's fiscal years 2025, 2024 and 2023?",
+        "hit_ids": [
+          "apple_item7_chunk_002",
+          "apple_item7_chunk_003",
+          "apple_item8_chunk_010",
+          "apple_item7_chunk_007",
+          "apple_item8_chunk_060",
+          "apple_item8_chunk_011",
+          "apple_item8_chunk_059",
+          "apple_item8_chunk_008",
+          "apple_item8_chunk_006",
+          "apple_item6_chunk_001"
+        ],
+        "gold_ids": [
+          "apple_item7_chunk_003",
+          "apple_item8_chunk_010",
+          "apple_item7_chunk_002",
+          "apple_item8_chunk_011"
+        ],
+        "rr": 1.0,
+        "latency_ms": 8.0
+      },
+      {
+        "question_id": "AAPL_2025_026_TOTAL_NET_SALES_BY_YEAR",
+        "question": "What were Apple's total net sales in 2025, 2024 and 2023?",
+        "hit_ids": [
+          "apple_item7_chunk_007",
+          "apple_item8_chunk_060",
+          "apple_item8_chunk_019",
+          "apple_item8_chunk_059",
+          "apple_item7_chunk_008",
+          "apple_item7_chunk_005",
+          "apple_item8_chunk_020",
+          "apple_item7_chunk_006",
+          "apple_item7_chunk_003",
+          "apple_item7_chunk_002"
+        ],
+        "gold_ids": [
+          "apple_item7_chunk_007",
+          "apple_item8_chunk_002",
+          "apple_item8_chunk_060",
+          "apple_item8_chunk_019"
+        ],
+        "rr": 1.0,
+        "latency_ms": 101.7
+      },
+      {
+        "question_id": "AAPL_2025_027_SEGMENT_NET_SALES_2025",
+        "question": "What were Apple's 2025 net sales by reportable geographic segment?",
+        "hit_ids": [
+          "apple_item8_chunk_059",
+          "apple_item7_chunk_007",
+          "apple_item8_chunk_060",
+          "apple_item8_chunk_020",
+          "apple_item7_chunk_005",
+          "apple_item8_chunk_056",
+          "apple_item8_chunk_019",
+          "apple_item7_chunk_006",
+          "apple_item7_chunk_008",
+          "apple_item2_chunk_001"
+        ],
+        "gold_ids": [
+          "apple_item8_chunk_059",
+          "apple_item7_chunk_005"
+        ],
+        "rr": 1.0,
+        "latency_ms": 16.0
+      },
+      {
+        "question_id": "AAPL_2025_028_SEGMENT_CHANGE_DRIVERS",
+        "question": "What drove changes in Apple's 2025 regional net sales compared with 2024?",
+        "hit_ids": [
+          "apple_item7_chunk_007",
+          "apple_item7_chunk_006",
+          "apple_item7_chunk_005",
+          "apple_item8_chunk_059",
+          "apple_item7_chunk_008",
+          "apple_item8_chunk_060",
+          "apple_item7_chunk_003",
+          "apple_item8_chunk_019",
+          "walmart_item7_chunk_036",
+          "apple_item8_chunk_020"
+        ],
+        "gold_ids": [
+          "apple_item7_chunk_006",
+          "apple_item7_chunk_005"
+        ],
+        "rr": 0.5,
+        "latency_ms": 9.7
+      },
+      {
+        "question_id": "AAPL_2025_029_PRODUCT_NET_SALES_2025",
+        "question": "What were Apple's 2025 net sales by product and services category?",
+        "hit_ids": [
+          "apple_item7_chunk_007",
+          "apple_item7_chunk_008",
+          "apple_item8_chunk_019",
+          "apple_item8_chunk_060",
+          "apple_item8_chunk_059",
+          "apple_item7_chunk_005",
+          "apple_item7_chunk_006",
+          "apple_item8_chunk_020",
+          "apple_item8_chunk_008",
+          "apple_item8_chunk_006"
+        ],
+        "gold_ids": [
+          "apple_item7_chunk_007",
+          "apple_item8_chunk_019"
+        ],
+        "rr": 1.0,
+        "latency_ms": 7.3
+      },
+      {
+        "question_id": "AAPL_2025_030_PRODUCT_SALES_DRIVERS",
+        "question": "What were the main drivers of Apple's 2025 product and services category sales changes?",
+        "hit_ids": [
+          "apple_item7_chunk_007",
+          "apple_item7_chunk_008",
+          "apple_item1_chunk_008",
+          "apple_item7_chunk_002",
+          "apple_item7_chunk_005",
+          "apple_item7_chunk_006",
+          "apple_item8_chunk_019",
+          "apple_item8_chunk_059",
+          "apple_item1_chunk_003",
+          "apple_item8_chunk_060"
+        ],
+        "gold_ids": [
+          "apple_item7_chunk_007",
+          "apple_item7_chunk_008"
+        ],
+        "rr": 1.0,
+        "latency_ms": 8.7
+      },
+      {
+        "question_id": "AAPL_2025_031_GROSS_MARGIN_2025",
+        "question": "What were Apple's 2025 products, services and total gross margins and gross margin percentages?",
+        "hit_ids": [
+          "apple_item7_chunk_008",
+          "apple_item7_chunk_007",
+          "apple_item8_chunk_019",
+          "apple_item7_chunk_009",
+          "apple_item8_chunk_060",
+          "apple_item8_chunk_059",
+          "apple_item8_chunk_008",
+          "apple_item8_chunk_004",
+          "apple_item8_chunk_006",
+          "apple_item1_chunk_008"
+        ],
+        "gold_ids": [
+          "apple_item7_chunk_008",
+          "apple_item8_chunk_002"
+        ],
+        "rr": 1.0,
+        "latency_ms": 5.7
+      },
+      {
+        "question_id": "AAPL_2025_032_GROSS_MARGIN_DRIVERS",
+        "question": "Why did Apple's products and services gross margin change in 2025 compared with 2024?",
+        "hit_ids": [
+          "apple_item7_chunk_008",
+          "apple_item7_chunk_007",
+          "apple_item7_chunk_009",
+          "apple_item7_chunk_006",
+          "apple_item8_chunk_019",
+          "apple_item7_chunk_003",
+          "apple_item7_chunk_005",
+          "apple_item8_chunk_059",
+          "walmart_item7_chunk_036",
+          "apple_item8_chunk_060"
+        ],
+        "gold_ids": [
+          "apple_item7_chunk_008",
+          "apple_item7_chunk_009"
+        ],
+        "rr": 1.0,
+        "latency_ms": 6.7
+      },
+      {
+        "question_id": "AAPL_2025_033_OPERATING_EXPENSES_2025",
+        "question": "What were Apple's 2025 R&D, SG&A and total operating expenses, and what drove their growth?",
+        "hit_ids": [
+          "apple_item7_chunk_010",
+          "apple_item7_chunk_007",
+          "apple_item8_chunk_059",
+          "apple_item7_chunk_008",
+          "apple_item8_chunk_060",
+          "apple_item8_chunk_008",
+          "apple_item8_chunk_006",
+          "apple_item7_chunk_011",
+          "apple_item1_chunk_008",
+          "apple_item8_chunk_004"
+        ],
+        "gold_ids": [
+          "apple_item7_chunk_010",
+          "apple_item8_chunk_002"
+        ],
+        "rr": 1.0,
+        "latency_ms": 7.4
+      },
+      {
+        "question_id": "AAPL_2025_034_EFFECTIVE_TAX_RATE",
+        "question": "What was Apple's effective tax rate in 2025, and why was it lower than the statutory federal rate?",
+        "hit_ids": [
+          "apple_item7_chunk_011",
+          "walmart_item8_chunk_087",
+          "elilily_item7_chunk_031",
+          "apple_item7_chunk_015",
+          "elilily_item8_chunk_072",
+          "walmart_item7_chunk_029",
+          "elilily_item8_chunk_073",
+          "apple_item8_chunk_038",
+          "apple_item8_chunk_035",
+          "chase_item8_chunk_472"
+        ],
+        "gold_ids": [
+          "apple_item7_chunk_011",
+          "apple_item8_chunk_037"
+        ],
+        "rr": 1.0,
+        "latency_ms": 10.0
+      },
+      {
+        "question_id": "AAPL_2025_035_LIQUIDITY_RESOURCES",
+        "question": "What liquidity resources did Apple say would be sufficient to meet cash requirements and capital return plans?",
+        "hit_ids": [
+          "apple_item7_chunk_012",
+          "apple_item8_chunk_025",
+          "elilily_item7_chunk_033",
+          "apple_item8_chunk_022",
+          "apple_item7_chunk_015",
+          "walmart_item7_chunk_042",
+          "elilily_item7_chunk_032",
+          "apple_item5_chunk_002",
+          "apple_item8_chunk_045",
+          "chase_item8_chunk_504"
+        ],
+        "gold_ids": [
+          "apple_item7_chunk_012"
+        ],
+        "rr": 1.0,
+        "latency_ms": 9.0
+      },
+      {
+        "question_id": "AAPL_2025_036_CONTRACTUAL_CASH_REQUIREMENTS",
+        "question": "What material contractual cash requirements did Apple disclose as of September 27, 2025?",
+        "hit_ids": [
+          "apple_item8_chunk_025",
+          "apple_item8_chunk_052",
+          "apple_item8_chunk_008",
+          "apple_item8_chunk_006",
+          "apple_item8_chunk_022",
+          "apple_item14_chunk_001",
+          "apple_item8_chunk_045",
+          "apple_item6_chunk_001",
+          "apple_item8_chunk_004",
+          "apple_item8_chunk_060"
+        ],
+        "gold_ids": [
+          "apple_item7_chunk_014",
+          "apple_item7_chunk_012",
+          "apple_item7_chunk_015",
+          "apple_item7_chunk_013"
+        ],
+        "rr": 0.0,
+        "latency_ms": 8.7
+      },
+      {
+        "question_id": "AAPL_2025_037_CAPITAL_RETURN_PROGRAM",
+        "question": "What did Apple disclose about dividends and share repurchases in 2025?",
+        "hit_ids": [
+          "apple_item5_chunk_002",
+          "apple_item7_chunk_015",
+          "apple_item8_chunk_048",
+          "apple_item6_chunk_001",
+          "chase_item7_chunk_202",
+          "apple_item14_chunk_001",
+          "apple_item8_chunk_008",
+          "exxon_item7_chunk_115",
+          "apple_item8_chunk_006",
+          "walmart_item7_chunk_052"
+        ],
+        "gold_ids": [
+          "apple_item7_chunk_016",
+          "apple_item7_chunk_015",
+          "apple_item5_chunk_002"
+        ],
+        "rr": 1.0,
+        "latency_ms": 9.0
+      },
+      {
+        "question_id": "AAPL_2025_038_MARKET_RISK_INTEREST_RATE",
+        "question": "What potential impacts would a hypothetical 100 basis point interest rate increase have on Apple's investment portfolio and term debt?",
+        "hit_ids": [
+          "apple_item7a_chunk_002",
+          "chase_item7_chunk_187",
+          "apple_item1a_chunk_080",
+          "apple_item8_chunk_025",
+          "apple_item1a_chunk_005",
+          "chase_item8_chunk_497",
+          "apple_item7_chunk_003",
+          "apple_item1a_chunk_073",
+          "apple_item1a_chunk_026",
+          "walmart_item7a_chunk_004"
+        ],
+        "gold_ids": [
+          "apple_item7a_chunk_002",
+          "apple_item7a_chunk_001"
+        ],
+        "rr": 1.0,
+        "latency_ms": 9.3
+      },
+      {
+        "question_id": "AAPL_2025_039_MARKET_RISK_FOREIGN_EXCHANGE",
+        "question": "How does Apple describe its foreign exchange risk and VAR estimate for 2025?",
+        "hit_ids": [
+          "apple_item7a_chunk_004",
+          "apple_item1a_chunk_080",
+          "apple_item7_chunk_003",
+          "elilily_item7_chunk_042",
+          "chase_item7_chunk_424",
+          "apple_item8_chunk_030",
+          "walmart_item7a_chunk_005",
+          "apple_item8_chunk_025",
+          "apple_item8_chunk_038",
+          "apple_item7a_chunk_003"
+        ],
+        "gold_ids": [
+          "apple_item7a_chunk_004",
+          "apple_item7a_chunk_003"
+        ],
+        "rr": 1.0,
+        "latency_ms": 9.1
+      },
+      {
+        "question_id": "AAPL_2025_040_STATEMENT_OF_OPERATIONS_2025",
+        "question": "What were Apple's 2025 total net sales, gross margin, operating income, net income and diluted EPS?",
+        "hit_ids": [
+          "apple_item7_chunk_007",
+          "apple_item7_chunk_008",
+          "apple_item8_chunk_060",
+          "apple_item8_chunk_059",
+          "apple_item8_chunk_003",
+          "apple_item8_chunk_019",
+          "apple_item8_chunk_008",
+          "apple_item8_chunk_006",
+          "apple_item8_chunk_004",
+          "apple_item7_chunk_011"
+        ],
+        "gold_ids": [
+          "apple_item8_chunk_021",
+          "apple_item8_chunk_002"
+        ],
+        "rr": 0.0,
+        "latency_ms": 6.4
+      },
+      {
+        "question_id": "AAPL_2025_041_BALANCE_SHEET_2025",
+        "question": "What were Apple's total assets, total liabilities and total shareholders' equity as of September 27, 2025?",
+        "hit_ids": [
+          "apple_item8_chunk_060",
+          "apple_item8_chunk_025",
+          "apple_item8_chunk_061",
+          "apple_item8_chunk_003",
+          "apple_item8_chunk_048",
+          "apple_item8_chunk_022",
+          "apple_item8_chunk_033",
+          "apple_item5_chunk_001",
+          "apple_item8_chunk_042",
+          "apple_item8_chunk_005"
+        ],
+        "gold_ids": [
+          "apple_item8_chunk_005"
+        ],
+        "rr": 0.1,
+        "latency_ms": 5.9
+      },
+      {
+        "question_id": "AAPL_2025_042_CASH_FLOW_2025",
+        "question": "What cash flows did Apple report for operating, investing and financing activities in 2025?",
+        "hit_ids": [
+          "exxon_item7_chunk_114",
+          "apple_item7_chunk_007",
+          "apple_item8_chunk_059",
+          "walmart_item7_chunk_022",
+          "apple_item8_chunk_060",
+          "apple_item8_chunk_003",
+          "apple_item8_chunk_061",
+          "apple_item8_chunk_008",
+          "apple_item6_chunk_001",
+          "apple_item8_chunk_025"
+        ],
+        "gold_ids": [
+          "apple_item8_chunk_009"
+        ],
+        "rr": 0.0,
+        "latency_ms": 6.0
+      },
+      {
+        "question_id": "AAPL_2025_043_REVENUE_RECOGNITION",
+        "question": "How does Apple recognize revenue for products, services, bundled services and third-party App Store applications?",
+        "hit_ids": [
+          "apple_item8_chunk_019",
+          "apple_item8_chunk_017",
+          "apple_item1_chunk_004",
+          "apple_item7_chunk_007",
+          "walmart_item8_chunk_050",
+          "elilily_item7_chunk_046",
+          "apple_item8_chunk_014",
+          "elilily_item8_chunk_013",
+          "elilily_item8_chunk_014",
+          "elilily_item8_chunk_021"
+        ],
+        "gold_ids": [
+          "apple_item8_chunk_017",
+          "apple_item8_chunk_019",
+          "apple_item8_chunk_016",
+          "apple_item8_chunk_018",
+          "apple_item8_chunk_014",
+          "apple_item8_chunk_015"
+        ],
+        "rr": 1.0,
+        "latency_ms": 8.4
+      },
+      {
+        "question_id": "AAPL_2025_044_DEFERRED_REVENUE",
+        "question": "How much deferred revenue did Apple have as of September 27, 2025, and when does it expect to realize it?",
+        "hit_ids": [
+          "apple_item8_chunk_020",
+          "apple_item8_chunk_019",
+          "apple_item8_chunk_025",
+          "apple_item7_chunk_007",
+          "apple_item8_chunk_038",
+          "apple_item8_chunk_052",
+          "apple_item8_chunk_060",
+          "chase_item7_chunk_424",
+          "apple_item7_chunk_015",
+          "apple_item8_chunk_030"
+        ],
+        "gold_ids": [
+          "apple_item8_chunk_020"
+        ],
+        "rr": 1.0,
+        "latency_ms": 6.1
+      },
+      {
+        "question_id": "AAPL_2025_045_FINANCIAL_INSTRUMENTS_TOTAL",
+        "question": "What was the fair value of Apple's cash, cash equivalents and marketable securities as of September 27, 2025?",
+        "hit_ids": [
+          "apple_item8_chunk_025",
+          "apple_item8_chunk_022",
+          "apple_item8_chunk_030",
+          "apple_item8_chunk_060",
+          "apple_item8_chunk_061",
+          "apple_item8_chunk_003",
+          "apple_item5_chunk_002",
+          "apple_item8_chunk_045",
+          "apple_item5_chunk_001",
+          "apple_item7_chunk_007"
+        ],
+        "gold_ids": [
+          "apple_item8_chunk_023",
+          "apple_item8_chunk_022"
+        ],
+        "rr": 0.5,
+        "latency_ms": 6.1
+      },
+      {
+        "question_id": "AAPL_2025_046_DERIVATIVE_NOTIONALS",
+        "question": "What notional amounts of derivative instruments did Apple have outstanding as of September 27, 2025?",
+        "hit_ids": [
+          "apple_item8_chunk_030",
+          "apple_item8_chunk_025",
+          "apple_item8_chunk_022",
+          "chase_item7_chunk_261",
+          "apple_item8_chunk_052",
+          "apple_item8_chunk_045",
+          "apple_item8_chunk_038",
+          "apple_item8_chunk_008",
+          "chase_item8_chunk_504",
+          "apple_item8_chunk_003"
+        ],
+        "gold_ids": [
+          "apple_item8_chunk_030"
+        ],
+        "rr": 1.0,
+        "latency_ms": 7.2
+      },
+      {
+        "question_id": "AAPL_2025_047_RECEIVABLES_CONCENTRATION",
+        "question": "What customer and vendor concentration risks did Apple disclose for receivables as of September 27, 2025?",
+        "hit_ids": [
+          "apple_item8_chunk_052",
+          "apple_item8_chunk_025",
+          "chase_item7_chunk_424",
+          "apple_item8_chunk_020",
+          "apple_item8_chunk_031",
+          "apple_item1a_chunk_077",
+          "apple_item8_chunk_060",
+          "apple_item8_chunk_008",
+          "apple_item8_chunk_022",
+          "apple_item8_chunk_045"
+        ],
+        "gold_ids": [
+          "apple_item8_chunk_032",
+          "apple_item8_chunk_031"
+        ],
+        "rr": 0.2,
+        "latency_ms": 6.2
+      },
+      {
+        "question_id": "AAPL_2025_048_INCOME_TAX_STATE_AID",
+        "question": "What did Apple disclose about the European Commission State Aid Decision?",
+        "hit_ids": [
+          "apple_item8_chunk_033",
+          "apple_item8_chunk_034",
+          "apple_item1a_chunk_060",
+          "apple_item3_chunk_001",
+          "apple_item1a_chunk_061",
+          "apple_item1a_chunk_053",
+          "apple_item8_chunk_008",
+          "apple_item8_chunk_006",
+          "apple_item4_chunk_001",
+          "apple_item8_chunk_066"
+        ],
+        "gold_ids": [
+          "apple_item8_chunk_035",
+          "apple_item8_chunk_033",
+          "apple_item8_chunk_034"
+        ],
+        "rr": 1.0,
+        "latency_ms": 5.8
+      },
+      {
+        "question_id": "AAPL_2025_049_DEBT_COMMERCIAL_PAPER_TERM_DEBT",
+        "question": "What commercial paper and term debt amounts did Apple report as of September 27, 2025?",
+        "hit_ids": [
+          "apple_item8_chunk_045",
+          "apple_item8_chunk_025",
+          "apple_item8_chunk_030",
+          "apple_item8_chunk_022",
+          "apple_item8_chunk_052",
+          "apple_item8_chunk_060",
+          "apple_item8_chunk_008",
+          "apple_item8_chunk_003",
+          "apple_item8_chunk_006",
+          "apple_item8_chunk_004"
+        ],
+        "gold_ids": [
+          "apple_item8_chunk_045",
+          "apple_item8_chunk_047",
+          "apple_item7_chunk_013",
+          "apple_item8_chunk_046"
+        ],
+        "rr": 1.0,
+        "latency_ms": 6.3
+      },
+      {
+        "question_id": "AAPL_2025_050_SEGMENT_GEOGRAPHIC_DATA",
+        "question": "What did Apple disclose about U.S., China and other-country net sales and long-lived assets in 2025?",
+        "hit_ids": [
+          "apple_item8_chunk_060",
+          "apple_item7_chunk_007",
+          "apple_item8_chunk_020",
+          "apple_item8_chunk_059",
+          "apple_item7_chunk_003",
+          "apple_item8_chunk_008",
+          "apple_item7_chunk_005",
+          "apple_item6_chunk_001",
+          "apple_item8_chunk_052",
+          "apple_item8_chunk_006"
+        ],
+        "gold_ids": [
+          "apple_item8_chunk_059",
+          "apple_item8_chunk_060"
+        ],
+        "rr": 1.0,
+        "latency_ms": 6.9
+      }
+    ]
+  },
+  "bm25": {
+    "summary": {
+      "strategy": "bm25",
+      "version": "v2",
+      "n_questions": 50,
+      "mean_latency_ms": 28.0506,
+      "mrr": 0.6168,
+      "primary_mrr": 0.6102,
+      "recall@1": 0.5,
+      "primary_recall@1": 0.5,
+      "recall@5": 0.78,
+      "primary_recall@5": 0.74,
+      "recall@10": 0.82,
+      "primary_recall@10": 0.8
+    },
+    "per_question": [
+      {
+        "question_id": "AAPL_2025_001_BUSINESS_OVERVIEW",
+        "question": "What business does Apple say it is engaged in?",
+        "hit_ids": [
+          "chase_item1a_chunk_080",
+          "chase_item1a_chunk_025",
+          "chase_item1a_chunk_105",
+          "chase_item1a_chunk_008",
+          "apple_item8_chunk_019",
+          "chase_item1a_chunk_004",
+          "chase_item8_chunk_396",
+          "apple_item8_chunk_018",
+          "walmart_item7_chunk_021",
+          "elilily_item7_chunk_017"
+        ],
+        "gold_ids": [
+          "apple_item1_chunk_001"
+        ],
+        "rr": 0.0,
+        "latency_ms": 30.8
+      },
+      {
+        "question_id": "AAPL_2025_002_PRODUCT_CATEGORIES",
+        "question": "What are Apple's main product categories described in the filing?",
+        "hit_ids": [
+          "elilily_item7_chunk_046",
+          "walmart_item8_chunk_106",
+          "elilily_item8_chunk_128",
+          "walmart_item1_chunk_019",
+          "walmart_item1_chunk_030",
+          "elilily_item8_chunk_097",
+          "chase_item7_chunk_118",
+          "elilily_item1a_chunk_027",
+          "exxon_item8_chunk_151",
+          "walmart_item7_chunk_027"
+        ],
+        "gold_ids": [
+          "apple_item1_chunk_001",
+          "apple_item1_chunk_002"
+        ],
+        "rr": 0.0,
+        "latency_ms": 26.5
+      },
+      {
+        "question_id": "AAPL_2025_003_IPHONE_LINE",
+        "question": "Which iPhone models are included in Apple's iPhone line in the 2025 filing?",
+        "hit_ids": [
+          "apple_item1_chunk_001",
+          "apple_item7_chunk_002",
+          "apple_item7_chunk_007",
+          "apple_item8_chunk_019",
+          "apple_item8_chunk_020",
+          "apple_item8_chunk_027",
+          "apple_item7_chunk_006",
+          "apple_item7_chunk_005",
+          "exxon_item8_chunk_083",
+          "chase_item1a_chunk_100"
+        ],
+        "gold_ids": [
+          "apple_item1_chunk_001"
+        ],
+        "rr": 1.0,
+        "latency_ms": 24.9
+      },
+      {
+        "question_id": "AAPL_2025_004_MAC_LINE",
+        "question": "What Mac products does Apple list in its Mac line?",
+        "hit_ids": [
+          "apple_item1_chunk_001",
+          "apple_item7_chunk_007",
+          "apple_item7_chunk_002",
+          "apple_item8_chunk_019",
+          "apple_item8_chunk_016",
+          "chase_item8_chunk_643",
+          "elilily_item1_chunk_071",
+          "chase_item8_chunk_519",
+          "elilily_item1a_chunk_021",
+          "elilily_item1_chunk_057"
+        ],
+        "gold_ids": [
+          "apple_item1_chunk_001"
+        ],
+        "rr": 1.0,
+        "latency_ms": 20.1
+      },
+      {
+        "question_id": "AAPL_2025_005_WEARABLES_HOME_ACCESSORIES",
+        "question": "What products are included in Apple's Wearables, Home and Accessories category?",
+        "hit_ids": [
+          "apple_item7_chunk_008",
+          "apple_item1_chunk_002",
+          "apple_item8_chunk_019",
+          "apple_item7_chunk_007",
+          "chase_item8_chunk_555",
+          "apple_item1_chunk_003",
+          "chase_item8_chunk_617",
+          "chase_item7_chunk_077",
+          "exxon_item8_chunk_110",
+          "exxon_item7_chunk_014"
+        ],
+        "gold_ids": [
+          "apple_item1_chunk_003",
+          "apple_item1_chunk_002"
+        ],
+        "rr": 0.5,
+        "latency_ms": 24.3
+      },
+      {
+        "question_id": "AAPL_2025_006_SERVICES_OFFERINGS",
+        "question": "What service offerings does Apple describe in Item 1?",
+        "hit_ids": [
+          "apple_item1_chunk_003",
+          "apple_item7_chunk_001",
+          "elilily_item1c_chunk_005",
+          "apple_item14_chunk_001",
+          "walmart_item8_chunk_050",
+          "apple_item1a_chunk_027",
+          "walmart_item1a_chunk_066",
+          "apple_item9a_chunk_005",
+          "elilily_item1a_chunk_044",
+          "apple_item1_chunk_009"
+        ],
+        "gold_ids": [
+          "apple_item1_chunk_004",
+          "apple_item1_chunk_003"
+        ],
+        "rr": 1.0,
+        "latency_ms": 21.1
+      },
+      {
+        "question_id": "AAPL_2025_007_REPORTABLE_SEGMENTS",
+        "question": "What reportable segments does Apple use to manage its business?",
+        "hit_ids": [
+          "chase_item8_chunk_561",
+          "apple_item1_chunk_005",
+          "apple_item8_chunk_056",
+          "chase_item7_chunk_010",
+          "chase_item1_chunk_004",
+          "walmart_item8_chunk_116",
+          "chase_item8_chunk_566",
+          "exxon_item8_chunk_047",
+          "chase_item7_chunk_069",
+          "apple_item8_chunk_057"
+        ],
+        "gold_ids": [
+          "apple_item8_chunk_056",
+          "apple_item1_chunk_005"
+        ],
+        "rr": 0.5,
+        "latency_ms": 21.6
+      },
+      {
+        "question_id": "AAPL_2025_008_DISTRIBUTION_CHANNELS",
+        "question": "What percentage of Apple's 2025 net sales came through direct and indirect distribution channels?",
+        "hit_ids": [
+          "apple_item1_chunk_006",
+          "elilily_item7_chunk_046",
+          "elilily_item8_chunk_017",
+          "apple_item1_chunk_016",
+          "walmart_item8_chunk_054",
+          "apple_item7_chunk_008",
+          "chase_item9b_chunk_003",
+          "apple_item8_chunk_057",
+          "walmart_item7_chunk_012",
+          "elilily_item1a_chunk_028"
+        ],
+        "gold_ids": [
+          "apple_item1_chunk_006"
+        ],
+        "rr": 1.0,
+        "latency_ms": 27.5
+      },
+      {
+        "question_id": "AAPL_2025_009_CUSTOMER_MARKETS",
+        "question": "Which customer markets does Apple primarily serve?",
+        "hit_ids": [
+          "apple_item1a_chunk_018",
+          "chase_item7_chunk_026",
+          "chase_item8_chunk_402",
+          "chase_item8_chunk_401",
+          "walmart_item1a_chunk_027",
+          "apple_item1_chunk_007",
+          "exxon_item1a_chunk_027",
+          "apple_item1_chunk_006",
+          "apple_item1a_chunk_019",
+          "apple_item1_chunk_004"
+        ],
+        "gold_ids": [
+          "apple_item1_chunk_006"
+        ],
+        "rr": 0.125,
+        "latency_ms": 12.3
+      },
+      {
+        "question_id": "AAPL_2025_010_COMPETITIVE_FACTORS",
+        "question": "What principal competitive factors does Apple identify as important to its business?",
+        "hit_ids": [
+          "apple_item1_chunk_008",
+          "exxon_item1a_chunk_029",
+          "chase_item7_chunk_026",
+          "chase_item1a_chunk_114",
+          "chase_item1a_chunk_084",
+          "walmart_item1a_chunk_001",
+          "chase_item7_chunk_012",
+          "apple_item1_chunk_017",
+          "chase_item1a_chunk_083",
+          "walmart_item1a_chunk_013"
+        ],
+        "gold_ids": [
+          "apple_item1_chunk_008",
+          "apple_item1_chunk_007"
+        ],
+        "rr": 1.0,
+        "latency_ms": 21.4
+      },
+      {
+        "question_id": "AAPL_2025_011_COMPONENT_SUPPLY_RISKS_BUSINESS",
+        "question": "What does Apple say about supply of components in its business description?",
+        "hit_ids": [
+          "apple_item8_chunk_055",
+          "apple_item1_chunk_012",
+          "apple_item1a_chunk_025",
+          "apple_item1a_chunk_007",
+          "apple_item1a_chunk_012",
+          "elilily_item1_chunk_087",
+          "walmart_item1a_chunk_004",
+          "apple_item1a_chunk_024",
+          "apple_item1a_chunk_026",
+          "apple_item1a_chunk_006"
+        ],
+        "gold_ids": [
+          "apple_item1_chunk_012",
+          "apple_item1_chunk_011",
+          "apple_item1_chunk_010"
+        ],
+        "rr": 0.5,
+        "latency_ms": 25.8
+      },
+      {
+        "question_id": "AAPL_2025_012_R_AND_D_ROLE",
+        "question": "Why does Apple say research and development is important?",
+        "hit_ids": [
+          "elilily_item7_chunk_010",
+          "elilily_item8_chunk_008",
+          "elilily_item8_chunk_115",
+          "elilily_item1_chunk_075",
+          "elilily_item8_chunk_114",
+          "elilily_item7_chunk_024",
+          "exxon_item7_chunk_030",
+          "elilily_item7_chunk_011",
+          "elilily_item7_chunk_009",
+          "exxon_item1a_chunk_022"
+        ],
+        "gold_ids": [
+          "apple_item1_chunk_013",
+          "apple_item1_chunk_008"
+        ],
+        "rr": 0.0,
+        "latency_ms": 18.6
+      },
+      {
+        "question_id": "AAPL_2025_013_MACRO_RISKS",
+        "question": "How can adverse macroeconomic conditions affect Apple according to the risk factors?",
+        "hit_ids": [
+          "chase_item1a_chunk_041",
+          "chase_item7_chunk_424",
+          "chase_item7_chunk_422",
+          "chase_item8_chunk_364",
+          "chase_item8_chunk_644",
+          "chase_item7_chunk_314",
+          "apple_item1a_chunk_007",
+          "chase_item1a_chunk_040",
+          "chase_item8_chunk_623",
+          "elilily_item13_chunk_001"
+        ],
+        "gold_ids": [
+          "apple_item1a_chunk_002",
+          "apple_item1a_chunk_004",
+          "apple_item1a_chunk_003"
+        ],
+        "rr": 0.0,
+        "latency_ms": 21.9
+      },
+      {
+        "question_id": "AAPL_2025_014_TARIFFS_TRADE_RISKS",
+        "question": "What tariff and international trade risks does Apple describe?",
+        "hit_ids": [
+          "elilily_item1a_chunk_072",
+          "apple_item1a_chunk_005",
+          "walmart_item1a_chunk_068",
+          "exxon_item1a_chunk_003",
+          "apple_item1a_chunk_076",
+          "walmart_item1a_chunk_026",
+          "elilily_item1_chunk_073",
+          "elilily_item7_chunk_012",
+          "walmart_item1a_chunk_072",
+          "walmart_item1a_chunk_069"
+        ],
+        "gold_ids": [
+          "apple_item1a_chunk_007",
+          "apple_item1a_chunk_008",
+          "apple_item7_chunk_004",
+          "apple_item7_chunk_003",
+          "apple_item7_chunk_005",
+          "apple_item1a_chunk_009",
+          "apple_item1a_chunk_006"
+        ],
+        "rr": 0.0,
+        "latency_ms": 17.0
+      },
+      {
+        "question_id": "AAPL_2025_015_OUTSOURCING_RISKS",
+        "question": "What risks arise from Apple's dependence on outsourcing partners for manufacturing and logistics?",
+        "hit_ids": [
+          "apple_item1a_chunk_021",
+          "apple_item1a_chunk_006",
+          "apple_item7_chunk_013",
+          "elilily_item1a_chunk_058",
+          "elilily_item1_chunk_050",
+          "apple_item1a_chunk_023",
+          "apple_item1a_chunk_076",
+          "chase_item1a_chunk_005",
+          "elilily_item1a_chunk_062",
+          "chase_item8_chunk_217"
+        ],
+        "gold_ids": [
+          "apple_item8_chunk_056",
+          "apple_item1a_chunk_023",
+          "apple_item1a_chunk_021",
+          "apple_item1a_chunk_022"
+        ],
+        "rr": 1.0,
+        "latency_ms": 27.5
+      },
+      {
+        "question_id": "AAPL_2025_016_COMPONENT_SHORTAGE_RISKS",
+        "question": "Why does Apple say component supply shortages are a material risk?",
+        "hit_ids": [
+          "elilily_item1a_chunk_055",
+          "elilily_item1_chunk_087",
+          "chase_item8_chunk_351",
+          "apple_item1_chunk_012",
+          "elilily_item1_chunk_081",
+          "apple_item1a_chunk_026",
+          "elilily_item1a_chunk_056",
+          "elilily_item1c_chunk_005",
+          "apple_item1a_chunk_024",
+          "apple_item8_chunk_055"
+        ],
+        "gold_ids": [
+          "apple_item1_chunk_011",
+          "apple_item1a_chunk_026",
+          "apple_item1a_chunk_024",
+          "apple_item1a_chunk_025",
+          "apple_item1_chunk_012",
+          "apple_item1_chunk_010"
+        ],
+        "rr": 0.25,
+        "latency_ms": 21.3
+      },
+      {
+        "question_id": "AAPL_2025_017_PRODUCT_DEFECT_AI_RISKS",
+        "question": "How can product defects and AI features create risks for Apple?",
+        "hit_ids": [
+          "apple_item1a_chunk_023",
+          "apple_item1a_chunk_020",
+          "apple_item1a_chunk_027",
+          "apple_item1a_chunk_028",
+          "elilily_item1a_chunk_070",
+          "elilily_item1a_chunk_067",
+          "chase_item1a_chunk_113",
+          "elilily_item1a_chunk_069",
+          "elilily_item13_chunk_001",
+          "elilily_item8_chunk_130"
+        ],
+        "gold_ids": [
+          "apple_item1a_chunk_026",
+          "apple_item1a_chunk_027",
+          "apple_item1a_chunk_028"
+        ],
+        "rr": 0.3333333333333333,
+        "latency_ms": 25.1
+      },
+      {
+        "question_id": "AAPL_2025_018_RESELLER_RISK",
+        "question": "What reseller and carrier risks does Apple describe?",
+        "hit_ids": [
+          "apple_item1a_chunk_040",
+          "chase_item7_chunk_424",
+          "walmart_item7_chunk_005",
+          "chase_item7_chunk_025",
+          "chase_item1a_chunk_080",
+          "apple_item1_chunk_004",
+          "chase_item7_chunk_012",
+          "apple_item1_chunk_002",
+          "apple_item1_chunk_003",
+          "apple_item1a_chunk_026"
+        ],
+        "gold_ids": [
+          "apple_item1a_chunk_040",
+          "apple_item1a_chunk_041"
+        ],
+        "rr": 1.0,
+        "latency_ms": 17.6
+      },
+      {
+        "question_id": "AAPL_2025_019_CYBER_INFORMATION_SYSTEM_RISK",
+        "question": "What information technology system and cybersecurity risks does Apple disclose?",
+        "hit_ids": [
+          "apple_item1a_chunk_041",
+          "elilily_item1c_chunk_002",
+          "walmart_item1c_chunk_002",
+          "chase_item7_chunk_394",
+          "walmart_item1c_chunk_005",
+          "walmart_item1c_chunk_006",
+          "walmart_item1c_chunk_001",
+          "apple_item1c_chunk_001",
+          "exxon_item1a_chunk_032",
+          "exxon_item1c_chunk_001"
+        ],
+        "gold_ids": [
+          "apple_item1a_chunk_045",
+          "apple_item1a_chunk_043",
+          "apple_item1a_chunk_041",
+          "apple_item1a_chunk_047",
+          "apple_item1a_chunk_044",
+          "apple_item1a_chunk_042",
+          "apple_item1a_chunk_046"
+        ],
+        "rr": 1.0,
+        "latency_ms": 21.6
+      },
+      {
+        "question_id": "AAPL_2025_020_PRIVACY_DATA_RISKS",
+        "question": "What personal data and privacy risks does Apple identify?",
+        "hit_ids": [
+          "walmart_item1a_chunk_088",
+          "apple_item1a_chunk_068",
+          "elilily_item1a_chunk_051",
+          "apple_item1a_chunk_067",
+          "walmart_item1a_chunk_054",
+          "walmart_item1c_chunk_002",
+          "walmart_item1a_chunk_087",
+          "apple_item1a_chunk_066",
+          "elilily_item1a_chunk_052",
+          "chase_item1a_chunk_005"
+        ],
+        "gold_ids": [
+          "apple_item1a_chunk_066",
+          "apple_item1a_chunk_069",
+          "apple_item1a_chunk_067",
+          "apple_item1a_chunk_068"
+        ],
+        "rr": 0.5,
+        "latency_ms": 20.2
+      },
+      {
+        "question_id": "AAPL_2025_021_REGULATORY_DMA_ANTITRUST_RISKS",
+        "question": "What risks does Apple disclose related to the Digital Markets Act and antitrust scrutiny?",
+        "hit_ids": [
+          "apple_item1a_chunk_061",
+          "apple_item3_chunk_001",
+          "apple_item1_chunk_004",
+          "chase_item7_chunk_424",
+          "apple_item8_chunk_018",
+          "chase_item9b_chunk_004",
+          "chase_item1a_chunk_021",
+          "walmart_item9b_chunk_001",
+          "chase_item8_chunk_540",
+          "apple_item7_chunk_015"
+        ],
+        "gold_ids": [
+          "apple_item1a_chunk_064",
+          "apple_item1a_chunk_061",
+          "apple_item1a_chunk_062",
+          "apple_item1a_chunk_060",
+          "apple_item1a_chunk_065",
+          "apple_item1a_chunk_063"
+        ],
+        "rr": 1.0,
+        "latency_ms": 29.2
+      },
+      {
+        "question_id": "AAPL_2025_022_CYBERSECURITY_GOVERNANCE",
+        "question": "Who is responsible for managing Apple's material cybersecurity risks?",
+        "hit_ids": [
+          "chase_item7_chunk_395",
+          "elilily_item1c_chunk_005",
+          "walmart_item1c_chunk_003",
+          "chase_item7_chunk_394",
+          "apple_item1c_chunk_001",
+          "exxon_item1c_chunk_005",
+          "exxon_item1a_chunk_032",
+          "exxon_item1c_chunk_002",
+          "elilily_item1c_chunk_007",
+          "chase_item7_chunk_409"
+        ],
+        "gold_ids": [
+          "apple_item1c_chunk_002",
+          "apple_item1c_chunk_003",
+          "apple_item1c_chunk_001"
+        ],
+        "rr": 0.2,
+        "latency_ms": 18.7
+      },
+      {
+        "question_id": "AAPL_2025_023_DMA_LEGAL_PROCEEDINGS",
+        "question": "What legal proceedings did Apple disclose under the EU Digital Markets Act?",
+        "hit_ids": [
+          "apple_item1a_chunk_061",
+          "apple_item3_chunk_001",
+          "walmart_item3_chunk_001",
+          "exxon_item8_chunk_088",
+          "apple_item1a_chunk_062",
+          "chase_item8_chunk_548",
+          "chase_item1a_chunk_062",
+          "apple_item7_chunk_021",
+          "apple_item1_chunk_004",
+          "apple_item1a_chunk_050"
+        ],
+        "gold_ids": [
+          "apple_item3_chunk_002",
+          "apple_item3_chunk_001"
+        ],
+        "rr": 0.5,
+        "latency_ms": 33.9
+      },
+      {
+        "question_id": "AAPL_2025_024_PRODUCT_ANNOUNCEMENTS_2025",
+        "question": "What significant product, service and software announcements did Apple list for fiscal 2025?",
+        "hit_ids": [
+          "apple_item7_chunk_001",
+          "apple_item1_chunk_008",
+          "apple_item7_chunk_002",
+          "apple_item1a_chunk_033",
+          "apple_item1_chunk_003",
+          "walmart_item7_chunk_056",
+          "apple_item1a_chunk_026",
+          "walmart_item8_chunk_058",
+          "apple_item1a_chunk_028",
+          "chase_item1a_chunk_068"
+        ],
+        "gold_ids": [
+          "apple_item7_chunk_002"
+        ],
+        "rr": 0.3333333333333333,
+        "latency_ms": 28.9
+      },
+      {
+        "question_id": "AAPL_2025_025_FISCAL_PERIODS",
+        "question": "How many weeks were in Apple's fiscal years 2025, 2024 and 2023?",
+        "hit_ids": [
+          "apple_item7_chunk_003",
+          "apple_item8_chunk_011",
+          "walmart_item7_chunk_026",
+          "walmart_item7_chunk_032",
+          "chase_item8_chunk_102",
+          "walmart_item7_chunk_010",
+          "walmart_item7_chunk_009",
+          "walmart_item7_chunk_039",
+          "walmart_item7_chunk_025",
+          "walmart_item7_chunk_036"
+        ],
+        "gold_ids": [
+          "apple_item7_chunk_003",
+          "apple_item8_chunk_010",
+          "apple_item7_chunk_002",
+          "apple_item8_chunk_011"
+        ],
+        "rr": 1.0,
+        "latency_ms": 27.0
+      },
+      {
+        "question_id": "AAPL_2025_026_TOTAL_NET_SALES_BY_YEAR",
+        "question": "What were Apple's total net sales in 2025, 2024 and 2023?",
+        "hit_ids": [
+          "apple_item7_chunk_010",
+          "walmart_item7_chunk_032",
+          "walmart_item7_chunk_025",
+          "apple_item8_chunk_019",
+          "apple_item8_chunk_020",
+          "walmart_item7_chunk_039",
+          "apple_item7_chunk_008",
+          "walmart_item7_chunk_010",
+          "apple_item8_chunk_051",
+          "walmart_item7_chunk_009"
+        ],
+        "gold_ids": [
+          "apple_item7_chunk_007",
+          "apple_item8_chunk_002",
+          "apple_item8_chunk_060",
+          "apple_item8_chunk_019"
+        ],
+        "rr": 0.25,
+        "latency_ms": 27.8
+      },
+      {
+        "question_id": "AAPL_2025_027_SEGMENT_NET_SALES_2025",
+        "question": "What were Apple's 2025 net sales by reportable geographic segment?",
+        "hit_ids": [
+          "apple_item8_chunk_057",
+          "apple_item1_chunk_005",
+          "walmart_item1_chunk_008",
+          "apple_item1a_chunk_070",
+          "walmart_item7_chunk_032",
+          "apple_item7_chunk_008",
+          "walmart_item8_chunk_050",
+          "apple_item8_chunk_056",
+          "walmart_item7_chunk_039",
+          "apple_item7_chunk_005"
+        ],
+        "gold_ids": [
+          "apple_item8_chunk_059",
+          "apple_item7_chunk_005"
+        ],
+        "rr": 0.1,
+        "latency_ms": 24.9
+      },
+      {
+        "question_id": "AAPL_2025_028_SEGMENT_CHANGE_DRIVERS",
+        "question": "What drove changes in Apple's 2025 regional net sales compared with 2024?",
+        "hit_ids": [
+          "apple_item7_chunk_006",
+          "apple_item7_chunk_007",
+          "apple_item7_chunk_008",
+          "apple_item7_chunk_010",
+          "walmart_item7_chunk_032",
+          "walmart_item7_chunk_039",
+          "chase_item7_chunk_270",
+          "walmart_item7_chunk_025",
+          "walmart_item7_chunk_013",
+          "apple_item7_chunk_009"
+        ],
+        "gold_ids": [
+          "apple_item7_chunk_006",
+          "apple_item7_chunk_005"
+        ],
+        "rr": 1.0,
+        "latency_ms": 24.1
+      },
+      {
+        "question_id": "AAPL_2025_029_PRODUCT_NET_SALES_2025",
+        "question": "What were Apple's 2025 net sales by product and services category?",
+        "hit_ids": [
+          "apple_item8_chunk_019",
+          "walmart_item7_chunk_032",
+          "apple_item7_chunk_007",
+          "walmart_item7_chunk_039",
+          "apple_item7_chunk_008",
+          "elilily_item7_chunk_046",
+          "walmart_item8_chunk_050",
+          "apple_item1_chunk_016",
+          "elilily_item8_chunk_019",
+          "apple_item1a_chunk_071"
+        ],
+        "gold_ids": [
+          "apple_item7_chunk_007",
+          "apple_item8_chunk_019"
+        ],
+        "rr": 1.0,
+        "latency_ms": 23.2
+      },
+      {
+        "question_id": "AAPL_2025_030_PRODUCT_SALES_DRIVERS",
+        "question": "What were the main drivers of Apple's 2025 product and services category sales changes?",
+        "hit_ids": [
+          "apple_item1a_chunk_072",
+          "apple_item7_chunk_007",
+          "apple_item8_chunk_019",
+          "chase_item8_chunk_114",
+          "apple_item1a_chunk_071",
+          "chase_item7_chunk_376",
+          "walmart_item7_chunk_039",
+          "walmart_item8_chunk_122",
+          "walmart_item8_chunk_050",
+          "chase_item8_chunk_213"
+        ],
+        "gold_ids": [
+          "apple_item7_chunk_007",
+          "apple_item7_chunk_008"
+        ],
+        "rr": 0.5,
+        "latency_ms": 25.5
+      },
+      {
+        "question_id": "AAPL_2025_031_GROSS_MARGIN_2025",
+        "question": "What were Apple's 2025 products, services and total gross margins and gross margin percentages?",
+        "hit_ids": [
+          "apple_item7_chunk_009",
+          "apple_item7_chunk_008",
+          "apple_item1a_chunk_070",
+          "apple_item1a_chunk_014",
+          "chase_item8_chunk_106",
+          "chase_item8_chunk_105",
+          "elilily_item7_chunk_029",
+          "exxon_item2_chunk_031",
+          "chase_item8_chunk_108",
+          "apple_item8_chunk_038"
+        ],
+        "gold_ids": [
+          "apple_item7_chunk_008",
+          "apple_item8_chunk_002"
+        ],
+        "rr": 0.5,
+        "latency_ms": 29.1
+      },
+      {
+        "question_id": "AAPL_2025_032_GROSS_MARGIN_DRIVERS",
+        "question": "Why did Apple's products and services gross margin change in 2025 compared with 2024?",
+        "hit_ids": [
+          "apple_item7_chunk_009",
+          "apple_item7_chunk_008",
+          "elilily_item7_chunk_029",
+          "walmart_item7_chunk_033",
+          "apple_item1a_chunk_014",
+          "walmart_item7_chunk_013",
+          "exxon_item8_chunk_064",
+          "walmart_item7_chunk_027",
+          "apple_item1a_chunk_033",
+          "apple_item1_chunk_007"
+        ],
+        "gold_ids": [
+          "apple_item7_chunk_008",
+          "apple_item7_chunk_009"
+        ],
+        "rr": 1.0,
+        "latency_ms": 35.0
+      },
+      {
+        "question_id": "AAPL_2025_033_OPERATING_EXPENSES_2025",
+        "question": "What were Apple's 2025 R&D, SG&A and total operating expenses, and what drove their growth?",
+        "hit_ids": [
+          "apple_item2_chunk_001",
+          "apple_item7_chunk_010",
+          "walmart_item8_chunk_117",
+          "walmart_item8_chunk_116",
+          "apple_item8_chunk_015",
+          "exxon_item7_chunk_061",
+          "apple_item8_chunk_041",
+          "walmart_item7_chunk_055",
+          "exxon_item7_chunk_007",
+          "exxon_item7_chunk_147"
+        ],
+        "gold_ids": [
+          "apple_item7_chunk_010",
+          "apple_item8_chunk_002"
+        ],
+        "rr": 0.5,
+        "latency_ms": 35.3
+      },
+      {
+        "question_id": "AAPL_2025_034_EFFECTIVE_TAX_RATE",
+        "question": "What was Apple's effective tax rate in 2025, and why was it lower than the statutory federal rate?",
+        "hit_ids": [
+          "apple_item7_chunk_011",
+          "walmart_item7_chunk_030",
+          "elilily_item8_chunk_073",
+          "walmart_item8_chunk_087",
+          "walmart_item1a_chunk_073",
+          "elilily_item8_chunk_070",
+          "chase_item8_chunk_471",
+          "walmart_item7_chunk_029",
+          "chase_item8_chunk_473",
+          "walmart_item8_chunk_085"
+        ],
+        "gold_ids": [
+          "apple_item7_chunk_011",
+          "apple_item8_chunk_037"
+        ],
+        "rr": 1.0,
+        "latency_ms": 32.0
+      },
+      {
+        "question_id": "AAPL_2025_035_LIQUIDITY_RESOURCES",
+        "question": "What liquidity resources did Apple say would be sufficient to meet cash requirements and capital return plans?",
+        "hit_ids": [
+          "apple_item7_chunk_012",
+          "chase_item7_chunk_220",
+          "chase_item1_chunk_011",
+          "walmart_item7_chunk_057",
+          "chase_item7_chunk_214",
+          "elilily_item7_chunk_033",
+          "chase_item7_chunk_163",
+          "apple_item1_chunk_018",
+          "exxon_item7_chunk_053",
+          "chase_item1a_chunk_058"
+        ],
+        "gold_ids": [
+          "apple_item7_chunk_012"
+        ],
+        "rr": 1.0,
+        "latency_ms": 34.4
+      },
+      {
+        "question_id": "AAPL_2025_036_CONTRACTUAL_CASH_REQUIREMENTS",
+        "question": "What material contractual cash requirements did Apple disclose as of September 27, 2025?",
+        "hit_ids": [
+          "apple_item7_chunk_012",
+          "apple_item8_chunk_061",
+          "apple_item8_chunk_068",
+          "apple_item7_chunk_015",
+          "apple_item8_chunk_030",
+          "apple_item8_chunk_025",
+          "apple_item8_chunk_045",
+          "walmart_item7_chunk_055",
+          "apple_item8_chunk_038",
+          "apple_item8_chunk_067"
+        ],
+        "gold_ids": [
+          "apple_item7_chunk_014",
+          "apple_item7_chunk_012",
+          "apple_item7_chunk_015",
+          "apple_item7_chunk_013"
+        ],
+        "rr": 1.0,
+        "latency_ms": 27.6
+      },
+      {
+        "question_id": "AAPL_2025_037_CAPITAL_RETURN_PROGRAM",
+        "question": "What did Apple disclose about dividends and share repurchases in 2025?",
+        "hit_ids": [
+          "exxon_item5_chunk_002",
+          "walmart_item7_chunk_048",
+          "walmart_item8_chunk_070",
+          "walmart_item7_chunk_052",
+          "walmart_item5_chunk_002",
+          "walmart_item7_chunk_054",
+          "apple_item1a_chunk_081",
+          "walmart_item8_chunk_069",
+          "walmart_item7_chunk_043",
+          "exxon_item2_chunk_020"
+        ],
+        "gold_ids": [
+          "apple_item7_chunk_016",
+          "apple_item7_chunk_015",
+          "apple_item5_chunk_002"
+        ],
+        "rr": 0.0,
+        "latency_ms": 47.6
+      },
+      {
+        "question_id": "AAPL_2025_038_MARKET_RISK_INTEREST_RATE",
+        "question": "What potential impacts would a hypothetical 100 basis point interest rate increase have on Apple's investment portfolio and term debt?",
+        "hit_ids": [
+          "apple_item7a_chunk_002",
+          "apple_item7a_chunk_001",
+          "walmart_item7a_chunk_004",
+          "elilily_item7_chunk_040",
+          "elilily_item7_chunk_042",
+          "chase_item1a_chunk_044",
+          "chase_item7_chunk_434",
+          "chase_item8_chunk_089",
+          "chase_item8_chunk_107",
+          "chase_item8_chunk_339"
+        ],
+        "gold_ids": [
+          "apple_item7a_chunk_002",
+          "apple_item7a_chunk_001"
+        ],
+        "rr": 1.0,
+        "latency_ms": 66.3
+      },
+      {
+        "question_id": "AAPL_2025_039_MARKET_RISK_FOREIGN_EXCHANGE",
+        "question": "How does Apple describe its foreign exchange risk and VAR estimate for 2025?",
+        "hit_ids": [
+          "apple_item7a_chunk_004",
+          "chase_item8_chunk_153",
+          "chase_item7_chunk_355",
+          "chase_item8_chunk_563",
+          "chase_item8_chunk_205",
+          "chase_item7_chunk_072",
+          "chase_item8_chunk_635",
+          "apple_item7a_chunk_003",
+          "exxon_item8_chunk_041",
+          "chase_item7_chunk_362"
+        ],
+        "gold_ids": [
+          "apple_item7a_chunk_004",
+          "apple_item7a_chunk_003"
+        ],
+        "rr": 1.0,
+        "latency_ms": 22.3
+      },
+      {
+        "question_id": "AAPL_2025_040_STATEMENT_OF_OPERATIONS_2025",
+        "question": "What were Apple's 2025 total net sales, gross margin, operating income, net income and diluted EPS?",
+        "hit_ids": [
+          "walmart_item1a_chunk_016",
+          "elilily_item7_chunk_002",
+          "chase_item7_chunk_080",
+          "walmart_item8_chunk_059",
+          "walmart_item8_chunk_058",
+          "chase_item7_chunk_016",
+          "walmart_item8_chunk_054",
+          "chase_item8_chunk_463",
+          "walmart_item7_chunk_018",
+          "walmart_item7_chunk_016"
+        ],
+        "gold_ids": [
+          "apple_item8_chunk_021",
+          "apple_item8_chunk_002"
+        ],
+        "rr": 0.0,
+        "latency_ms": 33.4
+      },
+      {
+        "question_id": "AAPL_2025_041_BALANCE_SHEET_2025",
+        "question": "What were Apple's total assets, total liabilities and total shareholders' equity as of September 27, 2025?",
+        "hit_ids": [
+          "apple_item8_chunk_020",
+          "apple_item8_chunk_031",
+          "apple_item8_chunk_038",
+          "apple_item8_chunk_032",
+          "apple_item7_chunk_012",
+          "apple_item8_chunk_061",
+          "apple_item8_chunk_043",
+          "apple_item8_chunk_050",
+          "walmart_item7_chunk_016",
+          "apple_item8_chunk_051"
+        ],
+        "gold_ids": [
+          "apple_item8_chunk_005"
+        ],
+        "rr": 0.0,
+        "latency_ms": 40.3
+      },
+      {
+        "question_id": "AAPL_2025_042_CASH_FLOW_2025",
+        "question": "What cash flows did Apple report for operating, investing and financing activities in 2025?",
+        "hit_ids": [
+          "walmart_item7_chunk_021",
+          "exxon_item8_chunk_109",
+          "walmart_item7_chunk_022",
+          "walmart_item8_chunk_019",
+          "walmart_item7_chunk_020",
+          "exxon_item7_chunk_114",
+          "walmart_item7_chunk_046",
+          "exxon_item7_chunk_024",
+          "exxon_item8_chunk_127",
+          "walmart_item7_chunk_047"
+        ],
+        "gold_ids": [
+          "apple_item8_chunk_009"
+        ],
+        "rr": 0.0,
+        "latency_ms": 31.9
+      },
+      {
+        "question_id": "AAPL_2025_043_REVENUE_RECOGNITION",
+        "question": "How does Apple recognize revenue for products, services, bundled services and third-party App Store applications?",
+        "hit_ids": [
+          "apple_item8_chunk_019",
+          "apple_item8_chunk_017",
+          "apple_item1_chunk_004",
+          "apple_item1_chunk_003",
+          "apple_item1a_chunk_033",
+          "chase_item1a_chunk_083",
+          "apple_item8_chunk_018",
+          "apple_item1a_chunk_019",
+          "apple_item1_chunk_008",
+          "apple_item1a_chunk_061"
+        ],
+        "gold_ids": [
+          "apple_item8_chunk_017",
+          "apple_item8_chunk_019",
+          "apple_item8_chunk_016",
+          "apple_item8_chunk_018",
+          "apple_item8_chunk_014",
+          "apple_item8_chunk_015"
+        ],
+        "rr": 1.0,
+        "latency_ms": 27.2
+      },
+      {
+        "question_id": "AAPL_2025_044_DEFERRED_REVENUE",
+        "question": "How much deferred revenue did Apple have as of September 27, 2025, and when does it expect to realize it?",
+        "hit_ids": [
+          "apple_item8_chunk_020",
+          "apple_item8_chunk_061",
+          "apple_item7_chunk_015",
+          "apple_item8_chunk_037",
+          "apple_item8_chunk_068",
+          "apple_item8_chunk_025",
+          "chase_item7_chunk_438",
+          "apple_item8_chunk_067",
+          "apple_item8_chunk_019",
+          "apple_item8_chunk_030"
+        ],
+        "gold_ids": [
+          "apple_item8_chunk_020"
+        ],
+        "rr": 1.0,
+        "latency_ms": 40.1
+      },
+      {
+        "question_id": "AAPL_2025_045_FINANCIAL_INSTRUMENTS_TOTAL",
+        "question": "What was the fair value of Apple's cash, cash equivalents and marketable securities as of September 27, 2025?",
+        "hit_ids": [
+          "apple_item8_chunk_025",
+          "apple_item7_chunk_012",
+          "apple_item1a_chunk_075",
+          "apple_item8_chunk_022",
+          "apple_item8_chunk_030",
+          "apple_item8_chunk_009",
+          "apple_item8_chunk_029",
+          "apple_item8_chunk_061",
+          "apple_item8_chunk_003",
+          "apple_item8_chunk_050"
+        ],
+        "gold_ids": [
+          "apple_item8_chunk_023",
+          "apple_item8_chunk_022"
+        ],
+        "rr": 0.25,
+        "latency_ms": 30.4
+      },
+      {
+        "question_id": "AAPL_2025_046_DERIVATIVE_NOTIONALS",
+        "question": "What notional amounts of derivative instruments did Apple have outstanding as of September 27, 2025?",
+        "hit_ids": [
+          "apple_item8_chunk_030",
+          "apple_item8_chunk_003",
+          "apple_item8_chunk_061",
+          "elilily_item8_chunk_045",
+          "apple_item8_chunk_068",
+          "chase_item8_chunk_162",
+          "apple_item8_chunk_038",
+          "apple_item7a_chunk_004",
+          "apple_item8_chunk_067",
+          "chase_item8_chunk_121"
+        ],
+        "gold_ids": [
+          "apple_item8_chunk_030"
+        ],
+        "rr": 1.0,
+        "latency_ms": 27.7
+      },
+      {
+        "question_id": "AAPL_2025_047_RECEIVABLES_CONCENTRATION",
+        "question": "What customer and vendor concentration risks did Apple disclose for receivables as of September 27, 2025?",
+        "hit_ids": [
+          "apple_item8_chunk_031",
+          "apple_item1a_chunk_077",
+          "apple_item8_chunk_061",
+          "apple_item8_chunk_032",
+          "apple_item8_chunk_068",
+          "apple_item8_chunk_060",
+          "apple_item8_chunk_045",
+          "apple_item8_chunk_030",
+          "apple_item2_chunk_001",
+          "apple_item1a_chunk_076"
+        ],
+        "gold_ids": [
+          "apple_item8_chunk_032",
+          "apple_item8_chunk_031"
+        ],
+        "rr": 1.0,
+        "latency_ms": 25.7
+      },
+      {
+        "question_id": "AAPL_2025_048_INCOME_TAX_STATE_AID",
+        "question": "What did Apple disclose about the European Commission State Aid Decision?",
+        "hit_ids": [
+          "apple_item8_chunk_034",
+          "apple_item8_chunk_033",
+          "apple_item8_chunk_025",
+          "chase_item8_chunk_543",
+          "apple_item7_chunk_011",
+          "apple_item8_chunk_067",
+          "walmart_item1a_chunk_086",
+          "walmart_item7_chunk_062",
+          "elilily_item1a_chunk_084",
+          "elilily_item7_chunk_022"
+        ],
+        "gold_ids": [
+          "apple_item8_chunk_035",
+          "apple_item8_chunk_033",
+          "apple_item8_chunk_034"
+        ],
+        "rr": 1.0,
+        "latency_ms": 15.9
+      },
+      {
+        "question_id": "AAPL_2025_049_DEBT_COMMERCIAL_PAPER_TERM_DEBT",
+        "question": "What commercial paper and term debt amounts did Apple report as of September 27, 2025?",
+        "hit_ids": [
+          "apple_item8_chunk_045",
+          "apple_item8_chunk_030",
+          "apple_item7_chunk_013",
+          "apple_item8_chunk_068",
+          "apple_item8_chunk_061",
+          "apple_item8_chunk_046",
+          "apple_item8_chunk_044",
+          "apple_item8_chunk_043",
+          "apple_item8_chunk_025",
+          "apple_item8_chunk_047"
+        ],
+        "gold_ids": [
+          "apple_item8_chunk_045",
+          "apple_item8_chunk_047",
+          "apple_item7_chunk_013",
+          "apple_item8_chunk_046"
+        ],
+        "rr": 1.0,
+        "latency_ms": 32.2
+      },
+      {
+        "question_id": "AAPL_2025_050_SEGMENT_GEOGRAPHIC_DATA",
+        "question": "What did Apple disclose about U.S., China and other-country net sales and long-lived assets in 2025?",
+        "hit_ids": [
+          "apple_item8_chunk_060",
+          "walmart_item1a_chunk_004",
+          "walmart_item8_chunk_122",
+          "apple_item7_chunk_006",
+          "elilily_item1_chunk_051",
+          "apple_item8_chunk_056",
+          "walmart_item1_chunk_008",
+          "chase_item8_chunk_552",
+          "apple_item7_chunk_005",
+          "elilily_item1a_chunk_052"
+        ],
+        "gold_ids": [
+          "apple_item8_chunk_059",
+          "apple_item8_chunk_060"
+        ],
+        "rr": 1.0,
+        "latency_ms": 57.4
+      }
+    ]
+  },
+  "hybrid": {
+    "summary": {
+      "strategy": "hybrid",
+      "version": "v2",
+      "n_questions": 50,
+      "mean_latency_ms": 41.6614,
+      "mrr": 0.7404,
+      "primary_mrr": 0.7147,
+      "recall@1": 0.66,
+      "primary_recall@1": 0.64,
+      "recall@5": 0.86,
+      "primary_recall@5": 0.82,
+      "recall@10": 0.9,
+      "primary_recall@10": 0.86
+    },
+    "per_question": [
+      {
+        "question_id": "AAPL_2025_001_BUSINESS_OVERVIEW",
+        "question": "What business does Apple say it is engaged in?",
+        "hit_ids": [
+          "chase_item1a_chunk_080",
+          "apple_item1a_chunk_060",
+          "chase_item1a_chunk_025",
+          "apple_item1_chunk_003",
+          "apple_item1a_chunk_040",
+          "chase_item1a_chunk_105",
+          "chase_item1a_chunk_008",
+          "apple_item8_chunk_008",
+          "apple_item8_chunk_019",
+          "apple_item8_chunk_036"
+        ],
+        "gold_ids": [
+          "apple_item1_chunk_001"
+        ],
+        "rr": 0.0,
+        "latency_ms": 28.5
+      },
+      {
+        "question_id": "AAPL_2025_002_PRODUCT_CATEGORIES",
+        "question": "What are Apple's main product categories described in the filing?",
+        "hit_ids": [
+          "apple_item1_chunk_003",
+          "elilily_item7_chunk_046",
+          "apple_item7_chunk_007",
+          "walmart_item8_chunk_106",
+          "elilily_item8_chunk_128",
+          "apple_item8_chunk_008",
+          "walmart_item1_chunk_019",
+          "apple_item1_chunk_008",
+          "apple_item1_chunk_001",
+          "walmart_item1_chunk_030"
+        ],
+        "gold_ids": [
+          "apple_item1_chunk_001",
+          "apple_item1_chunk_002"
+        ],
+        "rr": 0.1111111111111111,
+        "latency_ms": 30.2
+      },
+      {
+        "question_id": "AAPL_2025_003_IPHONE_LINE",
+        "question": "Which iPhone models are included in Apple's iPhone line in the 2025 filing?",
+        "hit_ids": [
+          "apple_item7_chunk_007",
+          "apple_item7_chunk_002",
+          "apple_item1_chunk_001",
+          "apple_item8_chunk_008",
+          "apple_item8_chunk_019",
+          "apple_item8_chunk_004",
+          "apple_item8_chunk_006",
+          "apple_item8_chunk_020",
+          "apple_item8_chunk_027",
+          "apple_item7_chunk_006"
+        ],
+        "gold_ids": [
+          "apple_item1_chunk_001"
+        ],
+        "rr": 0.3333333333333333,
+        "latency_ms": 28.7
+      },
+      {
+        "question_id": "AAPL_2025_004_MAC_LINE",
+        "question": "What Mac products does Apple list in its Mac line?",
+        "hit_ids": [
+          "apple_item1_chunk_001",
+          "apple_item7_chunk_007",
+          "apple_item7_chunk_002",
+          "apple_item1_chunk_002",
+          "apple_item1_chunk_003",
+          "apple_item8_chunk_019",
+          "apple_item8_chunk_016",
+          "chase_item8_chunk_643",
+          "apple_item1_chunk_008",
+          "elilily_item1_chunk_071"
+        ],
+        "gold_ids": [
+          "apple_item1_chunk_001"
+        ],
+        "rr": 1.0,
+        "latency_ms": 21.4
+      },
+      {
+        "question_id": "AAPL_2025_005_WEARABLES_HOME_ACCESSORIES",
+        "question": "What products are included in Apple's Wearables, Home and Accessories category?",
+        "hit_ids": [
+          "apple_item1_chunk_002",
+          "apple_item7_chunk_008",
+          "apple_item1_chunk_003",
+          "apple_item7_chunk_007",
+          "apple_item8_chunk_019",
+          "apple_item1_chunk_001",
+          "chase_item8_chunk_555",
+          "apple_item1_chunk_004",
+          "chase_item8_chunk_617",
+          "apple_item8_chunk_036"
+        ],
+        "gold_ids": [
+          "apple_item1_chunk_003",
+          "apple_item1_chunk_002"
+        ],
+        "rr": 1.0,
+        "latency_ms": 26.9
+      },
+      {
+        "question_id": "AAPL_2025_006_SERVICES_OFFERINGS",
+        "question": "What service offerings does Apple describe in Item 1?",
+        "hit_ids": [
+          "apple_item1_chunk_003",
+          "apple_item1_chunk_004",
+          "apple_item7_chunk_001",
+          "elilily_item1c_chunk_005",
+          "apple_item7_chunk_007",
+          "apple_item14_chunk_001",
+          "apple_item1_chunk_008",
+          "walmart_item8_chunk_050",
+          "apple_item1a_chunk_040",
+          "apple_item8_chunk_008"
+        ],
+        "gold_ids": [
+          "apple_item1_chunk_004",
+          "apple_item1_chunk_003"
+        ],
+        "rr": 1.0,
+        "latency_ms": 22.1
+      },
+      {
+        "question_id": "AAPL_2025_007_REPORTABLE_SEGMENTS",
+        "question": "What reportable segments does Apple use to manage its business?",
+        "hit_ids": [
+          "apple_item8_chunk_056",
+          "apple_item1_chunk_005",
+          "chase_item8_chunk_561",
+          "apple_item8_chunk_059",
+          "chase_item7_chunk_068",
+          "chase_item7_chunk_010",
+          "chase_item8_chunk_560",
+          "chase_item1_chunk_004",
+          "apple_item8_chunk_008",
+          "walmart_item8_chunk_116"
+        ],
+        "gold_ids": [
+          "apple_item8_chunk_056",
+          "apple_item1_chunk_005"
+        ],
+        "rr": 1.0,
+        "latency_ms": 31.1
+      },
+      {
+        "question_id": "AAPL_2025_008_DISTRIBUTION_CHANNELS",
+        "question": "What percentage of Apple's 2025 net sales came through direct and indirect distribution channels?",
+        "hit_ids": [
+          "apple_item1_chunk_006",
+          "apple_item7_chunk_008",
+          "apple_item8_chunk_019",
+          "elilily_item7_chunk_046",
+          "elilily_item8_chunk_017",
+          "apple_item7_chunk_007",
+          "apple_item1_chunk_016",
+          "apple_item1a_chunk_040",
+          "walmart_item8_chunk_054",
+          "apple_item8_chunk_020"
+        ],
+        "gold_ids": [
+          "apple_item1_chunk_006"
+        ],
+        "rr": 1.0,
+        "latency_ms": 34.4
+      },
+      {
+        "question_id": "AAPL_2025_009_CUSTOMER_MARKETS",
+        "question": "Which customer markets does Apple primarily serve?",
+        "hit_ids": [
+          "apple_item1_chunk_004",
+          "apple_item8_chunk_036",
+          "apple_item1a_chunk_018",
+          "chase_item7_chunk_026",
+          "apple_item1_chunk_003",
+          "chase_item8_chunk_402",
+          "apple_item8_chunk_056",
+          "chase_item8_chunk_401",
+          "apple_item1_chunk_001",
+          "walmart_item1a_chunk_027"
+        ],
+        "gold_ids": [
+          "apple_item1_chunk_006"
+        ],
+        "rr": 0.0,
+        "latency_ms": 21.7
+      },
+      {
+        "question_id": "AAPL_2025_010_COMPETITIVE_FACTORS",
+        "question": "What principal competitive factors does Apple identify as important to its business?",
+        "hit_ids": [
+          "apple_item1_chunk_008",
+          "exxon_item1a_chunk_029",
+          "apple_item1a_chunk_018",
+          "apple_item1_chunk_009",
+          "chase_item7_chunk_026",
+          "chase_item1a_chunk_114",
+          "apple_item1a_chunk_033",
+          "chase_item1a_chunk_084",
+          "apple_item8_chunk_036",
+          "apple_item1a_chunk_026"
+        ],
+        "gold_ids": [
+          "apple_item1_chunk_008",
+          "apple_item1_chunk_007"
+        ],
+        "rr": 1.0,
+        "latency_ms": 32.7
+      },
+      {
+        "question_id": "AAPL_2025_011_COMPONENT_SUPPLY_RISKS_BUSINESS",
+        "question": "What does Apple say about supply of components in its business description?",
+        "hit_ids": [
+          "apple_item1a_chunk_026",
+          "apple_item8_chunk_055",
+          "apple_item1_chunk_012",
+          "apple_item1_chunk_008",
+          "apple_item8_chunk_056",
+          "apple_item1a_chunk_025",
+          "apple_item1a_chunk_007",
+          "apple_item1a_chunk_040",
+          "apple_item1_chunk_011",
+          "apple_item1a_chunk_012"
+        ],
+        "gold_ids": [
+          "apple_item1_chunk_012",
+          "apple_item1_chunk_011",
+          "apple_item1_chunk_010"
+        ],
+        "rr": 0.3333333333333333,
+        "latency_ms": 32.3
+      },
+      {
+        "question_id": "AAPL_2025_012_R_AND_D_ROLE",
+        "question": "Why does Apple say research and development is important?",
+        "hit_ids": [
+          "elilily_item1_chunk_075",
+          "elilily_item8_chunk_008",
+          "elilily_item7_chunk_024",
+          "apple_item1_chunk_013",
+          "elilily_item7_chunk_010",
+          "apple_item1_chunk_018",
+          "elilily_item8_chunk_115",
+          "apple_item1_chunk_008",
+          "elilily_item8_chunk_114",
+          "apple_item8_chunk_036"
+        ],
+        "gold_ids": [
+          "apple_item1_chunk_013",
+          "apple_item1_chunk_008"
+        ],
+        "rr": 0.25,
+        "latency_ms": 25.9
+      },
+      {
+        "question_id": "AAPL_2025_013_MACRO_RISKS",
+        "question": "How can adverse macroeconomic conditions affect Apple according to the risk factors?",
+        "hit_ids": [
+          "apple_item1a_chunk_005",
+          "chase_item1a_chunk_041",
+          "chase_item7_chunk_424",
+          "apple_item1a_chunk_026",
+          "apple_item1a_chunk_012",
+          "chase_item7_chunk_422",
+          "chase_item8_chunk_364",
+          "apple_item1a_chunk_003",
+          "chase_item8_chunk_644",
+          "apple_item1a_chunk_002"
+        ],
+        "gold_ids": [
+          "apple_item1a_chunk_002",
+          "apple_item1a_chunk_004",
+          "apple_item1a_chunk_003"
+        ],
+        "rr": 0.125,
+        "latency_ms": 27.8
+      },
+      {
+        "question_id": "AAPL_2025_014_TARIFFS_TRADE_RISKS",
+        "question": "What tariff and international trade risks does Apple describe?",
+        "hit_ids": [
+          "apple_item1a_chunk_005",
+          "walmart_item1a_chunk_072",
+          "apple_item1a_chunk_026",
+          "elilily_item1a_chunk_072",
+          "apple_item7_chunk_003",
+          "elilily_item1a_chunk_065",
+          "walmart_item1a_chunk_068",
+          "exxon_item1a_chunk_003",
+          "apple_item1a_chunk_060",
+          "apple_item1a_chunk_076"
+        ],
+        "gold_ids": [
+          "apple_item1a_chunk_007",
+          "apple_item1a_chunk_008",
+          "apple_item7_chunk_004",
+          "apple_item7_chunk_003",
+          "apple_item7_chunk_005",
+          "apple_item1a_chunk_009",
+          "apple_item1a_chunk_006"
+        ],
+        "rr": 0.2,
+        "latency_ms": 19.9
+      },
+      {
+        "question_id": "AAPL_2025_015_OUTSOURCING_RISKS",
+        "question": "What risks arise from Apple's dependence on outsourcing partners for manufacturing and logistics?",
+        "hit_ids": [
+          "apple_item1a_chunk_021",
+          "elilily_item1a_chunk_058",
+          "apple_item1a_chunk_006",
+          "apple_item1a_chunk_026",
+          "apple_item1a_chunk_022",
+          "apple_item7_chunk_013",
+          "elilily_item1_chunk_084",
+          "apple_item8_chunk_056",
+          "elilily_item1_chunk_050",
+          "apple_item1a_chunk_023"
+        ],
+        "gold_ids": [
+          "apple_item8_chunk_056",
+          "apple_item1a_chunk_023",
+          "apple_item1a_chunk_021",
+          "apple_item1a_chunk_022"
+        ],
+        "rr": 1.0,
+        "latency_ms": 31.8
+      },
+      {
+        "question_id": "AAPL_2025_016_COMPONENT_SHORTAGE_RISKS",
+        "question": "Why does Apple say component supply shortages are a material risk?",
+        "hit_ids": [
+          "apple_item1a_chunk_026",
+          "apple_item1_chunk_012",
+          "apple_item1a_chunk_024",
+          "elilily_item1a_chunk_055",
+          "apple_item8_chunk_054",
+          "elilily_item1_chunk_087",
+          "chase_item8_chunk_351",
+          "apple_item1a_chunk_025",
+          "apple_item1a_chunk_012",
+          "elilily_item1_chunk_081"
+        ],
+        "gold_ids": [
+          "apple_item1_chunk_011",
+          "apple_item1a_chunk_026",
+          "apple_item1a_chunk_024",
+          "apple_item1a_chunk_025",
+          "apple_item1_chunk_012",
+          "apple_item1_chunk_010"
+        ],
+        "rr": 1.0,
+        "latency_ms": 27.1
+      },
+      {
+        "question_id": "AAPL_2025_017_PRODUCT_DEFECT_AI_RISKS",
+        "question": "How can product defects and AI features create risks for Apple?",
+        "hit_ids": [
+          "apple_item1a_chunk_027",
+          "elilily_item1a_chunk_069",
+          "elilily_item1a_chunk_067",
+          "apple_item1a_chunk_028",
+          "apple_item1a_chunk_023",
+          "apple_item1a_chunk_026",
+          "apple_item1a_chunk_020",
+          "elilily_item1a_chunk_068",
+          "elilily_item1a_chunk_070",
+          "apple_item1_chunk_008"
+        ],
+        "gold_ids": [
+          "apple_item1a_chunk_026",
+          "apple_item1a_chunk_027",
+          "apple_item1a_chunk_028"
+        ],
+        "rr": 1.0,
+        "latency_ms": 28.0
+      },
+      {
+        "question_id": "AAPL_2025_018_RESELLER_RISK",
+        "question": "What reseller and carrier risks does Apple describe?",
+        "hit_ids": [
+          "apple_item1a_chunk_040",
+          "apple_item1a_chunk_026",
+          "apple_item1_chunk_003",
+          "chase_item7_chunk_424",
+          "walmart_item7_chunk_005",
+          "apple_item1a_chunk_018",
+          "chase_item7_chunk_025",
+          "apple_item7_chunk_021",
+          "chase_item1a_chunk_080",
+          "apple_item1_chunk_004"
+        ],
+        "gold_ids": [
+          "apple_item1a_chunk_040",
+          "apple_item1a_chunk_041"
+        ],
+        "rr": 1.0,
+        "latency_ms": 21.3
+      },
+      {
+        "question_id": "AAPL_2025_019_CYBER_INFORMATION_SYSTEM_RISK",
+        "question": "What information technology system and cybersecurity risks does Apple disclose?",
+        "hit_ids": [
+          "apple_item1a_chunk_041",
+          "apple_item1a_chunk_046",
+          "elilily_item1c_chunk_002",
+          "apple_item1a_chunk_026",
+          "apple_item1a_chunk_066",
+          "walmart_item1c_chunk_002",
+          "apple_item1a_chunk_060",
+          "chase_item7_chunk_394",
+          "walmart_item1c_chunk_005",
+          "apple_item1_chunk_008"
+        ],
+        "gold_ids": [
+          "apple_item1a_chunk_045",
+          "apple_item1a_chunk_043",
+          "apple_item1a_chunk_041",
+          "apple_item1a_chunk_047",
+          "apple_item1a_chunk_044",
+          "apple_item1a_chunk_042",
+          "apple_item1a_chunk_046"
+        ],
+        "rr": 1.0,
+        "latency_ms": 28.2
+      },
+      {
+        "question_id": "AAPL_2025_020_PRIVACY_DATA_RISKS",
+        "question": "What personal data and privacy risks does Apple identify?",
+        "hit_ids": [
+          "apple_item1a_chunk_068",
+          "apple_item1a_chunk_066",
+          "elilily_item1a_chunk_051",
+          "walmart_item1a_chunk_088",
+          "apple_item1a_chunk_046",
+          "apple_item1a_chunk_060",
+          "apple_item1a_chunk_026",
+          "apple_item1a_chunk_067",
+          "walmart_item1a_chunk_054",
+          "walmart_item1c_chunk_002"
+        ],
+        "gold_ids": [
+          "apple_item1a_chunk_066",
+          "apple_item1a_chunk_069",
+          "apple_item1a_chunk_067",
+          "apple_item1a_chunk_068"
+        ],
+        "rr": 1.0,
+        "latency_ms": 30.3
+      },
+      {
+        "question_id": "AAPL_2025_021_REGULATORY_DMA_ANTITRUST_RISKS",
+        "question": "What risks does Apple disclose related to the Digital Markets Act and antitrust scrutiny?",
+        "hit_ids": [
+          "apple_item1a_chunk_061",
+          "apple_item3_chunk_001",
+          "apple_item1a_chunk_060",
+          "apple_item1a_chunk_066",
+          "apple_item1_chunk_004",
+          "chase_item7_chunk_424",
+          "apple_item1a_chunk_063",
+          "apple_item8_chunk_018",
+          "apple_item1a_chunk_053",
+          "apple_item1a_chunk_080"
+        ],
+        "gold_ids": [
+          "apple_item1a_chunk_064",
+          "apple_item1a_chunk_061",
+          "apple_item1a_chunk_062",
+          "apple_item1a_chunk_060",
+          "apple_item1a_chunk_065",
+          "apple_item1a_chunk_063"
+        ],
+        "rr": 1.0,
+        "latency_ms": 32.2
+      },
+      {
+        "question_id": "AAPL_2025_022_CYBERSECURITY_GOVERNANCE",
+        "question": "Who is responsible for managing Apple's material cybersecurity risks?",
+        "hit_ids": [
+          "elilily_item1c_chunk_005",
+          "apple_item1c_chunk_001",
+          "apple_item1a_chunk_046",
+          "chase_item7_chunk_395",
+          "walmart_item1c_chunk_003",
+          "apple_item1a_chunk_026",
+          "chase_item7_chunk_394",
+          "walmart_item1c_chunk_002",
+          "exxon_item1c_chunk_005",
+          "apple_item1_chunk_008"
+        ],
+        "gold_ids": [
+          "apple_item1c_chunk_002",
+          "apple_item1c_chunk_003",
+          "apple_item1c_chunk_001"
+        ],
+        "rr": 0.5,
+        "latency_ms": 24.8
+      },
+      {
+        "question_id": "AAPL_2025_023_DMA_LEGAL_PROCEEDINGS",
+        "question": "What legal proceedings did Apple disclose under the EU Digital Markets Act?",
+        "hit_ids": [
+          "apple_item1a_chunk_061",
+          "apple_item3_chunk_001",
+          "walmart_item3_chunk_001",
+          "apple_item1a_chunk_060",
+          "exxon_item8_chunk_088",
+          "apple_item1a_chunk_066",
+          "apple_item3_chunk_003",
+          "apple_item1a_chunk_062",
+          "chase_item8_chunk_548",
+          "apple_item1a_chunk_063"
+        ],
+        "gold_ids": [
+          "apple_item3_chunk_002",
+          "apple_item3_chunk_001"
+        ],
+        "rr": 0.5,
+        "latency_ms": 29.2
+      },
+      {
+        "question_id": "AAPL_2025_024_PRODUCT_ANNOUNCEMENTS_2025",
+        "question": "What significant product, service and software announcements did Apple list for fiscal 2025?",
+        "hit_ids": [
+          "apple_item7_chunk_002",
+          "apple_item1_chunk_008",
+          "apple_item1_chunk_003",
+          "apple_item7_chunk_001",
+          "apple_item7_chunk_007",
+          "apple_item8_chunk_008",
+          "apple_item1a_chunk_033",
+          "apple_item8_chunk_006",
+          "apple_item6_chunk_001",
+          "walmart_item7_chunk_056"
+        ],
+        "gold_ids": [
+          "apple_item7_chunk_002"
+        ],
+        "rr": 1.0,
+        "latency_ms": 59.7
+      },
+      {
+        "question_id": "AAPL_2025_025_FISCAL_PERIODS",
+        "question": "How many weeks were in Apple's fiscal years 2025, 2024 and 2023?",
+        "hit_ids": [
+          "apple_item7_chunk_003",
+          "apple_item8_chunk_011",
+          "apple_item7_chunk_002",
+          "walmart_item7_chunk_026",
+          "apple_item8_chunk_010",
+          "apple_item7_chunk_007",
+          "walmart_item7_chunk_032",
+          "chase_item8_chunk_102",
+          "apple_item8_chunk_060",
+          "walmart_item7_chunk_010"
+        ],
+        "gold_ids": [
+          "apple_item7_chunk_003",
+          "apple_item8_chunk_010",
+          "apple_item7_chunk_002",
+          "apple_item8_chunk_011"
+        ],
+        "rr": 1.0,
+        "latency_ms": 30.9
+      },
+      {
+        "question_id": "AAPL_2025_026_TOTAL_NET_SALES_BY_YEAR",
+        "question": "What were Apple's total net sales in 2025, 2024 and 2023?",
+        "hit_ids": [
+          "apple_item8_chunk_019",
+          "apple_item7_chunk_008",
+          "apple_item8_chunk_020",
+          "apple_item7_chunk_010",
+          "apple_item7_chunk_007",
+          "apple_item8_chunk_060",
+          "walmart_item7_chunk_032",
+          "walmart_item7_chunk_025",
+          "apple_item8_chunk_059",
+          "apple_item7_chunk_005"
+        ],
+        "gold_ids": [
+          "apple_item7_chunk_007",
+          "apple_item8_chunk_002",
+          "apple_item8_chunk_060",
+          "apple_item8_chunk_019"
+        ],
+        "rr": 1.0,
+        "latency_ms": 27.2
+      },
+      {
+        "question_id": "AAPL_2025_027_SEGMENT_NET_SALES_2025",
+        "question": "What were Apple's 2025 net sales by reportable geographic segment?",
+        "hit_ids": [
+          "apple_item8_chunk_056",
+          "apple_item7_chunk_005",
+          "apple_item7_chunk_008",
+          "apple_item8_chunk_057",
+          "apple_item8_chunk_059",
+          "apple_item1_chunk_005",
+          "apple_item7_chunk_007",
+          "walmart_item1_chunk_008",
+          "apple_item8_chunk_060",
+          "apple_item1a_chunk_070"
+        ],
+        "gold_ids": [
+          "apple_item8_chunk_059",
+          "apple_item7_chunk_005"
+        ],
+        "rr": 0.5,
+        "latency_ms": 24.7
+      },
+      {
+        "question_id": "AAPL_2025_028_SEGMENT_CHANGE_DRIVERS",
+        "question": "What drove changes in Apple's 2025 regional net sales compared with 2024?",
+        "hit_ids": [
+          "apple_item7_chunk_006",
+          "apple_item7_chunk_007",
+          "apple_item7_chunk_008",
+          "apple_item7_chunk_005",
+          "apple_item7_chunk_010",
+          "apple_item8_chunk_059",
+          "walmart_item7_chunk_032",
+          "walmart_item7_chunk_039",
+          "apple_item8_chunk_060",
+          "apple_item7_chunk_003"
+        ],
+        "gold_ids": [
+          "apple_item7_chunk_006",
+          "apple_item7_chunk_005"
+        ],
+        "rr": 1.0,
+        "latency_ms": 42.4
+      },
+      {
+        "question_id": "AAPL_2025_029_PRODUCT_NET_SALES_2025",
+        "question": "What were Apple's 2025 net sales by product and services category?",
+        "hit_ids": [
+          "apple_item8_chunk_019",
+          "apple_item7_chunk_007",
+          "apple_item7_chunk_008",
+          "walmart_item7_chunk_032",
+          "walmart_item7_chunk_039",
+          "apple_item8_chunk_060",
+          "apple_item8_chunk_059",
+          "apple_item7_chunk_005",
+          "elilily_item7_chunk_046",
+          "apple_item7_chunk_006"
+        ],
+        "gold_ids": [
+          "apple_item7_chunk_007",
+          "apple_item8_chunk_019"
+        ],
+        "rr": 1.0,
+        "latency_ms": 64.9
+      },
+      {
+        "question_id": "AAPL_2025_030_PRODUCT_SALES_DRIVERS",
+        "question": "What were the main drivers of Apple's 2025 product and services category sales changes?",
+        "hit_ids": [
+          "apple_item7_chunk_007",
+          "apple_item8_chunk_019",
+          "apple_item1a_chunk_072",
+          "apple_item7_chunk_008",
+          "apple_item1_chunk_008",
+          "apple_item7_chunk_002",
+          "chase_item8_chunk_114",
+          "apple_item7_chunk_005",
+          "apple_item1a_chunk_071",
+          "apple_item7_chunk_006"
+        ],
+        "gold_ids": [
+          "apple_item7_chunk_007",
+          "apple_item7_chunk_008"
+        ],
+        "rr": 1.0,
+        "latency_ms": 33.5
+      },
+      {
+        "question_id": "AAPL_2025_031_GROSS_MARGIN_2025",
+        "question": "What were Apple's 2025 products, services and total gross margins and gross margin percentages?",
+        "hit_ids": [
+          "apple_item7_chunk_008",
+          "apple_item7_chunk_009",
+          "apple_item7_chunk_007",
+          "apple_item8_chunk_019",
+          "apple_item1a_chunk_070",
+          "apple_item1a_chunk_014",
+          "chase_item8_chunk_106",
+          "apple_item8_chunk_060",
+          "chase_item8_chunk_105",
+          "apple_item8_chunk_059"
+        ],
+        "gold_ids": [
+          "apple_item7_chunk_008",
+          "apple_item8_chunk_002"
+        ],
+        "rr": 1.0,
+        "latency_ms": 32.0
+      },
+      {
+        "question_id": "AAPL_2025_032_GROSS_MARGIN_DRIVERS",
+        "question": "Why did Apple's products and services gross margin change in 2025 compared with 2024?",
+        "hit_ids": [
+          "apple_item7_chunk_008",
+          "apple_item7_chunk_009",
+          "apple_item7_chunk_007",
+          "elilily_item7_chunk_029",
+          "apple_item7_chunk_006",
+          "walmart_item7_chunk_033",
+          "apple_item8_chunk_019",
+          "apple_item1a_chunk_014",
+          "apple_item7_chunk_003",
+          "walmart_item7_chunk_013"
+        ],
+        "gold_ids": [
+          "apple_item7_chunk_008",
+          "apple_item7_chunk_009"
+        ],
+        "rr": 1.0,
+        "latency_ms": 30.5
+      },
+      {
+        "question_id": "AAPL_2025_033_OPERATING_EXPENSES_2025",
+        "question": "What were Apple's 2025 R&D, SG&A and total operating expenses, and what drove their growth?",
+        "hit_ids": [
+          "apple_item7_chunk_010",
+          "apple_item2_chunk_001",
+          "apple_item7_chunk_007",
+          "walmart_item8_chunk_117",
+          "apple_item8_chunk_059",
+          "apple_item7_chunk_008",
+          "walmart_item8_chunk_116",
+          "apple_item8_chunk_015",
+          "apple_item8_chunk_060",
+          "exxon_item7_chunk_061"
+        ],
+        "gold_ids": [
+          "apple_item7_chunk_010",
+          "apple_item8_chunk_002"
+        ],
+        "rr": 1.0,
+        "latency_ms": 53.3
+      },
+      {
+        "question_id": "AAPL_2025_034_EFFECTIVE_TAX_RATE",
+        "question": "What was Apple's effective tax rate in 2025, and why was it lower than the statutory federal rate?",
+        "hit_ids": [
+          "apple_item7_chunk_011",
+          "walmart_item8_chunk_087",
+          "elilily_item8_chunk_073",
+          "walmart_item7_chunk_029",
+          "walmart_item7_chunk_030",
+          "elilily_item7_chunk_031",
+          "apple_item7_chunk_015",
+          "walmart_item1a_chunk_073",
+          "elilily_item8_chunk_072",
+          "elilily_item8_chunk_070"
+        ],
+        "gold_ids": [
+          "apple_item7_chunk_011",
+          "apple_item8_chunk_037"
+        ],
+        "rr": 1.0,
+        "latency_ms": 107.8
+      },
+      {
+        "question_id": "AAPL_2025_035_LIQUIDITY_RESOURCES",
+        "question": "What liquidity resources did Apple say would be sufficient to meet cash requirements and capital return plans?",
+        "hit_ids": [
+          "apple_item7_chunk_012",
+          "elilily_item7_chunk_033",
+          "apple_item8_chunk_025",
+          "chase_item7_chunk_220",
+          "chase_item1_chunk_011",
+          "apple_item8_chunk_022",
+          "walmart_item7_chunk_057",
+          "chase_item7_chunk_214",
+          "apple_item7_chunk_015",
+          "walmart_item7_chunk_042"
+        ],
+        "gold_ids": [
+          "apple_item7_chunk_012"
+        ],
+        "rr": 1.0,
+        "latency_ms": 35.9
+      },
+      {
+        "question_id": "AAPL_2025_036_CONTRACTUAL_CASH_REQUIREMENTS",
+        "question": "What material contractual cash requirements did Apple disclose as of September 27, 2025?",
+        "hit_ids": [
+          "apple_item8_chunk_025",
+          "apple_item8_chunk_045",
+          "apple_item7_chunk_012",
+          "apple_item8_chunk_052",
+          "apple_item8_chunk_061",
+          "apple_item8_chunk_008",
+          "apple_item8_chunk_068",
+          "apple_item8_chunk_006",
+          "apple_item7_chunk_015",
+          "apple_item8_chunk_022"
+        ],
+        "gold_ids": [
+          "apple_item7_chunk_014",
+          "apple_item7_chunk_012",
+          "apple_item7_chunk_015",
+          "apple_item7_chunk_013"
+        ],
+        "rr": 0.3333333333333333,
+        "latency_ms": 29.6
+      },
+      {
+        "question_id": "AAPL_2025_037_CAPITAL_RETURN_PROGRAM",
+        "question": "What did Apple disclose about dividends and share repurchases in 2025?",
+        "hit_ids": [
+          "walmart_item7_chunk_052",
+          "exxon_item5_chunk_002",
+          "apple_item5_chunk_002",
+          "apple_item7_chunk_015",
+          "walmart_item7_chunk_048",
+          "walmart_item8_chunk_070",
+          "apple_item8_chunk_048",
+          "apple_item6_chunk_001",
+          "chase_item7_chunk_202",
+          "walmart_item5_chunk_002"
+        ],
+        "gold_ids": [
+          "apple_item7_chunk_016",
+          "apple_item7_chunk_015",
+          "apple_item5_chunk_002"
+        ],
+        "rr": 0.3333333333333333,
+        "latency_ms": 44.2
+      },
+      {
+        "question_id": "AAPL_2025_038_MARKET_RISK_INTEREST_RATE",
+        "question": "What potential impacts would a hypothetical 100 basis point interest rate increase have on Apple's investment portfolio and term debt?",
+        "hit_ids": [
+          "apple_item7a_chunk_002",
+          "walmart_item7a_chunk_004",
+          "apple_item7a_chunk_001",
+          "chase_item7_chunk_187",
+          "apple_item1a_chunk_080",
+          "apple_item8_chunk_025",
+          "elilily_item7_chunk_040",
+          "elilily_item7_chunk_042",
+          "apple_item1a_chunk_005",
+          "chase_item8_chunk_497"
+        ],
+        "gold_ids": [
+          "apple_item7a_chunk_002",
+          "apple_item7a_chunk_001"
+        ],
+        "rr": 1.0,
+        "latency_ms": 224.3
+      },
+      {
+        "question_id": "AAPL_2025_039_MARKET_RISK_FOREIGN_EXCHANGE",
+        "question": "How does Apple describe its foreign exchange risk and VAR estimate for 2025?",
+        "hit_ids": [
+          "apple_item7a_chunk_004",
+          "apple_item7a_chunk_003",
+          "apple_item1a_chunk_080",
+          "chase_item8_chunk_153",
+          "apple_item7_chunk_003",
+          "chase_item7_chunk_355",
+          "elilily_item7_chunk_042",
+          "chase_item8_chunk_563",
+          "chase_item7_chunk_424",
+          "chase_item8_chunk_205"
+        ],
+        "gold_ids": [
+          "apple_item7a_chunk_004",
+          "apple_item7a_chunk_003"
+        ],
+        "rr": 1.0,
+        "latency_ms": 34.1
+      },
+      {
+        "question_id": "AAPL_2025_040_STATEMENT_OF_OPERATIONS_2025",
+        "question": "What were Apple's 2025 total net sales, gross margin, operating income, net income and diluted EPS?",
+        "hit_ids": [
+          "walmart_item1a_chunk_016",
+          "apple_item7_chunk_007",
+          "elilily_item7_chunk_002",
+          "apple_item7_chunk_008",
+          "chase_item7_chunk_080",
+          "apple_item8_chunk_060",
+          "walmart_item8_chunk_059",
+          "apple_item8_chunk_059",
+          "apple_item8_chunk_003",
+          "walmart_item8_chunk_058"
+        ],
+        "gold_ids": [
+          "apple_item8_chunk_021",
+          "apple_item8_chunk_002"
+        ],
+        "rr": 0.0,
+        "latency_ms": 42.4
+      },
+      {
+        "question_id": "AAPL_2025_041_BALANCE_SHEET_2025",
+        "question": "What were Apple's total assets, total liabilities and total shareholders' equity as of September 27, 2025?",
+        "hit_ids": [
+          "apple_item8_chunk_061",
+          "apple_item8_chunk_020",
+          "apple_item8_chunk_060",
+          "apple_item8_chunk_025",
+          "apple_item8_chunk_031",
+          "apple_item8_chunk_038",
+          "apple_item8_chunk_003",
+          "apple_item8_chunk_032",
+          "apple_item8_chunk_048",
+          "apple_item7_chunk_012"
+        ],
+        "gold_ids": [
+          "apple_item8_chunk_005"
+        ],
+        "rr": 0.0,
+        "latency_ms": 50.3
+      },
+      {
+        "question_id": "AAPL_2025_042_CASH_FLOW_2025",
+        "question": "What cash flows did Apple report for operating, investing and financing activities in 2025?",
+        "hit_ids": [
+          "exxon_item7_chunk_114",
+          "walmart_item7_chunk_022",
+          "walmart_item7_chunk_021",
+          "exxon_item8_chunk_109",
+          "apple_item7_chunk_007",
+          "apple_item8_chunk_059",
+          "walmart_item8_chunk_019",
+          "walmart_item7_chunk_020",
+          "apple_item8_chunk_060",
+          "apple_item8_chunk_003"
+        ],
+        "gold_ids": [
+          "apple_item8_chunk_009"
+        ],
+        "rr": 0.0,
+        "latency_ms": 32.9
+      },
+      {
+        "question_id": "AAPL_2025_043_REVENUE_RECOGNITION",
+        "question": "How does Apple recognize revenue for products, services, bundled services and third-party App Store applications?",
+        "hit_ids": [
+          "apple_item8_chunk_019",
+          "apple_item8_chunk_017",
+          "apple_item1_chunk_004",
+          "apple_item1_chunk_003",
+          "apple_item7_chunk_007",
+          "walmart_item8_chunk_050",
+          "apple_item1a_chunk_033",
+          "chase_item1a_chunk_083",
+          "elilily_item7_chunk_046",
+          "apple_item8_chunk_018"
+        ],
+        "gold_ids": [
+          "apple_item8_chunk_017",
+          "apple_item8_chunk_019",
+          "apple_item8_chunk_016",
+          "apple_item8_chunk_018",
+          "apple_item8_chunk_014",
+          "apple_item8_chunk_015"
+        ],
+        "rr": 1.0,
+        "latency_ms": 32.0
+      },
+      {
+        "question_id": "AAPL_2025_044_DEFERRED_REVENUE",
+        "question": "How much deferred revenue did Apple have as of September 27, 2025, and when does it expect to realize it?",
+        "hit_ids": [
+          "apple_item8_chunk_020",
+          "apple_item8_chunk_025",
+          "apple_item8_chunk_019",
+          "apple_item7_chunk_015",
+          "apple_item8_chunk_030",
+          "apple_item8_chunk_061",
+          "apple_item7_chunk_007",
+          "apple_item8_chunk_037",
+          "apple_item8_chunk_038",
+          "apple_item8_chunk_068"
+        ],
+        "gold_ids": [
+          "apple_item8_chunk_020"
+        ],
+        "rr": 1.0,
+        "latency_ms": 77.8
+      },
+      {
+        "question_id": "AAPL_2025_045_FINANCIAL_INSTRUMENTS_TOTAL",
+        "question": "What was the fair value of Apple's cash, cash equivalents and marketable securities as of September 27, 2025?",
+        "hit_ids": [
+          "apple_item8_chunk_025",
+          "apple_item8_chunk_022",
+          "apple_item8_chunk_030",
+          "apple_item8_chunk_061",
+          "apple_item8_chunk_003",
+          "apple_item7_chunk_012",
+          "apple_item1a_chunk_075",
+          "apple_item8_chunk_060",
+          "apple_item8_chunk_009",
+          "apple_item8_chunk_029"
+        ],
+        "gold_ids": [
+          "apple_item8_chunk_023",
+          "apple_item8_chunk_022"
+        ],
+        "rr": 0.5,
+        "latency_ms": 55.7
+      },
+      {
+        "question_id": "AAPL_2025_046_DERIVATIVE_NOTIONALS",
+        "question": "What notional amounts of derivative instruments did Apple have outstanding as of September 27, 2025?",
+        "hit_ids": [
+          "apple_item8_chunk_030",
+          "apple_item8_chunk_003",
+          "apple_item8_chunk_038",
+          "apple_item8_chunk_025",
+          "apple_item8_chunk_022",
+          "apple_item8_chunk_061",
+          "chase_item7_chunk_261",
+          "elilily_item8_chunk_045",
+          "apple_item8_chunk_052",
+          "apple_item8_chunk_068"
+        ],
+        "gold_ids": [
+          "apple_item8_chunk_030"
+        ],
+        "rr": 1.0,
+        "latency_ms": 113.5
+      },
+      {
+        "question_id": "AAPL_2025_047_RECEIVABLES_CONCENTRATION",
+        "question": "What customer and vendor concentration risks did Apple disclose for receivables as of September 27, 2025?",
+        "hit_ids": [
+          "apple_item8_chunk_031",
+          "apple_item1a_chunk_077",
+          "apple_item8_chunk_060",
+          "apple_item8_chunk_045",
+          "apple_item8_chunk_052",
+          "apple_item8_chunk_025",
+          "chase_item7_chunk_424",
+          "apple_item8_chunk_061",
+          "apple_item8_chunk_032",
+          "apple_item8_chunk_020"
+        ],
+        "gold_ids": [
+          "apple_item8_chunk_032",
+          "apple_item8_chunk_031"
+        ],
+        "rr": 1.0,
+        "latency_ms": 44.5
+      },
+      {
+        "question_id": "AAPL_2025_048_INCOME_TAX_STATE_AID",
+        "question": "What did Apple disclose about the European Commission State Aid Decision?",
+        "hit_ids": [
+          "apple_item8_chunk_034",
+          "apple_item8_chunk_033",
+          "apple_item1a_chunk_060",
+          "apple_item8_chunk_025",
+          "apple_item3_chunk_001",
+          "chase_item8_chunk_543",
+          "apple_item7_chunk_011",
+          "apple_item1a_chunk_061",
+          "apple_item8_chunk_067",
+          "apple_item1a_chunk_053"
+        ],
+        "gold_ids": [
+          "apple_item8_chunk_035",
+          "apple_item8_chunk_033",
+          "apple_item8_chunk_034"
+        ],
+        "rr": 1.0,
+        "latency_ms": 33.3
+      },
+      {
+        "question_id": "AAPL_2025_049_DEBT_COMMERCIAL_PAPER_TERM_DEBT",
+        "question": "What commercial paper and term debt amounts did Apple report as of September 27, 2025?",
+        "hit_ids": [
+          "apple_item8_chunk_045",
+          "apple_item8_chunk_030",
+          "apple_item8_chunk_025",
+          "apple_item7_chunk_013",
+          "apple_item8_chunk_022",
+          "apple_item8_chunk_068",
+          "apple_item8_chunk_052",
+          "apple_item8_chunk_061",
+          "apple_item8_chunk_060",
+          "apple_item8_chunk_046"
+        ],
+        "gold_ids": [
+          "apple_item8_chunk_045",
+          "apple_item8_chunk_047",
+          "apple_item7_chunk_013",
+          "apple_item8_chunk_046"
+        ],
+        "rr": 1.0,
+        "latency_ms": 41.9
+      },
+      {
+        "question_id": "AAPL_2025_050_SEGMENT_GEOGRAPHIC_DATA",
+        "question": "What did Apple disclose about U.S., China and other-country net sales and long-lived assets in 2025?",
+        "hit_ids": [
+          "apple_item8_chunk_060",
+          "apple_item7_chunk_005",
+          "apple_item7_chunk_007",
+          "walmart_item1a_chunk_004",
+          "apple_item8_chunk_020",
+          "walmart_item8_chunk_122",
+          "apple_item7_chunk_006",
+          "apple_item8_chunk_059",
+          "apple_item7_chunk_003",
+          "elilily_item1_chunk_051"
+        ],
+        "gold_ids": [
+          "apple_item8_chunk_059",
+          "apple_item8_chunk_060"
+        ],
+        "rr": 1.0,
+        "latency_ms": 47.1
+      }
+    ]
+  }
+}

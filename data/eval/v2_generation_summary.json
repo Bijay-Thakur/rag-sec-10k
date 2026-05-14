@@ -1,0 +1,7 @@
+{
+  "version": "v2",
+  "n_questions": 20,
+  "mean_latency_ms": 3098.2,
+  "faithfulness": 0.9,
+  "relevancy": 0.95
+}
