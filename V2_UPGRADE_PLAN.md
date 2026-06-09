@@ -559,6 +559,7 @@ ENVIRONMENT=development
 - [ ] Expand gold eval to 2+ companies (25 Qs each minimum)
 - [ ] Rebrand Streamlit UI (SEC Insight AI theme, landing page)
 - [ ] Architecture docs + demo video script
+- [x] Demo video walkthrough — [Loom](https://www.loom.com/share/cee7b50bc1e648c3b1aaa32b71da48de)
 - [ ] Optional Next.js frontend (if time permits)
 - [ ] Remove `legacy/` after 30-day parity window
 - [ ] Deploy demo to cloud (Railway/Fly.io/AWS)

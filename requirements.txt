@@ -20,6 +20,10 @@ datasets>=2.20.0          # HuggingFace datasets — used by ragas
 langchain-openai>=0.1.0   # LangChain OpenAI wrapper for ragas metrics
 pandas>=2.0.0             # dataframe ops in eval notebooks
 
+# API
+fastapi>=0.115.0
+uvicorn[standard]>=0.32.0
+
 # UI
 streamlit>=1.35.0
 

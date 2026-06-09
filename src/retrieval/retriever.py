@@ -72,14 +72,19 @@ def semantic_search(
     collection: Collection,
     query: str,
     top_k: int = 5,
+    source_file: Optional[str] = None,
 ) -> List[Dict[str, Any]]:
     """Semantic retrieval using OpenAI embeddings + Chroma."""
     q_embed = embed_text(query)
 
-    res = collection.query(
-        query_embeddings=[q_embed],
-        n_results=top_k,
-    )
+    query_kwargs: Dict[str, Any] = {
+        "query_embeddings": [q_embed],
+        "n_results": top_k,
+    }
+    if source_file:
+        query_kwargs["where"] = {"source_file": source_file}
+
+    res = collection.query(**query_kwargs)
 
     out: List[Dict[str, Any]] = []
     ids = res["ids"][0]
@@ -145,6 +150,7 @@ def hybrid_search(
     query: str,
     top_k: int = 5,
     k_rrf: int = 60,
+    source_file: Optional[str] = None,
 ) -> List[Dict[str, Any]]:
     """
     Hybrid retrieval:
@@ -152,7 +158,9 @@ def hybrid_search(
     - lexical (BM25)
     merged via Reciprocal Rank Fusion.
     """
-    semantic_results = semantic_search(collection, query, top_k=top_k)
+    semantic_results = semantic_search(
+        collection, query, top_k=top_k, source_file=source_file,
+    )
     bm25_results = bm25_retriever.search(query, top_k=top_k)
 
     # Build rank maps: doc_id -> rank (1-based)
@@ -245,6 +253,7 @@ def hybrid_rerank_search(
     top_k: int = 5,
     candidate_pool: int = 20,
     k_rrf: int = 60,
+    source_file: Optional[str] = None,
 ) -> List[Dict[str, Any]]:
     """
     Hybrid RRF over a wider candidate pool, then reranked with a cross-encoder.
@@ -258,6 +267,7 @@ def hybrid_rerank_search(
         query=query,
         top_k=candidate_pool,
         k_rrf=k_rrf,
+        source_file=source_file,
     )
     return rerank(query, candidates, top_k=top_k)
 
@@ -273,6 +283,7 @@ def get_retriever(
     chunks: List[Dict[str, Any]],
     strategy: RetrieverStrategy = "semantic",
     candidate_pool: int = 20,
+    source_file: Optional[str] = None,
 ):
     """
     Factory that returns a callable retriever:
@@ -290,7 +301,9 @@ def get_retriever(
 
     if strategy == "semantic":
         def _retriever(query: str, top_k: int = 5):
-            return semantic_search(collection, query, top_k=top_k)
+            return semantic_search(
+                collection, query, top_k=top_k, source_file=source_file,
+            )
         return _retriever
 
     if strategy == "bm25":
@@ -305,6 +318,7 @@ def get_retriever(
                 bm25_retriever=bm25_retriever,
                 query=query,
                 top_k=top_k,
+                source_file=source_file,
             )
         return _retriever
 
@@ -316,6 +330,7 @@ def get_retriever(
                 query=query,
                 top_k=top_k,
                 candidate_pool=candidate_pool,
+                source_file=source_file,
             )
         return _retriever
 
