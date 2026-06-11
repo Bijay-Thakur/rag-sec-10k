@@ -1,0 +1,4 @@
+# Minimal backend deps for auth/rate-limit (when full backend/requirements.txt fails on Windows)
+slowapi>=0.1.9
+PyJWT>=2.8.0
+httpx>=0.27.0

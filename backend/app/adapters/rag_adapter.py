@@ -240,6 +240,40 @@ def _rough_token_count(text: str) -> int:
     return max(1, len(text.split()))
 
 
+def _truncate_hits_for_input_budget(
+    hits: List[Dict[str, Any]],
+    max_input_tokens: int,
+) -> List[Dict[str, Any]]:
+    """Trim retrieved passages to stay within a rough input token budget."""
+    if max_input_tokens <= 0 or not hits:
+        return hits
+    budget = max_input_tokens
+    trimmed: List[Dict[str, Any]] = []
+    for hit in hits:
+        text = hit.get("text") or hit.get("document") or ""
+        words = text.split()
+        if not words:
+            trimmed.append(hit)
+            continue
+        if len(words) > budget:
+            short = " ".join(words[: max(budget, 1)])
+            trimmed.append({**hit, "text": f"{short}…"})
+            budget = 0
+        else:
+            trimmed.append(hit)
+            budget -= len(words)
+        if budget <= 0:
+            break
+    return trimmed or hits[:1]
+
+
+def _generation_kwargs(settings: Settings) -> Dict[str, Any]:
+    return {
+        "model": settings.generation_model,
+        "max_tokens": settings.max_output_tokens,
+    }
+
+
 def _demo_answer(hits: List[Dict[str, Any]], question: str) -> str:
     if not hits:
         return (
@@ -344,6 +378,8 @@ def ask_question(
     retrieval_ms = (time.perf_counter() - t0) * 1000.0
 
     hits = [_normalize_hit(h) for h in raw_hits]
+    llm_hits = _truncate_hits_for_input_budget(hits, settings.max_input_tokens)
+    gen_kwargs = _generation_kwargs(settings)
 
     sem_ranks, bm25_ranks = _rank_maps_for_hits(
         question,
@@ -413,8 +449,8 @@ def ask_question(
             try:
                 gen_result = generate_answer(
                     gen_question,
-                    hits,
-                    model=settings.generation_model,
+                    llm_hits,
+                    **gen_kwargs,
                 )
             except Exception as exc:
                 raise RAGPipelineError(
@@ -453,7 +489,7 @@ def ask_question(
                 gen_question = f"{question}\n\n{PARTIAL_GENERATION_HINT}"
                 t1 = time.perf_counter()
                 try:
-                    gen_result = generate_answer(gen_question, hits, model=settings.generation_model)
+                    gen_result = generate_answer(gen_question, llm_hits, **gen_kwargs)
                 except Exception as exc:
                     raise RAGPipelineError(
                         f"Generation failed: {exc}",
@@ -477,8 +513,8 @@ def ask_question(
         try:
             gen_result = generate_answer(
                 gen_question,
-                hits,
-                model=settings.generation_model,
+                llm_hits,
+                **gen_kwargs,
             )
         except Exception as exc:
             raise RAGPipelineError(

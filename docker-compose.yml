@@ -1,0 +1,58 @@
+# SEC Insight AI — local development with Docker
+#
+# Prerequisites:
+#   cp .env.example .env          # set OPENAI_API_KEY if using live generation
+#   python src/Embed/embed.py     # build db/ if not present
+#
+# Start:
+#   docker compose up --build
+#
+# Backend health: http://localhost:8080/health
+# Frontend UI:    http://localhost:3000
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+      ignorefile: backend/.dockerignore
+    image: sec-insight-api:local
+    ports:
+      # Bind to 127.0.0.1 only — the backend is reached via the frontend proxy
+      # or a reverse proxy (nginx/Caddy). Direct external access is blocked.
+      - "127.0.0.1:${BACKEND_PORT:-8080}:8080"
+    env_file:
+      - .env
+    environment:
+      PORT: "8080"
+      FRONTEND_ORIGIN: "http://localhost:3000,http://127.0.0.1:3000,http://frontend:3000"
+      RETRIEVAL_STRATEGY: "${RETRIEVAL_STRATEGY:-hybrid}"
+      DEFAULT_FILING_ID: "${DEFAULT_FILING_ID:-apple_2025}"
+    volumes:
+      # Mount persisted index + chunks so rebuilds don't require re-embedding
+      - ./db:/app/db:ro
+      - ./data/chunks:/app/data/chunks:ro
+      - ./data/eval:/app/data/eval:ro
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 120s
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: sec-insight-frontend:local
+    ports:
+      - "${FRONTEND_PORT:-3000}:3000"
+    environment:
+      NEXT_PUBLIC_API_BASE_URL: http://backend:8080
+      NEXT_PUBLIC_SITE_URL: http://localhost:3000
+      # Copy frontend/.env.example → frontend/.env.local for Supabase + Stripe
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped

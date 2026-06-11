@@ -75,3 +75,16 @@ class EvalSummaryResponse(BaseModel):
 class ErrorResponse(BaseModel):
     detail: str
     error_code: Optional[str] = None
+
+
+class EntitlementsResponse(BaseModel):
+    authenticated: bool
+    email: Optional[str] = None
+    plan: str = "anonymous"
+    llm_calls_used: int = 0
+    llm_calls_limit: int = 0
+    llm_calls_remaining: int = 0
+    can_use_llm: bool = False
+    demo_mode_only: bool = True
+    daily_token_budget: int = 0
+    daily_tokens_used: int = 0

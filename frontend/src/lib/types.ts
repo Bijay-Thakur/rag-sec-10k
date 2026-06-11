@@ -168,10 +168,24 @@ export interface ApiErrorBody {
   error_code?: string;
 }
 
+export interface EntitlementsResponse {
+  authenticated: boolean;
+  email?: string | null;
+  plan: string;
+  llm_calls_used: number;
+  llm_calls_limit: number;
+  llm_calls_remaining: number;
+  can_use_llm: boolean;
+  demo_mode_only: boolean;
+  daily_token_budget: number;
+  daily_tokens_used: number;
+}
+
 export type AppErrorKind =
   | "backend_unavailable"
   | "live_calls_disabled"
   | "budget_exceeded"
+  | "auth_required"
   | "no_evidence"
   | "unknown";
 

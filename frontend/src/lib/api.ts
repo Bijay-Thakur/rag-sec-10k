@@ -1,6 +1,7 @@
 import type {
   ApiErrorBody,
   AppError,
+  EntitlementsResponse,
   EvalSummaryResponse,
   FilingsResponse,
   HealthResponse,
@@ -8,15 +9,54 @@ import type {
   SampleQuestionsResponse,
 } from "./types";
 
-const DEFAULT_BASE = "http://127.0.0.1:8770";
+const DEFAULT_DEV_BASE = "http://127.0.0.1:8770";
 
-/** Browser uses same-origin proxy (see next.config rewrites) to avoid CORS. */
+/** True when NEXT_PUBLIC_API_BASE_URL is set (required on Vercel / production). */
+export function isBackendUrlConfigured(): boolean {
+  const base = process.env.NEXT_PUBLIC_API_BASE_URL?.trim();
+  return Boolean(base && base.length > 0);
+}
+
+/** Backend base URL for SSR and next.config rewrites. Local dev falls back to localhost. */
+export function getServerApiBaseUrl(): string {
+  const base = process.env.NEXT_PUBLIC_API_BASE_URL?.trim();
+  return base && base.length > 0 ? base.replace(/\/$/, "") : DEFAULT_DEV_BASE;
+}
+
+/**
+ * Browser calls same-origin /api-proxy (see next.config rewrites) to avoid CORS.
+ * Server-side fetches use NEXT_PUBLIC_API_BASE_URL directly.
+ */
 export function getApiBaseUrl(): string {
   if (typeof window !== "undefined") {
     return "/api-proxy";
   }
-  const base = process.env.NEXT_PUBLIC_API_BASE_URL?.trim();
-  return base && base.length > 0 ? base.replace(/\/$/, "") : DEFAULT_BASE;
+  return getServerApiBaseUrl();
+}
+
+/** Returns a user-facing error when the backend URL env var is missing in production. */
+export function getBackendConfigError(): AppError | null {
+  if (isBackendUrlConfigured()) {
+    return null;
+  }
+  if (process.env.NODE_ENV === "production") {
+    return {
+      kind: "backend_unavailable",
+      message:
+        "NEXT_PUBLIC_API_BASE_URL is not configured. In Vercel, open Project Settings → Environment Variables and set it to your public FastAPI URL (for example https://api.example.com). Redeploy after saving. Do not add OPENAI_API_KEY or other backend-only secrets to Vercel.",
+    };
+  }
+  return null;
+}
+
+function authHeaders(accessToken?: string | null): HeadersInit {
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+  };
+  if (accessToken) {
+    headers.Authorization = `Bearer ${accessToken}`;
+  }
+  return headers;
 }
 
 async function parseJson<T>(res: Response): Promise<T> {
@@ -50,6 +90,20 @@ async function handleErrorResponse(res: Response): Promise<never> {
       errorCode: code,
     } satisfies AppError;
   }
+  if (code === "auth_required") {
+    throw {
+      kind: "auth_required",
+      message: body.detail,
+      errorCode: code,
+    } satisfies AppError;
+  }
+  if (res.status === 401) {
+    throw {
+      kind: "auth_required",
+      message: body.detail || "Session expired. Please sign in again.",
+      errorCode: "auth_invalid",
+    } satisfies AppError;
+  }
 
   throw {
     kind: "unknown",
@@ -78,6 +132,19 @@ export async function fetchHealth(): Promise<HealthResponse> {
   return parseJson<HealthResponse>(res);
 }
 
+export async function fetchEntitlements(
+  accessToken?: string | null,
+): Promise<EntitlementsResponse> {
+  const res = await fetch(`${getApiBaseUrl()}/api/me/entitlements`, {
+    cache: "no-store",
+    headers: authHeaders(accessToken),
+  });
+  if (!res.ok) {
+    await handleErrorResponse(res);
+  }
+  return parseJson<EntitlementsResponse>(res);
+}
+
 export async function fetchSampleQuestions(
   filingId?: string,
 ): Promise<SampleQuestionsResponse> {
@@ -95,10 +162,11 @@ export async function askQuestion(params: {
   question: string;
   filingId?: string;
   demoMode?: boolean;
+  accessToken?: string | null;
 }): Promise<RAGResponse> {
   const res = await fetch(`${getApiBaseUrl()}/api/ask`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: authHeaders(params.accessToken),
     body: JSON.stringify({
       question: params.question,
       filing_id: params.filingId,
