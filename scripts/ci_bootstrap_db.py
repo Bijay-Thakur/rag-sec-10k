@@ -9,6 +9,7 @@ Loads all chunks from data/chunks/semantic_chunks.jsonl (committed to git).
 from __future__ import annotations
 
 import json
+import shutil
 import sys
 from pathlib import Path
 from typing import Any, Dict, List
@@ -50,13 +51,10 @@ def main() -> int:
 
     import chromadb
 
+    if DB_PATH.exists():
+        shutil.rmtree(DB_PATH)
     DB_PATH.mkdir(parents=True, exist_ok=True)
     client = chromadb.PersistentClient(path=str(DB_PATH))
-
-    try:
-        client.delete_collection(COLLECTION)
-    except Exception:
-        pass
 
     collection = client.create_collection(
         name=COLLECTION,
@@ -76,11 +74,12 @@ def main() -> int:
     dummy = [0.0] * EMBED_DIM
     for start in range(0, len(ids), BATCH):
         end = start + BATCH
+        batch_len = len(ids[start:end])
         collection.add(
             ids=ids[start:end],
             documents=docs[start:end],
             metadatas=metas[start:end],
-            embeddings=[dummy] * (end - start),
+            embeddings=[dummy] * batch_len,
         )
 
     print(f"CI bootstrap: indexed {len(ids)} chunks into {COLLECTION} at {DB_PATH}")

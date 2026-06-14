@@ -1,0 +1,48 @@
+# gcloud builds submit upload rules (overrides .gitignore when present).
+# db/ is gitignored but created by cloudbuild step 0 before docker build.
+
+.git
+.github
+.vscode
+.idea
+.qodo
+.ruff_cache
+.mypy_cache
+.pytest_cache
+**/__pycache__
+**/*.py[cod]
+
+# Secrets
+.env
+.env.*
+**/.env
+**/.env.*
+cloudrun.env
+**/*.pem
+**/*.key
+*.secret
+
+# Python venvs
+.venv
+venv
+**/.venv
+
+# Frontend (not needed for backend image)
+frontend/
+**/node_modules
+**/.next
+
+# Large / optional data
+data/raw/
+data/processed/
+db/
+
+# Docs / notebooks / tests (not baked into API image)
+notebooks/
+v2/
+tests/
+*.ipynb
+*.md
+!README.md
+
+# Do NOT exclude: scripts/, data/chunks/, data/eval/, backend/, src/

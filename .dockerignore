@@ -1,0 +1,47 @@
+# Used with: docker build -f backend/Dockerfile --ignorefile backend/.dockerignore .
+
+# Secrets — never bake into images
+.env
+.env.*
+**/.env
+**/.env.*
+
+# Python / tooling
+**/__pycache__
+**/*.py[cod]
+**/.pytest_cache
+**/.mypy_cache
+**/.ruff_cache
+.venv
+venv
+**/.venv
+
+# Git / IDE
+.git
+.gitignore
+**/.vscode
+**/.idea
+
+# Not needed for API runtime
+frontend/
+notebooks/
+v2/
+tests/
+scripts/
+streamlit_app.py
+*.ipynb
+pytest-cache-files*/
+
+# Large / optional data (mount at runtime instead)
+data/raw/
+data/processed/
+data/eval/gold_questions/
+data/chunks/recursive_chunks.jsonl
+
+# Docs (keep image lean)
+*.md
+!README.md
+
+# Frontend artifacts
+**/node_modules
+**/.next
