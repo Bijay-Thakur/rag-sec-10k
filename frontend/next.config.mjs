@@ -1,4 +1,3 @@
-import type { NextConfig } from "next";
 import path from "path";
 
 const rawBackendUrl = process.env.NEXT_PUBLIC_API_BASE_URL?.trim() ?? "";
@@ -7,12 +6,10 @@ const backendUrl = (rawBackendUrl || "http://127.0.0.1:8770").replace(/\/$/, "")
 if (process.env.NODE_ENV === "production" && !rawBackendUrl) {
   console.warn(
     "[next.config] NEXT_PUBLIC_API_BASE_URL is not set. " +
-      "/api-proxy rewrites will target localhost until you add the env var in Vercel and redeploy.",
+      "/api-proxy rewrites will target localhost until you add the env var in Vercel and redeploy."
   );
 }
 
-// unsafe-eval is required by Next.js hot-reload in dev but must be absent in
-// production to reduce XSS risk (eval-based gadgets cannot execute).
 const isDev = process.env.NODE_ENV === "development";
 
 const securityHeaders = [
@@ -32,7 +29,6 @@ const securityHeaders = [
     key: "Content-Security-Policy",
     value: [
       "default-src 'self'",
-      // unsafe-eval only in dev (Next.js HMR); stripped from production builds.
       `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}`,
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' https://fonts.gstatic.com",
@@ -43,7 +39,8 @@ const securityHeaders = [
   },
 ];
 
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   reactStrictMode: true,
   outputFileTracingRoot: path.join(process.cwd()),
   serverExternalPackages: ["@supabase/supabase-js"],
