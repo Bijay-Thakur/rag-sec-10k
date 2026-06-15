@@ -7,6 +7,7 @@ Ask natural-language questions against five indexed 10-K filings (Apple, Walmart
 [![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-API-009688.svg)](https://fastapi.tiangolo.com/)
 [![Next.js](https://img.shields.io/badge/Next.js-15-black.svg)](https://nextjs.org/)
+[![Live demo](https://img.shields.io/badge/demo-live-brightgreen.svg)](https://rag-sec-10k-alpha.vercel.app)
 [![ChromaDB](https://img.shields.io/badge/ChromaDB-vector_store-green.svg)](https://www.trychroma.com/)
 [![OpenAI](https://img.shields.io/badge/OpenAI-gpt--4o--mini-black.svg)](https://platform.openai.com/)
 
@@ -16,10 +17,11 @@ Ask natural-language questions against five indexed 10-K filings (Apple, Walmart
 
 | | Link |
 |---|------|
-| **Web app** | _[Add your Vercel URL — e.g. `https://sec-insight-ai.vercel.app`]_ |
-| **API health** | _[Add your Cloud Run URL — e.g. `https://sec-insight-api-xxx.run.app/health`]_ |
+| **Web app** | **[https://rag-sec-10k-alpha.vercel.app](https://rag-sec-10k-alpha.vercel.app)** |
+| **API health** | [https://sec-insight-api-223362217905.us-central1.run.app/health](https://sec-insight-api-223362217905.us-central1.run.app/health) |
+| **GitHub** | [Bijay-Thakur/rag-sec-10k](https://github.com/Bijay-Thakur/rag-sec-10k) |
 
-> The frontend is deployed on **Vercel**. The backend runs separately as a **FastAPI container** on Google Cloud Run.
+> The frontend is deployed on **Vercel** (`frontend/` root directory). The backend runs as a **Dockerized FastAPI** service on **Google Cloud Run** (`us-central1`).
 
 ## Demo video
 
@@ -215,38 +217,88 @@ cd frontend && npm ci && npm run build
 
 Split deployment: **Vercel (frontend)** + **Cloud Run (backend)** + **Supabase (auth/quotas)**.
 
-| Component | Platform | Docs |
-|-----------|----------|------|
-| Frontend | Vercel — root dir `frontend` | [Vercel steps below](#vercel-frontend) |
-| Backend | Google Cloud Run — Docker | [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) |
+| Component | Platform | Production URL / setting |
+|-----------|----------|--------------------------|
+| Frontend | Vercel — root dir **`frontend`** | [rag-sec-10k-alpha.vercel.app](https://rag-sec-10k-alpha.vercel.app) |
+| Backend | Google Cloud Run — Docker | `https://sec-insight-api-223362217905.us-central1.run.app` |
 | Auth / quotas | Supabase Postgres | [`supabase/migrations/001_user_profiles.sql`](supabase/migrations/001_user_profiles.sql) |
+| Image build | Google Cloud Build | [`cloudbuild.yaml`](cloudbuild.yaml) → Artifact Registry |
+
+Detailed runbook: [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md)
+
+### Production configuration checklist
+
+After deploying both services, confirm these values are set (otherwise the UI may show **“API offline”** or auth may fail):
+
+| Where | Variable | Production value |
+|-------|----------|------------------|
+| **Vercel** | `NEXT_PUBLIC_API_BASE_URL` | `https://sec-insight-api-223362217905.us-central1.run.app` |
+| **Vercel** | `NEXT_PUBLIC_SITE_URL` | `https://rag-sec-10k-alpha.vercel.app` |
+| **Vercel** | `NEXT_PUBLIC_SUPABASE_URL` | Your Supabase project URL |
+| **Vercel** | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon key |
+| **Vercel** | `SUPABASE_URL` | Same Supabase URL |
+| **Vercel** | `SUPABASE_SERVICE_ROLE_KEY` | Supabase service role key (server-only) |
+| **Cloud Run** (`cloudrun.env`) | `FRONTEND_ORIGIN` | `https://rag-sec-10k-alpha.vercel.app` |
+| **Cloud Run** | `OPENAI_API_KEY`, Supabase secrets | See [`cloudrun.env.example`](cloudrun.env.example) |
+| **Supabase Auth** | Redirect URL | `https://rag-sec-10k-alpha.vercel.app/api/auth/confirm` |
+| **Supabase Auth** | Site URL | `https://rag-sec-10k-alpha.vercel.app` |
+
+Redeploy Vercel after any `NEXT_PUBLIC_*` change. Update Cloud Run env vars separately via `gcloud run services update`.
 
 ### Vercel (frontend)
 
-1. Import repo → set **Root Directory** to `frontend`.
-2. Set `NEXT_PUBLIC_API_BASE_URL` to your Cloud Run service URL.
-3. Set Supabase public keys + server-only `SUPABASE_SERVICE_ROLE_KEY` for auth routes.
-4. Deploy from GitHub; redeploy after any `NEXT_PUBLIC_*` change.
+This repo is a **monorepo** — deploy **only** the Next.js app, not the FastAPI backend (backend lives on Cloud Run).
 
-**Do not put on Vercel:** `OPENAI_API_KEY`, `SUPABASE_JWT_SECRET`, or other backend secrets.
+1. Import [Bijay-Thakur/rag-sec-10k](https://github.com/Bijay-Thakur/rag-sec-10k) → branch **`main`**.
+2. Set **Root Directory** to **`frontend`** (do not use the multi-service “Services” preset for backend).
+3. **Framework Preset:** Next.js.
+4. **Output Directory:** leave **empty** (do not set `public` or `.next` — that causes 404 or build failure).
+5. Add environment variables from the checklist above.
+6. Deploy; redeploy after any `NEXT_PUBLIC_*` change.
+
+**Do not put on Vercel:** `OPENAI_API_KEY`, `SUPABASE_JWT_SECRET`, `FRONTEND_ORIGIN`, or other backend-only secrets.
+
+Template: [`frontend/.env.example`](frontend/.env.example)
 
 ### Cloud Run (backend)
+
+Images are built in GCP (recommended — avoids local Docker OOM during PyTorch install):
+
+```bash
+# One-time: enable APIs, Artifact Registry, Cloud Build (see docs/DEPLOYMENT.md)
+
+gcloud builds submit . --config=cloudbuild.yaml
+```
+
+`cloudbuild.yaml` bootstraps the Chroma index on the build VM (`scripts/ci_bootstrap_db.py`) because `db/` is gitignored and not uploaded (see [`.gcloudignore`](.gcloudignore)).
+
+Deploy the image:
 
 ```bash
 cp cloudrun.env.example cloudrun.env   # edit locally — never commit
 
-docker build -f backend/Dockerfile --ignorefile backend/.dockerignore -t $IMAGE .
-docker push $IMAGE
-
 gcloud run deploy sec-insight-api \
-  --image $IMAGE \
+  --image us-central1-docker.pkg.dev/sec-insight-ai/cloud-run-source-deploy/sec-insight-api:latest \
   --region us-central1 \
   --port 8080 \
+  --memory 2Gi \
+  --cpu 2 \
+  --timeout 300 \
   --allow-unauthenticated \
   --env-vars-file cloudrun.env
 ```
 
-Full commands (Artifact Registry, Secret Manager, health check): [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md#google-cloud-run-exact-commands)
+**Important:** Do **not** set `PORT` in `cloudrun.env` — Cloud Run injects it automatically (setting it causes deploy failure).
+
+Wire CORS after Vercel is live:
+
+```bash
+gcloud run services update sec-insight-api \
+  --region us-central1 \
+  --update-env-vars FRONTEND_ORIGIN=https://rag-sec-10k-alpha.vercel.app
+```
+
+Full commands (Artifact Registry, Secret Manager, health check): [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md)
 
 **Cost safety:** Configure GCP billing alerts. OpenAI usage is billed separately — use `ENABLE_LIVE_LLM_CALLS`, daily caps, and OpenAI spending limits.
 
@@ -254,7 +306,7 @@ Full commands (Artifact Registry, Secret Manager, health check): [`docs/DEPLOYME
 
 ## API endpoints
 
-Base URL: `http://127.0.0.1:8770` (local) or your Cloud Run URL. Browser traffic from the UI goes through Next.js `/api-proxy`.
+Base URL: `http://127.0.0.1:8770` (local) or `https://sec-insight-api-223362217905.us-central1.run.app` (production). Browser traffic from the UI goes through Next.js `/api-proxy`.
 
 | Method | Path | Auth | Description |
 |--------|------|------|-------------|
@@ -273,10 +325,10 @@ curl -X POST http://127.0.0.1:8770/api/ask \
   -d '{"question": "What were Apple total net sales in fiscal 2025?", "filing_id": "apple_2025", "demo_mode": true}'
 ```
 
-**Example — health check:**
+**Example — health check (production):**
 
 ```bash
-curl http://127.0.0.1:8770/health
+curl https://sec-insight-api-223362217905.us-central1.run.app/health
 ```
 
 Interactive docs (`/docs`) are disabled in production unless `DEBUG=true`.
@@ -294,7 +346,7 @@ Interactive docs (`/docs`) are disabled in production unless `DEBUG=true`.
 | Generation | GPT-4o-mini, citation prompt |
 | Backend | FastAPI, slowapi rate limits, Supabase REST |
 | Frontend | Next.js 15, Tailwind, Supabase SSR auth |
-| Deploy | Vercel + Cloud Run + Docker |
+| Deploy | Vercel + Cloud Run (Docker) + Cloud Build |
 | Eval | RAGAS, custom R@k / MRR scripts |
 
 ---
