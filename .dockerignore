@@ -28,6 +28,9 @@ notebooks/
 v2/
 tests/
 scripts/
+!scripts/
+scripts/*
+!scripts/run_ingestion_worker.py
 streamlit_app.py
 *.ipynb
 pytest-cache-files*/

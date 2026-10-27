@@ -38,6 +38,7 @@ frontend/build/
 data/raw/
 data/processed/
 db/
+.research/
 
 # ── Logs / OS artifacts ───────────────────────────────────────
 *.log

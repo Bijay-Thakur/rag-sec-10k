@@ -1,5 +1,5 @@
 # SEC Insight AI — Next.js frontend (dev compose)
-FROM node:20-bookworm-slim
+FROM node:24-bookworm-slim
 
 WORKDIR /app
 

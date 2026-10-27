@@ -1,0 +1,42 @@
+# Opt-in local overlay: docker compose -f docker-compose.yml -f compose.research.yml up --build
+# Use a private .env with authentic SEC contact and an ingestion token. No cloud resources.
+services:
+  frontend:
+    environment:
+      RESEARCH_LOCAL_INGESTION_ENABLED: "true"
+      NEXT_PUBLIC_RESEARCH_LOCAL_INGESTION_ENABLED: "true"
+      RESEARCH_INGESTION_TOKEN: "${RESEARCH_INGESTION_TOKEN:?Set a private long token}"
+  backend:
+    volumes:
+      - research_data:/research
+      - ./data/chunks:/app/data/chunks:ro
+      - ./data/eval:/app/data/eval:ro
+    environment:
+      RESEARCH_DB_PATH: /research/research.sqlite3
+      RESEARCH_RAW_DIR: /research/objects
+      SEC_SINGLE_INSTANCE_MODE: "true"
+      SEC_RATE_DB_PATH: /research/sec_rate.sqlite3
+      RESEARCH_INGESTION_ENABLED: "true"
+      SEC_USER_AGENT: "${SEC_USER_AGENT:?Set real organization and contact email}"
+      RESEARCH_INGESTION_TOKEN: "${RESEARCH_INGESTION_TOKEN:?Set a private long token}"
+  research_worker:
+    image: sec-insight-api:local
+    command: ["python", "scripts/run_ingestion_worker.py"]
+    env_file:
+      - .env
+    environment:
+      RESEARCH_DB_PATH: /research/research.sqlite3
+      RESEARCH_RAW_DIR: /research/objects
+      SEC_SINGLE_INSTANCE_MODE: "true"
+      SEC_RATE_DB_PATH: /research/sec_rate.sqlite3
+      RESEARCH_SINGLE_WORKER: "true"
+      SEC_USER_AGENT: "${SEC_USER_AGENT:?Set real organization and contact email}"
+      RESEARCH_EMBEDDING_MODE: "${RESEARCH_EMBEDDING_MODE:-local-hash}"
+      RESEARCH_ALLOW_LOCAL_HASH: "true"
+    volumes:
+      - research_data:/research
+    depends_on:
+      backend:
+        condition: service_started
+volumes:
+  research_data:

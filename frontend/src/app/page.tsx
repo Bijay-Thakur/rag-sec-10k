@@ -23,6 +23,7 @@ import { QuestionPanel } from "@/components/QuestionPanel";
 import { RetrievalTracePanel } from "@/components/RetrievalTracePanel";
 
 import { SubscribeModal } from "@/components/SubscribeModal";
+import { SecExplorer } from "@/components/research/SecExplorer";
 
 import { useAuth } from "@/components/AuthProvider";
 
@@ -505,6 +506,8 @@ export default function HomePage() {
 
 
       <main className="mx-auto max-w-6xl space-y-6 px-4 py-8 sm:px-6">
+
+        <SecExplorer />
 
         {authHint && (
 
