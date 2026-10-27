@@ -1,6 +1,11 @@
 # Opt-in local overlay: docker compose -f docker-compose.yml -f compose.research.yml up --build
 # Use a private .env with authentic SEC contact and an ingestion token. No cloud resources.
 services:
+  frontend:
+    environment:
+      RESEARCH_LOCAL_INGESTION_ENABLED: "true"
+      NEXT_PUBLIC_RESEARCH_LOCAL_INGESTION_ENABLED: "true"
+      RESEARCH_INGESTION_TOKEN: "${RESEARCH_INGESTION_TOKEN:?Set a private long token}"
   backend:
     volumes:
       - research_data:/research
