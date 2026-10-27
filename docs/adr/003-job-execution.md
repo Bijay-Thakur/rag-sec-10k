@@ -1,0 +1,3 @@
+# ADR 003 — Ingestion execution
+
+**2026-10-27 · Status: local development choice.** The API atomically creates or reuses a QUEUED job and returns 202. A separate local worker process claims leases from SQLite. It can retry expired leases and publish a revision in a single transaction. This is durable only on the configured persistent development volume and a single-host worker limit; SQLite is not a distributed queue. FastAPI `BackgroundTasks` would lose jobs at process shutdown. Cloud Tasks to a bounded worker or Cloud Run Jobs require IAM, retry, time and cost review; none are provisioned. At-least-once delivery means every step must be idempotent; a failed new revision cannot replace the last READY pointer. Rollback is to stop workers and leave jobs/data inspectable.

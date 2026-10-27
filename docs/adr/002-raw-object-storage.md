@@ -1,0 +1,3 @@
+# ADR 002 — Immutable filing originals
+
+**2026-10-27 · Status: local development choice.** Content-addressed files named by SHA-256 in a dedicated mounted directory preserve exact response bytes. New content uses exclusive creation and an atomic hard link; repeat downloads of identical bytes reuse the same object. The database stores hash, URL, fetch time and selected response metadata. The adapter must verify the existing hash on reuse. An ephemeral Cloud Run filesystem cannot satisfy durability. GCS with versioned objects, least-privilege service identity, retention and measured cost is the proposed production adapter, not provisioned here. To roll back, disable new ingestion and retain the volume for inspection; do not delete original bytes.

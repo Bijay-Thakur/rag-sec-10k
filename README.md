@@ -6,6 +6,8 @@
 
 **SEC discovery (Phase 1 branch):** The read-only SEC Explorer finds issuers and 10-K/10-Q filing metadata from official SEC services; these filings are not indexed for Q&A yet. Live discovery requires `SEC_USER_AGENT` with a real contact and `SEC_SINGLE_INSTANCE_MODE=true` after verifying a single instance. See [Phase 1 report](docs/phase-reports/phase-1.md). The existing five-filing Q&A remains separate.
 
+**Local ingestion (Phase 2 branch):** A separate persistent research volume stores original SEC bytes, versioned sections/chunks and accession-scoped local diagnostics. It does not enable dynamic research Q&A or change the legacy five-filing index. Ingestion admission is off by default and requires an operator token. See [Phase 2 report](docs/phase-reports/phase-2.md).
+
 Ask natural-language questions against five indexed 10-K filings (Apple, Walmart, ExxonMobil, Eli Lilly, JPMorgan Chase). Every live answer is tied to retrieved passages with inline citations, pre-generation answerability checks, and server-side cost guards.
 
 [![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/)
@@ -169,7 +171,7 @@ Partially answerable questions receive citations for supported facts plus a _“
 
 ### Prerequisites
 
-- Python 3.12+, Node 20+
+- Python 3.12+, Node 24+
 - OpenAI API key (optional for demo mode; required for live LLM)
 - Chroma index built once: `python src/Embed/embed.py`
 

@@ -10,7 +10,7 @@ import httpx
 import pytest
 
 from backend.app.research.models import DiscoveryError, primary_document_url
-from backend.app.research.sec_client import LocalRateLimiter, SecHttpAdapter
+from backend.app.research.sec_client import LocalRateLimiter, SecHttpAdapter, SharedSQLiteRateLimiter
 
 FIXTURES = Path(__file__).parent / "fixtures"
 OBSERVED = datetime(2026, 10, 27, tzinfo=timezone.utc)
@@ -46,6 +46,7 @@ def test_ticker_ambiguity_and_name_candidates():
     assert result.ambiguous and {x.cik for x in result.candidates} == {"0001234567", "0002222222"}
     assert sec.resolve_issuer("Orion Research Inc.").candidates[0].cik == "0001234567"
     assert len(sec.resolve_issuer("Orion").candidates) == 2
+    assert sec.resolve_issuer("O").candidates == []  # valid one-letter lookup
 
 
 def test_cik_lookup_uses_submissions_if_missing_from_ticker_mapping():
@@ -146,6 +147,18 @@ def test_cache_ttl_conditional_get_and_fake_limiter():
     now[0] += 2
     sec.resolve_issuer("ORI")
     assert calls == [None, '"mapping-1"']
+
+
+def test_local_volume_limiter_coordinates_two_clients(tmp_path):
+    now, waits = [100.0], []
+    def sleeper(seconds):
+        waits.append(seconds)
+        now[0] += seconds
+    options = {"interval": 0.5, "clock": lambda: now[0], "sleep": sleeper}
+    first = SharedSQLiteRateLimiter(tmp_path / "rate.sqlite3", **options)
+    second = SharedSQLiteRateLimiter(tmp_path / "rate.sqlite3", **options)
+    first.acquire(); second.acquire(); first.acquire()
+    assert waits == [0.0, 0.5, 0.5]
 
 
 def test_api_contract_and_legacy_catalog(client):
