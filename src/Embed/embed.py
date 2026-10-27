@@ -1,5 +1,6 @@
 import json
 import os
+import sys
 from pathlib import Path
 from typing import Any, Dict, List
 
@@ -11,6 +12,8 @@ from openai import OpenAI
 # Paths (define before load_dotenv so we can load repo-root .env)
 # ---------------------------------------------------------------------------
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+sys.path.insert(0, str(PROJECT_ROOT / "src"))
+from vector_integrity import EMBEDDING_DIMENSIONS, INDEX_VERSION  # noqa: E402
 CHUNK_DIR = PROJECT_ROOT / "data" / "chunks"
 CHROMA_DB_DIR = PROJECT_ROOT / "db"
 
@@ -102,7 +105,9 @@ def build_index(name: str, chunks: List[dict], *, force: bool = False) -> None:
 
     collection = chroma.get_or_create_collection(
         name=name,
-        metadata={"hnsw:space": "cosine"},
+        metadata={"hnsw:space": "cosine", "index_version": INDEX_VERSION,
+                  "embedding_source": "openai", "embedding_model": EMBEDDING_MODEL,
+                  "embedding_dimensions": EMBEDDING_DIMENSIONS[EMBEDDING_MODEL]},
     )
 
     ids: List[str] = []

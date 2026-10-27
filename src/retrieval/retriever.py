@@ -27,12 +27,10 @@ RERANKER_MODEL = "cross-encoder/ms-marco-MiniLM-L-6-v2"
 # ---------------------------------------------------------
 # OpenAI client
 # ---------------------------------------------------------
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 # ---------------------------------------------------------
 # Chroma client & collection
 # ---------------------------------------------------------
-chroma_client = chromadb.PersistentClient(path=str(DB_DIR))
 
 # Lazy-loaded cross-encoder (only imported when reranking is requested)
 _cross_encoder: Optional[Any] = None
@@ -47,7 +45,7 @@ def _get_cross_encoder():
 
 
 def get_collection(name: str) -> Collection:
-    return chroma_client.get_collection(name=name)
+    return chromadb.PersistentClient(path=str(DB_DIR)).get_collection(name=name)
 
 
 # ---------------------------------------------------------
@@ -58,7 +56,7 @@ def embed_text(text: str) -> List[float]:
     if not text:
         raise ValueError("Cannot embed empty text")
 
-    resp = client.embeddings.create(
+    resp = OpenAI(api_key=os.getenv("OPENAI_API_KEY")).embeddings.create(
         model=EMBEDDING_MODEL,
         input=text,
     )
@@ -296,19 +294,19 @@ def get_retriever(
     hybrid         – RRF fusion of semantic + BM25
     hybrid_rerank  – hybrid RRF (candidate_pool docs) then cross-encoder reranker
     """
-    collection = get_collection(collection_name)
     bm25_retriever = BM25Retriever(chunks)
+
+    # A lexical-only demo must not create or depend on a Chroma collection.
+    if strategy == "bm25":
+        return lambda query, top_k=5: bm25_retriever.search(query, top_k=top_k)
+
+    collection = get_collection(collection_name)
 
     if strategy == "semantic":
         def _retriever(query: str, top_k: int = 5):
             return semantic_search(
                 collection, query, top_k=top_k, source_file=source_file,
             )
-        return _retriever
-
-    if strategy == "bm25":
-        def _retriever(query: str, top_k: int = 5):
-            return bm25_retriever.search(query, top_k=top_k)
         return _retriever
 
     if strategy == "hybrid":

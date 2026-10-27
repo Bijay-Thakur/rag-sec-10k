@@ -18,7 +18,6 @@ SEMANTIC_INDEX = "semantic_index"
 RECURSIVE_INDEX = "recursive_index"
 
 load_dotenv(PROJECT_ROOT / ".env")
-_client = OpenAI()
 _chroma: Optional[chromadb.PersistentClient] = None
 
 
@@ -34,7 +33,7 @@ def embed_query(text: str) -> List[float]:
     text = text.strip()
     if not text:
         raise ValueError("Query text must be non-empty")
-    response = _client.embeddings.create(model=EMBEDDING_MODEL, input=text)
+    response = OpenAI().embeddings.create(model=EMBEDDING_MODEL, input=text)
     return list(response.data[0].embedding)
 
 

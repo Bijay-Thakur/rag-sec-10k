@@ -1,23 +1,6 @@
-"""CI smoke tests — no OpenAI calls; uses demo_mode and offline bootstrap index."""
+"""CI smoke tests — no OpenAI calls; demo mode uses lexical retrieval."""
 
 from __future__ import annotations
-
-from pathlib import Path
-
-import pytest
-
-ROOT = Path(__file__).resolve().parent.parent
-
-
-def _offline_index_ready() -> bool:
-    if not (ROOT / "db").exists():
-        return False
-    try:
-        import chromadb  # noqa: F401
-    except ImportError:
-        return False
-    return True
-
 
 def test_backend_imports():
     from backend.app.adapters.rag_adapter import ask_question, index_is_ready
@@ -57,12 +40,8 @@ def test_filings_catalog_endpoint(client):
     assert body["filings"][0]["label"]
 
 
-@pytest.mark.skipif(
-    not _offline_index_ready(),
-    reason="Run scripts/ci_bootstrap_db.py with backend deps installed",
-)
 def test_ask_demo_mode_no_openai(client):
-    """POST /api/ask in demo_mode — BM25 only, zero LLM cost."""
+    """POST /api/ask in demo_mode — BM25 only, no vector index or LLM cost."""
     response = client.post(
         "/api/ask",
         json={

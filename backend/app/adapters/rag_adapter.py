@@ -82,6 +82,7 @@ class _PipelineResources:
     collection: Any
     bm25_retriever: Any
     chunks: List[Dict[str, Any]]
+    semantic_verified: bool = False
 
 
 _resources_by_filing: Dict[str, _PipelineResources] = {}
@@ -120,15 +121,18 @@ def _load_chunks(chunks_path, settings: Settings, source_file: str) -> List[Dict
     return rows
 
 
-def _get_resources(filing_id: str, settings: Settings) -> _PipelineResources:
+def _get_resources(
+    filing_id: str, settings: Settings, *, require_semantic: bool = False,
+) -> _PipelineResources:
     meta = FILING_REGISTRY[filing_id]
     with _resources_lock:
         cached = _resources_by_filing.get(filing_id)
         if cached is not None:
+            if require_semantic and not cached.semantic_verified:
+                _verify_semantic_index(cached, meta, settings)
             return cached
 
         try:
-            import chromadb
             from retrieval.retriever import BM25Retriever
         except ImportError as exc:
             raise RAGPipelineError(
@@ -143,23 +147,6 @@ def _get_resources(filing_id: str, settings: Settings) -> _PipelineResources:
                 error_code="chunks_missing",
             )
 
-        try:
-            client = chromadb.PersistentClient(path=str(settings.chroma_db_dir))
-            collection = client.get_collection(name=meta["collection"])
-            if collection.count() == 0:
-                raise RAGPipelineError(
-                    f"Chroma collection '{meta['collection']}' is empty. "
-                    "Run: python src/Embed/embed.py",
-                    error_code="index_empty",
-                )
-        except RAGPipelineError:
-            raise
-        except Exception as exc:
-            raise RAGPipelineError(
-                f"ChromaDB unavailable: {exc}",
-                error_code="index_unavailable",
-            ) from exc
-
         chunks = _load_chunks(chunks_path, settings, meta["source_file"])
         if not chunks:
             raise RAGPipelineError(
@@ -169,16 +156,36 @@ def _get_resources(filing_id: str, settings: Settings) -> _PipelineResources:
             )
 
         bm25 = BM25Retriever(chunks)
-        resources = _PipelineResources(collection=collection, bm25_retriever=bm25, chunks=chunks)
+        resources = _PipelineResources(collection=None, bm25_retriever=bm25, chunks=chunks)
+        if require_semantic:
+            _verify_semantic_index(resources, meta, settings)
         _resources_by_filing[filing_id] = resources
         return resources
+
+
+def _verify_semantic_index(resources: _PipelineResources, meta: Dict[str, str], settings: Settings) -> None:
+    try:
+        import chromadb
+        from vector_integrity import InvalidVectorIndex, verify_collection
+
+        client = chromadb.PersistentClient(path=str(settings.chroma_db_dir))
+        collection = client.get_collection(name=meta["collection"])
+        verify_collection(collection, model=settings.embedding_model)
+    except (InvalidVectorIndex, ValueError) as exc:
+        raise RAGPipelineError(str(exc), error_code="index_invalid") from exc
+    except Exception as exc:
+        raise RAGPipelineError(
+            f"Semantic index unavailable: {exc}", error_code="index_unavailable",
+        ) from exc
+    resources.collection = collection
+    resources.semantic_verified = True
 
 
 def index_is_ready(filing_id: Optional[str] = None) -> bool:
     settings = get_settings()
     try:
         fid = _resolve_filing_id(filing_id, settings)
-        _get_resources(fid, settings)
+        _get_resources(fid, settings, require_semantic=True)
         return True
     except RAGPipelineError:
         return False
@@ -348,7 +355,7 @@ def ask_question(
             error_code="missing_api_key",
         )
 
-    resources = _get_resources(fid, settings)
+    resources = _get_resources(fid, settings, require_semantic=strategy != "bm25")
     meta = FILING_REGISTRY[fid]
 
     try:
@@ -386,7 +393,7 @@ def ask_question(
         resources,
         hits,
         top_k,
-        include_semantic=bool(settings.openai_api_key),
+        include_semantic=bool(settings.openai_api_key) and strategy != "bm25",
         source_file=meta["source_file"],
     )
 

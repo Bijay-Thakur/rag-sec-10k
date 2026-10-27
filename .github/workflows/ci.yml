@@ -39,9 +39,6 @@ jobs:
           pip install -r backend/requirements.txt
           pip install pytest httpx
 
-      - name: Bootstrap offline Chroma index (no OpenAI)
-        run: python scripts/ci_bootstrap_db.py
-
       - name: CI smoke tests
         run: pytest tests/test_ci_smoke.py -v
 

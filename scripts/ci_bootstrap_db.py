@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Bootstrap a minimal ChromaDB index for CI — no OpenAI calls.
+Bootstrap a minimal ChromaDB index for isolated offline tests — no OpenAI calls.
 
 Uses dummy embeddings so demo_mode (BM25) and index_is_ready() work offline.
 Loads all chunks from data/chunks/semantic_chunks.jsonl (committed to git).
@@ -8,15 +8,14 @@ Loads all chunks from data/chunks/semantic_chunks.jsonl (committed to git).
 
 from __future__ import annotations
 
+import argparse
 import json
-import shutil
 import sys
 from pathlib import Path
 from typing import Any, Dict, List
 
 ROOT = Path(__file__).resolve().parents[1]
 CHUNKS_PATH = ROOT / "data" / "chunks" / "semantic_chunks.jsonl"
-DB_PATH = ROOT / "db"
 COLLECTION = "semantic_index"
 EMBED_DIM = 1536
 BATCH = 128
@@ -45,20 +44,26 @@ def load_chunks() -> List[dict]:
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--output", type=Path, required=True,
+                        help="A new, disposable directory; existing indexes are never overwritten")
+    args = parser.parse_args()
+    db_path = args.output.resolve()
     if not CHUNKS_PATH.is_file():
         print(f"Missing chunks file: {CHUNKS_PATH}", file=sys.stderr)
         return 1
 
     import chromadb
 
-    if DB_PATH.exists():
-        shutil.rmtree(DB_PATH)
-    DB_PATH.mkdir(parents=True, exist_ok=True)
-    client = chromadb.PersistentClient(path=str(DB_PATH))
+    if db_path.exists():
+        print(f"Refusing to overwrite existing index: {db_path}", file=sys.stderr)
+        return 1
+    db_path.mkdir(parents=True)
+    client = chromadb.PersistentClient(path=str(db_path))
 
     collection = client.create_collection(
         name=COLLECTION,
-        metadata={"hnsw:space": "cosine"},
+        metadata={"hnsw:space": "cosine", "index_kind": "offline_test_fixture"},
     )
 
     chunks = load_chunks()
@@ -82,7 +87,7 @@ def main() -> int:
             embeddings=[dummy] * batch_len,
         )
 
-    print(f"CI bootstrap: indexed {len(ids)} chunks into {COLLECTION} at {DB_PATH}")
+    print(f"Offline fixture: indexed {len(ids)} chunks into {COLLECTION} at {db_path}")
     return 0
 
 

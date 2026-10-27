@@ -3,7 +3,7 @@
 #   docker build -f backend/Dockerfile --ignorefile backend/.dockerignore -t sec-insight-api .
 #
 # Cloud Run sets PORT automatically (default 8080). The CMD below binds to it.
-# Requires local db/ and data/chunks/ baked into the image (see COPY below).
+# No dummy vector index is included. A verified real index may be mounted.
 
 FROM python:3.12-slim-bookworm
 
@@ -32,10 +32,9 @@ COPY backend/app ./app
 # V1 RAG pipeline (retrieval + generation)
 COPY src ./src
 
-# Demo persistence: vector index, BM25 chunks, eval summaries
+# Offline BM25 chunks and historical evaluation summaries
 COPY data/chunks ./data/chunks
 COPY data/eval ./data/eval
-COPY db ./db
 
 RUN useradd --create-home --uid 10001 appuser \
     && chown -R appuser:appuser /app
