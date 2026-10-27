@@ -1,0 +1,5 @@
+# ADR 001 — Research storage (Phase 2 local slice)
+
+**2026-10-27 · Status: local development choice, production undecided.** Legacy Chroma SQLite is tracked in the repository but untrusted and untouched. A persistent relational store must atomically switch one READY revision while retaining prior versions.
+
+PostgreSQL with pgvector and text search offers transactional metadata, scope-filtered vector/lexical retrieval and a single canonical writable corpus, but no authorized production Postgres/pgvector instance or measured operating cost has been verified. Durable Chroma plus another metadata DB would require cross-store publication and reconciliation. For the offline Phase 2 slice choose a **separate SQLite database with JSON exact vectors** and immutable filesystem objects under a mounted development volume; both are replaceable adapters. SQLite is deliberately not a Cloud Run production backend. Migration adds only new tables in that separate database; rollback is to stop this feature and retain the volume, never mutate legacy `db/` or `data/chunks/`. Reconsider Postgres after measured staging access, filtered-recall and cost results.

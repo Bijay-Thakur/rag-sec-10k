@@ -17,6 +17,7 @@ export type FilingRef = {
 
 export type IssuerSearch = { candidates: Issuer[]; ambiguous: boolean; fetched_at: string };
 export type FilingList = { filings: FilingRef[]; next_cursor: string | null; fetched_at: string };
+export type LocalFilingStatus = { ready_revision_id: string | null; index_scope: string };
 
 async function get<T>(path: string): Promise<T> {
   const response = await fetch(`/api-proxy/api/research/${path}`, { cache: "no-store" });
@@ -35,4 +36,8 @@ export function listResearchFilings(cik: string, cursor?: string): Promise<Filin
   const parameters = new URLSearchParams({ limit: "20" });
   if (cursor) parameters.set("cursor", cursor);
   return get<FilingList>(`issuers/${encodeURIComponent(cik)}/filings?${parameters}`);
+}
+
+export function localFilingStatus(cik: string, accession: string): Promise<LocalFilingStatus> {
+  return get<LocalFilingStatus>(`filings/${encodeURIComponent(cik)}/${encodeURIComponent(accession)}/status`);
 }

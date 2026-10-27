@@ -3,11 +3,14 @@
 from __future__ import annotations
 
 import json
+import hashlib
 import random
 import re
+import sqlite3
 import threading
 import time
 from datetime import date, datetime, timezone
+from pathlib import Path
 from typing import Callable, Protocol
 from urllib.parse import urlsplit
 
@@ -20,6 +23,7 @@ from .models import (
 
 TICKERS_URL = "https://www.sec.gov/files/company_tickers_exchange.json"
 MAX_JSON_BYTES = 8 * 1024 * 1024
+MAX_FILING_BYTES = 20 * 1024 * 1024
 
 
 class SecClient(Protocol):
@@ -28,6 +32,7 @@ class SecClient(Protocol):
                      include_amendments: bool = False, include_history: bool = False,
                      limit: int = 25, cursor: str | None = None,
                      filed_from: date | None = None, filed_to: date | None = None) -> FilingListResponse: ...
+    def fetch_primary(self, filing: FilingRef) -> tuple[bytes, dict[str, str]]: ...
 
 
 class LocalRateLimiter:
@@ -47,9 +52,31 @@ class LocalRateLimiter:
             self._next = self.clock() + self.interval
 
 
+class SharedSQLiteRateLimiter:
+    """Local-volume aggregate limit across the API and worker processes."""
+
+    def __init__(self, path: Path, *, interval: float = 0.5,
+                 clock: Callable[[], float] = time.time,
+                 sleep: Callable[[float], None] = time.sleep):
+        self.path, self.interval, self.clock, self.sleep = path, interval, clock, sleep
+        path.parent.mkdir(parents=True, exist_ok=True)
+        with sqlite3.connect(path) as db:
+            db.execute("CREATE TABLE IF NOT EXISTS sec_budget (id INTEGER PRIMARY KEY CHECK(id=1), next_at REAL NOT NULL)")
+
+    def acquire(self) -> None:
+        with sqlite3.connect(self.path, timeout=10) as db:
+            db.execute("BEGIN IMMEDIATE")
+            row = db.execute("SELECT next_at FROM sec_budget WHERE id=1").fetchone()
+            scheduled = max(self.clock(), row[0] if row else 0.0)
+            db.execute("INSERT INTO sec_budget(id,next_at) VALUES(1,?) ON CONFLICT(id) DO UPDATE SET next_at=excluded.next_at",
+                       (scheduled + self.interval,))
+        self.sleep(max(0.0, scheduled - self.clock()))
+
+
 class SecHttpAdapter:
     def __init__(self, *, user_agent: str, transport: httpx.BaseTransport | None = None,
-                 throttle: LocalRateLimiter | None = None, clock: Callable[[], datetime] | None = None,
+                 throttle: LocalRateLimiter | SharedSQLiteRateLimiter | None = None,
+                 clock: Callable[[], datetime] | None = None,
                  monotonic: Callable[[], float] = time.monotonic,
                  sleep: Callable[[float], None] = time.sleep,
                  ttl_seconds: int = 3600, max_attempts: int = 3):
@@ -131,8 +158,8 @@ class SecHttpAdapter:
 
     def resolve_issuer(self, query: str) -> IssuerSearchResponse:
         query = query.strip()
-        if len(query) < 2 or len(query) > 100 or any(ord(c) < 32 for c in query):
-            raise DiscoveryError("invalid_query", "Search needs 2–100 printable characters", 422)
+        if len(query) < 1 or len(query) > 100 or any(ord(c) < 32 for c in query):
+            raise DiscoveryError("invalid_query", "Search needs 1–100 printable characters", 422)
         payload, observed = self._json(TICKERS_URL)
         if not isinstance(payload, dict) or not isinstance(payload.get("fields"), list) or not isinstance(payload.get("data"), list):
             raise DiscoveryError("sec_schema", "Unexpected SEC ticker mapping", 502)
@@ -251,3 +278,42 @@ class SecHttpAdapter:
         next_cursor = str(offset + limit) if offset + limit < len(eligible) else None
         return FilingListResponse(cik=cik, filings=page, next_cursor=next_cursor,
                                   fetched_at=observed, source_url=source)
+
+    def fetch_primary(self, filing: FilingRef) -> tuple[bytes, dict[str, str]]:
+        """Fetch only the canonical URL reconstructed from a trusted filing ref."""
+        expected = primary_document_url(filing.cik, filing.accession, filing.primary_document)
+        if not expected or filing.primary_document_url != expected:
+            raise DiscoveryError("unsafe_sec_url", "Filing URL disagrees with its identity", 422)
+        for attempt in range(self.max_attempts):
+            self.throttle.acquire()
+            try:
+                with self.http.stream("GET", expected, headers={"Accept": "text/html, text/plain"}) as response:
+                    if 300 <= response.status_code < 400:
+                        raise DiscoveryError("sec_redirect", "SEC redirected the filing request", 502)
+                    if response.status_code in (403, 404):
+                        raise DiscoveryError(f"sec_{response.status_code}", "SEC filing unavailable", response.status_code)
+                    if response.status_code == 429 or response.status_code >= 500:
+                        raise httpx.HTTPStatusError("SEC temporarily unavailable", request=response.request, response=response)
+                    if response.status_code >= 400:
+                        raise DiscoveryError(f"sec_{response.status_code}", "SEC rejected filing request", 502)
+                    mime = response.headers.get("content-type", "").split(";")[0].lower()
+                    if mime not in ("text/html", "application/xhtml+xml", "text/plain"):
+                        raise DiscoveryError("unsupported_document", "SEC primary document is not HTML/text", 422)
+                    data = bytearray()
+                    for chunk in response.iter_bytes():  # httpx decodes content encoding; cap decoded bytes
+                        data.extend(chunk)
+                        if len(data) > MAX_FILING_BYTES:
+                            raise DiscoveryError("filing_too_large", "SEC filing exceeds byte limit", 413)
+                    if not data:
+                        raise DiscoveryError("empty_filing", "SEC filing was empty", 502)
+                    return bytes(data), {"content_type": mime, "etag": response.headers.get("etag", ""),
+                                         "last_modified": response.headers.get("last-modified", ""),
+                                         "sha256": hashlib.sha256(data).hexdigest(),
+                                         "fetched_at": self.clock().isoformat(), "source_url": expected}
+            except DiscoveryError:
+                raise
+            except (httpx.TimeoutException, httpx.TransportError, httpx.HTTPStatusError) as exc:
+                if attempt + 1 == self.max_attempts:
+                    raise DiscoveryError("sec_unavailable", "SEC filing fetch exhausted retries", 503) from exc
+                self.sleep(min(10.0, 0.5 * 2 ** attempt + random.uniform(0, 0.1)))
+        raise AssertionError("unreachable")
