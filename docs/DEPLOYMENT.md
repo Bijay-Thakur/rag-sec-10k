@@ -53,7 +53,7 @@ docker build -f backend/Dockerfile --ignorefile backend/.dockerignore -t sec-ins
 | `ANONYMOUS_DEMO_ONLY` / `DEMO_MODE_ONLY` | `true` — blocks anonymous LLM |
 | `FRONTEND_ORIGIN` | Your Vercel domain(s) |
 
-**Volume mounts:** `db/` (Chroma index), `data/chunks/`, `data/eval/` (read-only). The Docker image bakes these in for Cloud Run (no volume mount).
+**Volume mounts:** `data/chunks/` and `data/eval/` are included in the image. A separately generated real Chroma `db/` requires durable read-only runtime storage and must pass `scripts/check_vector_index.py` before semantic service is enabled. No vector index is baked into Cloud Build images. Without one, BM25 demo mode works and `/health` is degraded; authenticated semantic/hybrid requests return 503. Do not cut over this image until the real index and rollback are verified.
 
 **Health check:** `GET /health`
 
@@ -86,7 +86,7 @@ gcloud artifacts repositories create $AR_REPO \
   --description="SEC Insight API images" \
   || true
 
-# 3. Build and push the image (from repo root — includes db/ + data/chunks/)
+# 3. Build and push the image (from repo root — includes chunks, excludes db/)
 export IMAGE=$REGION-docker.pkg.dev/PROJECT_ID/$AR_REPO/$SERVICE_NAME:latest
 
 gcloud auth configure-docker $REGION-docker.pkg.dev

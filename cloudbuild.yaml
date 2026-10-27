@@ -1,16 +1,7 @@
 # Build backend image for Cloud Run.
-# Step 0 creates db/ on the build VM (db/ is gitignored and not uploaded).
+# Build contains no vector index. Semantic retrieval requires a separately
+# verified real index at runtime; BM25 demo mode works without one.
 steps:
-  - name: python:3.12-slim
-    entrypoint: bash
-    args:
-      - -c
-      - |
-        set -euo pipefail
-        pip install --no-cache-dir "chromadb>=0.4.24,<0.6"
-        python scripts/ci_bootstrap_db.py
-        test -d db || (echo "db/ missing after bootstrap" >&2; exit 1)
-
   - name: gcr.io/cloud-builders/docker
     args:
       - build

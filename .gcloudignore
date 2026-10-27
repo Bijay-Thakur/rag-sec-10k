@@ -1,5 +1,5 @@
 # gcloud builds submit upload rules (overrides .gitignore when present).
-# db/ is gitignored but created by cloudbuild step 0 before docker build.
+# Exclude tracked or local db/ artifacts. Cloud Build never creates an index.
 
 .git
 .github

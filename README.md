@@ -2,6 +2,8 @@
 
 **Citation-grounded Q&A over SEC 10-K filings — hybrid retrieval, measured on a 50-question gold set, deployed as a split Next.js + FastAPI stack.**
 
+> **Phase 0 research migration status:** The older Cloud Build path packaged an offline all-zero vector fixture. New builds omit that index. Lexical demo mode works without a vector index; semantic and hybrid queries require a separately supplied, provenance-verified real index and otherwise return 503. `/health` reports `degraded` with `index_ready=false` when semantic search is unavailable. Existing evaluation values below are historical offline results, not verified current production quality. See [the baseline audit](docs/audits/financial_research_baseline.md). Do not deploy this branch to production until a real index is verified and a rollback is prepared.
+
 Ask natural-language questions against five indexed 10-K filings (Apple, Walmart, ExxonMobil, Eli Lilly, JPMorgan Chase). Every live answer is tied to retrieved passages with inline citations, pre-generation answerability checks, and server-side cost guards.
 
 [![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/)
@@ -205,7 +207,6 @@ docker compose up --build
 
 ```bash
 pip install -r backend/requirements.txt pytest httpx
-python scripts/ci_bootstrap_db.py
 pytest tests/ -q
 
 cd frontend && npm ci && npm run build
@@ -270,7 +271,7 @@ Images are built in GCP (recommended — avoids local Docker OOM during PyTorch 
 gcloud builds submit . --config=cloudbuild.yaml
 ```
 
-`cloudbuild.yaml` bootstraps the Chroma index on the build VM (`scripts/ci_bootstrap_db.py`) because `db/` is gitignored and not uploaded (see [`.gcloudignore`](.gcloudignore)).
+`cloudbuild.yaml` builds without any vector index. A real index must be provided through a durable runtime mount and checked with `python scripts/check_vector_index.py --db /path/to/index` before enabling semantic queries. The optional offline fixture script accepts a new disposable directory (`python scripts/ci_bootstrap_db.py --output /tmp/sec-ci-fixture`); that fixture is never suitable for production.
 
 Deploy the image:
 
