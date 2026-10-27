@@ -47,6 +47,8 @@ from backend.app.schemas import (
     SampleQuestionsResponse,
 )
 from backend.app.services.access_policy import resolve_ask_access
+from backend.app.research.api import router as research_discovery_router
+from backend.app.research.models import DiscoveryError
 from backend.app.services.eval_service import get_eval_summary
 from backend.app.services.cost_guard import record_global_llm_usage
 from backend.app.services.quota_service import (
@@ -123,6 +125,12 @@ def create_app() -> FastAPI:
 
     app.state.limiter = limiter
     app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+    app.include_router(research_discovery_router)
+
+    @app.exception_handler(DiscoveryError)
+    async def discovery_error_handler(_request: Request, exc: DiscoveryError) -> JSONResponse:
+        return JSONResponse(status_code=exc.status,
+                            content={"detail": str(exc), "error_code": exc.code})
 
     origins: List[str] = [
         o.strip() for o in settings.frontend_origin.split(",") if o.strip()

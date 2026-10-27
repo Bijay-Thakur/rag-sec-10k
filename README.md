@@ -4,6 +4,8 @@
 
 > **Phase 0 research migration status:** The older Cloud Build path packaged an offline all-zero vector fixture. New builds omit that index. Lexical demo mode works without a vector index; semantic and hybrid queries require a separately supplied, provenance-verified real index and otherwise return 503. `/health` reports `degraded` with `index_ready=false` when semantic search is unavailable. Existing evaluation values below are historical offline results, not verified current production quality. See [the baseline audit](docs/audits/financial_research_baseline.md). Do not deploy this branch to production until a real index is verified and a rollback is prepared.
 
+**SEC discovery (Phase 1 branch):** The read-only SEC Explorer finds issuers and 10-K/10-Q filing metadata from official SEC services; these filings are not indexed for Q&A yet. Live discovery requires `SEC_USER_AGENT` with a real contact and `SEC_SINGLE_INSTANCE_MODE=true` after verifying a single instance. See [Phase 1 report](docs/phase-reports/phase-1.md). The existing five-filing Q&A remains separate.
+
 Ask natural-language questions against five indexed 10-K filings (Apple, Walmart, ExxonMobil, Eli Lilly, JPMorgan Chase). Every live answer is tied to retrieved passages with inline citations, pre-generation answerability checks, and server-side cost guards.
 
 [![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/)
