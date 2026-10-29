@@ -8,6 +8,8 @@
 
 **Local ingestion (Phase 2 branch):** A separate persistent research volume stores original SEC bytes, versioned sections/chunks and accession-scoped local diagnostics. It does not enable dynamic research Q&A or change the legacy five-filing index. Ingestion admission is off by default and requires an operator token. See [Phase 2 report](docs/phase-reports/phase-2.md).
 
+**Phases 3–5 local work:** An operator-only research preview, local-model revision gate, scoped retrieval, XBRL arithmetic primitives and evaluation checks are under development. Public dynamic answers and numeric reasoning remain disabled. The [release matrix](docs/phase-reports/release-readiness-matrix.md) lists the live and staging evidence still required.
+
 Ask natural-language questions against five indexed 10-K filings (Apple, Walmart, ExxonMobil, Eli Lilly, JPMorgan Chase). Every live answer is tied to retrieved passages with inline citations, pre-generation answerability checks, and server-side cost guards.
 
 [![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/)

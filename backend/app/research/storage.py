@@ -6,6 +6,7 @@ import hashlib
 import json
 import math
 import os
+import re
 import sqlite3
 import time
 import uuid
@@ -95,6 +96,11 @@ CREATE TABLE IF NOT EXISTS chunks (
  REFERENCES sections(revision_id, ordinal));
 CREATE INDEX IF NOT EXISTS jobs_state_lease ON jobs(state, lease_until);
 CREATE INDEX IF NOT EXISTS chunks_revision_section ON chunks(revision_id, section_ordinal);
+CREATE TABLE IF NOT EXISTS research_ready (
+ cik TEXT NOT NULL, accession TEXT NOT NULL, revision_id TEXT NOT NULL,
+ promoted_at REAL NOT NULL, PRIMARY KEY(cik, accession),
+ FOREIGN KEY(cik, accession) REFERENCES filings(cik, accession),
+ FOREIGN KEY(revision_id) REFERENCES revisions(revision_id));
 """
 
 
@@ -226,6 +232,47 @@ class LocalResearchRepository:
             row["score"] = sum(a * b for a, b in zip(vector, json.loads(row.pop("embedding_json"))))
         rows.sort(key=lambda row: row["score"], reverse=True)
         return rows[:limit]
+
+    def research_revision(self, cik: str, accession: str) -> dict | None:
+        cik, accession = normalize_cik(cik), validate_accession(accession)
+        with self.connect() as db:
+            row = db.execute("SELECT r.* FROM research_ready p JOIN revisions r ON r.revision_id=p.revision_id "
+                             "WHERE p.cik=? AND p.accession=? AND r.cik=p.cik AND r.accession=p.accession "
+                             "AND r.state='READY_RESEARCH'", (cik, accession)).fetchone()
+            return dict(row) if row else None
+
+    def promote_research(self, cik: str, accession: str, revision_id: str) -> None:
+        """Explicit offline operator gate; old pointer remains until one atomic commit."""
+        cik, accession = normalize_cik(cik), validate_accession(accession)
+        with self.connect() as db:
+            db.execute("BEGIN IMMEDIATE")
+            row = db.execute("SELECT * FROM revisions WHERE revision_id=? AND cik=? AND accession=?",
+                             (revision_id, cik, accession)).fetchone()
+            filing = db.execute("SELECT ready_revision,source_url FROM filings WHERE cik=? AND accession=?",
+                                (cik, accession)).fetchone()
+            if (not row or not filing or row["state"] not in ("READY_LOCAL", "READY_RESEARCH")
+                    or row["index_kind"] != "real_local_embeddings"
+                    or row["embedding_provider"] != "local_sentence_transformer"
+                    or not re.search(r"@sha256:[0-9a-f]{64}$", row["embedding_model"])
+                    or filing["ready_revision"] != revision_id
+                    or json.loads(row["qa_json"]).get("table_count", 0) > 0):
+                raise DiscoveryError("research_not_ready", "Revision requires local-model and parser review", 409)
+            chunks = db.execute("SELECT text,sha256,source_url,embedding_json FROM chunks WHERE revision_id=?",
+                                (revision_id,)).fetchall()
+            if not chunks:
+                raise DiscoveryError("research_not_ready", "No chunks to publish", 409)
+            for chunk in chunks:
+                vector = json.loads(chunk["embedding_json"])
+                if (chunk["source_url"] != filing["source_url"]
+                        or hashlib.sha256(chunk["text"].encode()).hexdigest() != chunk["sha256"]
+                        or len(vector) != row["dimensions"] or not all(math.isfinite(v) for v in vector)
+                        or abs(sum(v * v for v in vector) - 1) > .01):
+                    raise DiscoveryError("research_not_ready", "Chunk integrity failure", 409)
+            db.execute("UPDATE revisions SET state='READY_RESEARCH' WHERE revision_id=?", (revision_id,))
+            db.execute("INSERT INTO research_ready VALUES(?,?,?,?) ON CONFLICT(cik,accession) DO UPDATE "
+                       "SET revision_id=excluded.revision_id,promoted_at=excluded.promoted_at",
+                       (cik, accession, revision_id, time.time()))
+            db.commit()
 
     def publish(self, job_id: str, filing: FilingRef, raw_sha: str, object_path: Path,
                 headers: dict, parsed, chunks: list[dict], vectors: list[list[float]],

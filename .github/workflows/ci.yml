@@ -39,19 +39,8 @@ jobs:
           pip install -r backend/requirements.txt
           pip install pytest httpx
 
-      - name: CI smoke tests
-        run: pytest tests/test_ci_smoke.py -v
-
-      - name: Unit tests (answerability, calculation, RAG schema)
-        run: |
-          pytest \
-            tests/test_answerability.py \
-            tests/test_calculation.py \
-            tests/test_rag_response.py \
-            tests/test_retriever_strategies_compare.py \
-            tests/test_access_policy.py \
-            tests/test_auth_enforcement.py \
-            -v
+      - name: Full offline backend suite
+        run: python -m pytest tests/ -q
 
   frontend:
     name: Frontend build
@@ -67,7 +56,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "24"
           cache: npm
           cache-dependency-path: frontend/package-lock.json
 

@@ -14,7 +14,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from backend.app.research.api import get_sec_client  # noqa: E402
 from backend.app.research.storage import LocalResearchRepository, RawObjectStore  # noqa: E402
-from backend.app.research.worker import IngestionWorker, LocalHashEmbedding, OpenAIEmbedding  # noqa: E402
+from backend.app.research.worker import IngestionWorker, LocalHashEmbedding  # noqa: E402
+from backend.app.research.local_embedding import LocalSentenceEmbedding  # noqa: E402
 
 
 def main() -> int:
@@ -28,12 +29,16 @@ def main() -> int:
         print("BLOCKED: configure absolute persistent paths and verified single-worker/SEC limits")
         return 2
     mode = os.getenv("RESEARCH_EMBEDDING_MODE", "")
-    if mode == "openai":
-        embeddings = OpenAIEmbedding(os.getenv("OPENAI_API_KEY", ""))
+    if mode == "local-model":
+        model_dir = os.getenv("RESEARCH_LOCAL_MODEL_DIR", "")
+        if not model_dir or not Path(model_dir).is_absolute():
+            print("BLOCKED: set RESEARCH_LOCAL_MODEL_DIR to a preinstalled model directory")
+            return 2
+        embeddings = LocalSentenceEmbedding(Path(model_dir))
     elif mode == "local-hash" and os.getenv("RESEARCH_ALLOW_LOCAL_HASH") == "true":
         embeddings = LocalHashEmbedding()
     else:
-        print("BLOCKED: select explicit embedding mode (openai or local-hash diagnostic)")
+        print("BLOCKED: select explicit embedding mode (local-model or local-hash diagnostic)")
         return 2
     worker = IngestionWorker(LocalResearchRepository(Path(db)), RawObjectStore(Path(root)),
                              get_sec_client(), embeddings)

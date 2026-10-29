@@ -1,0 +1,5 @@
+# Phase 4 — offline XBRL arithmetic slice
+
+`SecHttpAdapter.fetch_companyfacts` uses the existing HTTPS allowlist, cache, timeout, retry and shared local-volume throttle policy; there is no live SEC call in this phase. `normalize_companyfacts` filters to an exact CIK/accession and preserves concept, taxonomy, units, period, filing date, form and frame. Decimal formulas provide YoY, margin, ratio and CAGR with explicit operands; mismatched units, filers, durations, periods, division by zero and missing comparison basis refuse. No dynamic numeric route is enabled: the Phase 3 preview explicitly refuses numeric/comparison intents.
+
+The implementation does **not** yet persist raw companyfacts response bytes, normalize amendment/restatement precedence or verify table cell/footnote provenance. Live 10-K/10-Q, amended and custom-taxonomy cases, held-out numeric accuracy, and reviewed formula/concept mapping are **BLOCKED**. G4 is **NO-GO**. Rollback: keep numeric routing off; the additive parser and arithmetic module do not change legacy calculations or raw filing data.

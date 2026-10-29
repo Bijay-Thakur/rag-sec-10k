@@ -17,7 +17,7 @@ export type FilingRef = {
 
 export type IssuerSearch = { candidates: Issuer[]; ambiguous: boolean; fetched_at: string };
 export type FilingList = { filings: FilingRef[]; next_cursor: string | null; fetched_at: string };
-export type LocalFilingStatus = { ready_revision_id: string | null; index_scope: string };
+export type LocalFilingStatus = { ready_revision_id: string | null; research_revision_id: string | null; index_scope: string };
 export type LocalJob = { job_id: string; state: string; error_code: string | null; progress: { step?: string } };
 export type LocalSection = { ordinal: number; part: string | null; item: string; heading: string; excerpt: string };
 

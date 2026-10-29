@@ -33,6 +33,7 @@ class SecClient(Protocol):
                      limit: int = 25, cursor: str | None = None,
                      filed_from: date | None = None, filed_to: date | None = None) -> FilingListResponse: ...
     def fetch_primary(self, filing: FilingRef) -> tuple[bytes, dict[str, str]]: ...
+    def fetch_companyfacts(self, cik: str) -> tuple[object, datetime, str]: ...
 
 
 class LocalRateLimiter:
@@ -101,7 +102,10 @@ class SecHttpAdapter:
         if parts.hostname == "www.sec.gov":
             return parts.path == "/files/company_tickers_exchange.json"
         if parts.hostname == "data.sec.gov":
-            return bool(re.fullmatch(r"/submissions/CIK[0-9]{10}(?:-submissions-[0-9]{3})?\.json", parts.path))
+            return bool(re.fullmatch(r"/submissions/CIK[0-9]{10}(?:-submissions-[0-9]{3})?\.json|"
+                                     r"/api/xbrl/companyfacts/CIK[0-9]{10}\.json|"
+                                     r"/api/xbrl/companyconcept/CIK[0-9]{10}/[A-Za-z0-9_-]{1,30}/[A-Za-z0-9_-]{1,100}\.json",
+                                     parts.path))
         return False
 
     def _json(self, url: str) -> tuple[object, datetime]:
@@ -155,6 +159,11 @@ class SecHttpAdapter:
                         delay = min(10.0, max(delay, float(raw)))
                 self.sleep(delay)
         raise AssertionError("unreachable")
+
+    def fetch_companyfacts(self, cik: str) -> tuple[object, datetime, str]:
+        url = f"https://data.sec.gov/api/xbrl/companyfacts/CIK{normalize_cik(cik)}.json"
+        payload, observed = self._json(url)
+        return payload, observed, url
 
     def resolve_issuer(self, query: str) -> IssuerSearchResponse:
         query = query.strip()

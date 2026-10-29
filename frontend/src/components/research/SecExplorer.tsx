@@ -37,7 +37,9 @@ export function SecExplorer() {
     setLocalStatus(previous => ({ ...previous, [filing.accession]: "Checking local index…" }));
     try {
       const result = await localFilingStatus(filing.cik, filing.accession);
-      setLocalStatus(previous => ({ ...previous, [filing.accession]: result.ready_revision_id
+      setLocalStatus(previous => ({ ...previous, [filing.accession]: result.research_revision_id
+        ? "Research preview ready for operator review · public AI answers unavailable"
+        : result.ready_revision_id
         ? "Locally indexed for diagnostics · AI answers unavailable"
         : "Queued or processing · AI answers unavailable" }));
     } catch {
