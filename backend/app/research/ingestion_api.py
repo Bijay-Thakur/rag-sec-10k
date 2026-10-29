@@ -82,10 +82,12 @@ def filing_status(request: Request, cik: str, accession: str,
     row = repository.filing(cik, accession)
     if not row:
         raise DiscoveryError("filing_not_indexed", "No local ingestion record", 404)
+    research = repository.research_revision(cik, accession)
     return {"cik": row["cik"], "accession": row["accession"], "form": row["form"],
             "filed_at": row["filed_at"], "report_period": row["report_period"],
             "source_url": row["source_url"], "ready_revision_id": row["ready_revision"],
-            "index_scope": "local diagnostic only; dynamic Q&A unavailable"}
+            "research_revision_id": research["revision_id"] if research else None,
+            "index_scope": "operator research preview only" if research else "local diagnostic only; dynamic Q&A unavailable"}
 
 
 @router.get("/filings/{cik}/{accession}/sections")

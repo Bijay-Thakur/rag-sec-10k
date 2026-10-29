@@ -2,6 +2,7 @@
 # Exclude tracked or local db/ artifacts. Cloud Build never creates an index.
 
 .git
+.research/
 .github
 .vscode
 .idea

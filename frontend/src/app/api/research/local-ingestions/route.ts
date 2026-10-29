@@ -5,9 +5,9 @@ export async function POST(request: NextRequest) {
   const backend = process.env.NEXT_PUBLIC_API_BASE_URL || "";
   const host = request.nextUrl.hostname;
   const origin = request.headers.get("origin");
-  if (process.env.VERCEL || process.env.RESEARCH_LOCAL_INGESTION_ENABLED !== "true" ||
+  if (process.env.VERCEL || process.env.NODE_ENV !== "development" || process.env.RESEARCH_LOCAL_INGESTION_ENABLED !== "true" ||
       token.length < 24 || !["localhost", "127.0.0.1"].includes(host) ||
-      (origin && origin !== request.nextUrl.origin) ||
+      origin !== request.nextUrl.origin ||
       !/^http:\/\/(backend|localhost|127\.0\.0\.1)(:\d+)?$/.test(backend)) {
     return NextResponse.json({ detail: "Local ingestion unavailable" }, { status: 403 });
   }

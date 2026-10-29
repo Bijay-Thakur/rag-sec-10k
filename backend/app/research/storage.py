@@ -6,6 +6,7 @@ import hashlib
 import json
 import math
 import os
+import re
 import sqlite3
 import time
 import uuid
@@ -95,6 +96,18 @@ CREATE TABLE IF NOT EXISTS chunks (
  REFERENCES sections(revision_id, ordinal));
 CREATE INDEX IF NOT EXISTS jobs_state_lease ON jobs(state, lease_until);
 CREATE INDEX IF NOT EXISTS chunks_revision_section ON chunks(revision_id, section_ordinal);
+CREATE TABLE IF NOT EXISTS research_ready (
+ cik TEXT NOT NULL, accession TEXT NOT NULL, revision_id TEXT NOT NULL,
+ promoted_at REAL NOT NULL, PRIMARY KEY(cik, accession),
+ FOREIGN KEY(cik, accession) REFERENCES filings(cik, accession),
+ FOREIGN KEY(revision_id) REFERENCES revisions(revision_id));
+CREATE TABLE IF NOT EXISTS research_budget (
+ day INTEGER PRIMARY KEY, calls INTEGER NOT NULL);
+CREATE TABLE IF NOT EXISTS research_events (
+ trace_id TEXT NOT NULL, event TEXT NOT NULL, code TEXT NOT NULL,
+ cik TEXT NOT NULL, accession TEXT NOT NULL, revision_id TEXT NOT NULL,
+ metrics_json TEXT NOT NULL, occurred_at REAL NOT NULL);
+CREATE INDEX IF NOT EXISTS research_events_time ON research_events(occurred_at);
 """
 
 
@@ -226,6 +239,107 @@ class LocalResearchRepository:
             row["score"] = sum(a * b for a, b in zip(vector, json.loads(row.pop("embedding_json"))))
         rows.sort(key=lambda row: row["score"], reverse=True)
         return rows[:limit]
+
+    def research_revision(self, cik: str, accession: str) -> dict | None:
+        cik, accession = normalize_cik(cik), validate_accession(accession)
+        with self.connect() as db:
+            row = db.execute("SELECT r.* FROM research_ready p JOIN revisions r ON r.revision_id=p.revision_id "
+                             "WHERE p.cik=? AND p.accession=? AND r.cik=p.cik AND r.accession=p.accession "
+                             "AND r.state='READY_RESEARCH'", (cik, accession)).fetchone()
+            return dict(row) if row else None
+
+    def reserve_research_call(self, cap: int, *, now: float | None = None) -> None:
+        if not 1 <= cap <= 100:
+            raise DiscoveryError("research_budget_unconfigured", "Research call budget unavailable", 503)
+        day = int((time.time() if now is None else now) // 86400)
+        with self.connect() as db:
+            db.execute("BEGIN IMMEDIATE")
+            row = db.execute("SELECT calls FROM research_budget WHERE day=?", (day,)).fetchone()
+            if row and row["calls"] >= cap:
+                raise DiscoveryError("research_budget_exhausted", "Research call budget exhausted", 429)
+            db.execute("INSERT INTO research_budget VALUES(?,1) ON CONFLICT(day) DO UPDATE SET calls=calls+1", (day,))
+            db.commit()
+
+    def record_research_event(self, trace_id: str, event: str, code: str, cik: str,
+                              accession: str, revision_id: str, metrics: dict) -> None:
+        # Strict keys prevent prompts, headers, text, credentials or arbitrary payloads entering telemetry.
+        allowed = {"elapsed_ms", "retrieval_ms", "generation_ms", "evidence_count", "citation_count",
+                   "prompt_tokens", "completion_tokens", "total_tokens", "operand_count"}
+        if event not in {"query_complete", "query_refused", "query_failed", "financial_complete", "financial_failed"} or not re.fullmatch(r"[a-z_]{1,80}", code):
+            raise ValueError("Invalid research event")
+        if set(metrics) - allowed or any(not isinstance(v, (int, float)) or not math.isfinite(v) or v < 0
+                                         for v in metrics.values()):
+            raise ValueError("Invalid research metrics")
+        cik, accession = normalize_cik(cik), validate_accession(accession)
+        uuid.UUID(trace_id); uuid.UUID(revision_id)
+        now = time.time()
+        with self.connect() as db:
+            db.execute("BEGIN IMMEDIATE")
+            db.execute("DELETE FROM research_events WHERE occurred_at<?", (now - 7 * 86400,))
+            db.execute("INSERT INTO research_events VALUES(?,?,?,?,?,?,?,?)",
+                       (trace_id, event, code, cik, accession, revision_id, json.dumps(metrics), now))
+            db.commit()
+
+    def promote_research(self, cik: str, accession: str, revision_id: str) -> None:
+        """Explicit offline operator gate; old pointer remains until one atomic commit."""
+        cik, accession = normalize_cik(cik), validate_accession(accession)
+        with self.connect() as db:
+            db.execute("BEGIN IMMEDIATE")
+            row = db.execute("SELECT * FROM revisions WHERE revision_id=? AND cik=? AND accession=?",
+                             (revision_id, cik, accession)).fetchone()
+            filing = db.execute("SELECT ready_revision,source_url FROM filings WHERE cik=? AND accession=?",
+                                (cik, accession)).fetchone()
+            if (not row or not filing or row["state"] not in ("READY_LOCAL", "READY_RESEARCH")
+                    or row["index_kind"] != "real_local_embeddings"
+                    or row["embedding_provider"] != "local_sentence_transformer"
+                    or not re.search(r"@sha256:[0-9a-f]{64}$", row["embedding_model"])
+                    or filing["ready_revision"] != revision_id
+                    or json.loads(row["qa_json"]).get("table_count", 0) > 0):
+                raise DiscoveryError("research_not_ready", "Revision requires local-model and parser review", 409)
+            chunks = db.execute("SELECT text,sha256,source_url,embedding_json FROM chunks WHERE revision_id=?",
+                                (revision_id,)).fetchall()
+            if not chunks:
+                raise DiscoveryError("research_not_ready", "No chunks to publish", 409)
+            for chunk in chunks:
+                vector = json.loads(chunk["embedding_json"])
+                if (chunk["source_url"] != filing["source_url"]
+                        or hashlib.sha256(chunk["text"].encode()).hexdigest() != chunk["sha256"]
+                        or len(vector) != row["dimensions"] or not all(math.isfinite(v) for v in vector)
+                        or abs(sum(v * v for v in vector) - 1) > .01):
+                    raise DiscoveryError("research_not_ready", "Chunk integrity failure", 409)
+            db.execute("UPDATE revisions SET state='READY_RESEARCH' WHERE revision_id=?", (revision_id,))
+            db.execute("INSERT INTO research_ready VALUES(?,?,?,?) ON CONFLICT(cik,accession) DO UPDATE "
+                       "SET revision_id=excluded.revision_id,promoted_at=excluded.promoted_at",
+                       (cik, accession, revision_id, time.time()))
+            db.commit()
+
+    def rollback_research(self, cik: str, accession: str, revision_id: str) -> None:
+        cik, accession = normalize_cik(cik), validate_accession(accession)
+        with self.connect() as db:
+            db.execute("BEGIN IMMEDIATE")
+            revision = db.execute("SELECT r.*,a.object_path,f.source_url FROM revisions r JOIN raw_artifacts a "
+                                  "ON a.sha256=r.raw_sha256 JOIN filings f ON f.cik=r.cik AND f.accession=r.accession "
+                                  "WHERE r.revision_id=? AND r.cik=? AND r.accession=? AND r.state='READY_RESEARCH'",
+                                  (revision_id, cik, accession)).fetchone()
+            if not revision:
+                raise DiscoveryError("research_not_ready", "Rollback requires a prior validated revision in this scope", 409)
+            if hashlib.sha256(Path(revision["object_path"]).read_bytes()).hexdigest() != revision["raw_sha256"]:
+                raise DiscoveryError("raw_corrupt", "Rollback source checksum mismatch", 503)
+            rows = db.execute("SELECT text,sha256,source_url,embedding_json FROM chunks WHERE revision_id=?",
+                              (revision_id,)).fetchall()
+            if not rows:
+                raise DiscoveryError("research_not_ready", "Rollback index is empty", 409)
+            for row in rows:
+                vector = json.loads(row["embedding_json"])
+                if (hashlib.sha256(row["text"].encode()).hexdigest() != row["sha256"]
+                        or row["source_url"] != revision["source_url"] or len(vector) != revision["dimensions"]
+                        or not all(math.isfinite(value) for value in vector)
+                        or abs(sum(value * value for value in vector) - 1) > .01):
+                    raise DiscoveryError("chunk_corrupt", "Rollback index integrity failed", 503)
+            db.execute("INSERT INTO research_ready VALUES(?,?,?,?) ON CONFLICT(cik,accession) DO UPDATE "
+                       "SET revision_id=excluded.revision_id,promoted_at=excluded.promoted_at",
+                       (cik, accession, revision_id, time.time()))
+            db.commit()
 
     def publish(self, job_id: str, filing: FilingRef, raw_sha: str, object_path: Path,
                 headers: dict, parsed, chunks: list[dict], vectors: list[list[float]],

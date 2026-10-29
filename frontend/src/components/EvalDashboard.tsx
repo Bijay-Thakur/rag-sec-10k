@@ -56,9 +56,9 @@ export function EvalDashboard({ evalSummary, loading }: EvalDashboardProps) {
   return (
     <section className="panel">
       <div className="panel-header">
-        <h2 className="panel-title">Evaluation dashboard</h2>
+        <h2 className="panel-title">Historical evaluation</h2>
         <p className="mt-1 text-xs text-brand-500">
-          Apple 2025 gold set (50 questions) · offline benchmark metrics
+          Apple 2025 gold set (50 questions) · historical offline metrics; current research preview unmeasured
         </p>
       </div>
       <div className="panel-body">

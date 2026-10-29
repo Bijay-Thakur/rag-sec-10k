@@ -37,6 +37,7 @@ pytest-cache-files*/
 
 # Large / optional data (mount at runtime instead)
 db/
+.research/
 data/raw/
 data/processed/
 data/eval/gold_questions/

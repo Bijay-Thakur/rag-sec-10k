@@ -1,0 +1,16 @@
+{
+  "python": "3.12.14",
+  "dependencies": {
+    "pytest": "9.1.1",
+    "fastapi": "0.162.0",
+    "pydantic": "2.14.1",
+    "httpx": "0.28.1",
+    "chromadb": "0.5.23",
+    "onnxruntime": "1.31.1",
+    "torch": "2.6.0+cpu",
+    "transformers": "4.46.3",
+    "sentence-transformers": "3.4.1",
+    "openai": "3.39.0"
+  },
+  "implementation_commit": "135367c802f162cb5a89e23c9d7ec04f68594544"
+}

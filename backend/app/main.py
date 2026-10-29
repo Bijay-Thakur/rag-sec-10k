@@ -49,6 +49,8 @@ from backend.app.schemas import (
 from backend.app.services.access_policy import resolve_ask_access
 from backend.app.research.api import router as research_discovery_router
 from backend.app.research.ingestion_api import router as research_ingestion_router
+from backend.app.research.query_api import router as research_query_router
+from backend.app.research.facts_api import router as research_facts_router
 from backend.app.research.models import DiscoveryError
 from backend.app.services.eval_service import get_eval_summary
 from backend.app.services.cost_guard import record_global_llm_usage
@@ -128,11 +130,14 @@ def create_app() -> FastAPI:
     app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
     app.include_router(research_discovery_router)
     app.include_router(research_ingestion_router)
+    app.include_router(research_query_router)
+    app.include_router(research_facts_router)
 
     @app.exception_handler(DiscoveryError)
     async def discovery_error_handler(_request: Request, exc: DiscoveryError) -> JSONResponse:
         return JSONResponse(status_code=exc.status,
-                            content={"detail": str(exc), "error_code": exc.code})
+                            content={"detail": str(exc), "error_code": exc.code,
+                                     **({"trace_id": exc.trace_id} if getattr(exc, "trace_id", None) else {})})
 
     origins: List[str] = [
         o.strip() for o in settings.frontend_origin.split(",") if o.strip()

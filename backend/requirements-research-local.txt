@@ -1,0 +1,5 @@
+# Tested optional CPU research runtime. Install CPU torch from the official index first:
+# pip install torch==2.6.0 --index-url https://download.pytorch.org/whl/cpu
+torch==2.6.0
+sentence-transformers==3.4.1
+transformers==4.46.3
