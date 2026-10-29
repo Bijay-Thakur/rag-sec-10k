@@ -91,7 +91,7 @@ class SecHttpAdapter:
         self.clock = clock or (lambda: datetime.now(timezone.utc))
         self.monotonic, self.sleep = monotonic, sleep
         self.ttl_seconds, self.max_attempts = ttl_seconds, max_attempts
-        self._cache: dict[str, tuple[float, object, str | None, datetime]] = {}
+        self._cache: dict[str, tuple[float, object, str | None, datetime, bytes]] = {}
         self._cache_lock = threading.Lock()
 
     @staticmethod
@@ -109,12 +109,16 @@ class SecHttpAdapter:
         return False
 
     def _json(self, url: str) -> tuple[object, datetime]:
+        payload, observed, _ = self._json_document(url)
+        return payload, observed
+
+    def _json_document(self, url: str) -> tuple[object, datetime, bytes]:
         if not self._allowlisted(url):
             raise DiscoveryError("unsafe_sec_url", "SEC request path is not allowlisted", 422)
         with self._cache_lock:
             cached = self._cache.get(url)
             if cached and cached[0] > self.monotonic():
-                return cached[1], cached[3]
+                return cached[1], cached[3], cached[4]
         headers = {"If-None-Match": cached[2]} if cached and cached[2] else {}
         for attempt in range(self.max_attempts):
             self.throttle.acquire()
@@ -122,8 +126,8 @@ class SecHttpAdapter:
                 with self.http.stream("GET", url, headers=headers) as response:
                     if response.status_code == 304 and cached:
                         with self._cache_lock:
-                            self._cache[url] = (self.monotonic() + self.ttl_seconds, cached[1], cached[2], cached[3])
-                        return cached[1], cached[3]
+                            self._cache[url] = (self.monotonic() + self.ttl_seconds, cached[1], cached[2], cached[3], cached[4])
+                        return cached[1], cached[3], cached[4]
                     if 300 <= response.status_code < 400:
                         raise DiscoveryError("sec_redirect", "SEC redirected a restricted request", 502)
                     if response.status_code in (403, 404):
@@ -145,8 +149,10 @@ class SecHttpAdapter:
                     observed = self.clock()
                     with self._cache_lock:
                         self._cache[url] = (self.monotonic() + self.ttl_seconds, payload,
-                                            response.headers.get("etag"), observed)
-                    return payload, observed
+                                            response.headers.get("etag"), observed, bytes(data))
+                        while len(self._cache) > 8:
+                            self._cache.pop(next(iter(self._cache)))
+                    return payload, observed, bytes(data)
             except DiscoveryError:
                 raise
             except (httpx.TimeoutException, httpx.TransportError, httpx.HTTPStatusError) as exc:
@@ -164,6 +170,11 @@ class SecHttpAdapter:
         url = f"https://data.sec.gov/api/xbrl/companyfacts/CIK{normalize_cik(cik)}.json"
         payload, observed = self._json(url)
         return payload, observed, url
+
+    def fetch_companyfacts_bytes(self, cik: str) -> tuple[bytes, datetime, str]:
+        url = f"https://data.sec.gov/api/xbrl/companyfacts/CIK{normalize_cik(cik)}.json"
+        _, observed, raw = self._json_document(url)
+        return raw, observed, url
 
     def resolve_issuer(self, query: str) -> IssuerSearchResponse:
         query = query.strip()

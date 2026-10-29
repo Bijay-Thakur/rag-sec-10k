@@ -1,0 +1,76 @@
+{
+  "environment": "synthetic_filings_real_local_embeddings",
+  "dataset_version": "research-synthetic-v1",
+  "corpus_sha256": "b8a00535aba4e2e324bbaee43d35edacfa9f6ca6a180eb274a7921da988bdb37",
+  "observed_at": "2026-10-27T11:32:43.396169+00:00",
+  "forms": [
+    "10-K",
+    "10-Q",
+    "10-K/A"
+  ],
+  "filings": 3,
+  "chunks_per_filing": 3,
+  "dependencies": {
+    "torch": "2.6.0+cpu",
+    "transformers": "4.46.3",
+    "sentence-transformers": "3.4.1"
+  },
+  "model": "sentence-transformers/all-MiniLM-L6-v2@1110a243fdf4706b3f48f1d95db1a4f5529b4d41@sha256:0cd92801c17d612750534fe77f79f6c5faa9e8e2315e4bdbabb6b1ef027b5655",
+  "dimensions": 384,
+  "queries": 9,
+  "model_load_seconds": 3.0329777150000155,
+  "retrieval_p50_ms": 14.13823300003969,
+  "retrieval_p95_ms": 16.422727999952258,
+  "process_peak_memory_kib": 494856,
+  "generation_calls": 0,
+  "embedding_api_calls": 0,
+  "modes": {
+    "lexical": {
+      "cases": 9,
+      "retrieval_cases": 9,
+      "recall_at_5": 1.0,
+      "recall_at_1": 1.0,
+      "mrr_at_5": 1.0,
+      "ndcg_at_5": 1.0,
+      "scope_valid_rate": 1,
+      "citation_target_cases": 0,
+      "citation_target_rate": null,
+      "refusal_agreement": 1,
+      "refusal_precision": null,
+      "refusal_recall": null
+    },
+    "dense": {
+      "cases": 9,
+      "retrieval_cases": 9,
+      "recall_at_5": 1.0,
+      "recall_at_1": 1.0,
+      "mrr_at_5": 1.0,
+      "ndcg_at_5": 1.0,
+      "scope_valid_rate": 1,
+      "citation_target_cases": 0,
+      "citation_target_rate": null,
+      "refusal_agreement": 1,
+      "refusal_precision": null,
+      "refusal_recall": null
+    },
+    "rrf": {
+      "cases": 9,
+      "retrieval_cases": 9,
+      "recall_at_5": 1.0,
+      "recall_at_1": 1.0,
+      "mrr_at_5": 1.0,
+      "ndcg_at_5": 1.0,
+      "scope_valid_rate": 1,
+      "citation_target_cases": 0,
+      "citation_target_rate": null,
+      "refusal_agreement": 1,
+      "refusal_precision": null,
+      "refusal_recall": null
+    }
+  },
+  "limitations": [
+    "Synthetic source text only; no SEC filings, LLM, real-world relevance or live citation quality verified.",
+    "No generated citation or unanswerable-query sample is scored in this smoke.",
+    "Modes share one retrieval pass; only the full retrieval path is timed. Peak RSS is measured on Linux."
+  ]
+}

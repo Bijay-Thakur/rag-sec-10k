@@ -3,8 +3,11 @@
 import { FormEvent, useState } from "react";
 import { FilingRef, Issuer, LocalSection, listResearchFilings, localFilingStatus, localJobStatus,
   localSections, requestLocalIngestion, searchIssuers } from "@/lib/research-api";
+import { ResearchPreview } from "./ResearchPreview";
 
 const localIngestionEnabled = process.env.NEXT_PUBLIC_RESEARCH_LOCAL_INGESTION_ENABLED === "true";
+const localQueryEnabled = process.env.NEXT_PUBLIC_RESEARCH_LOCAL_QUERY_ENABLED === "true";
+const filingKey = (filing: FilingRef) => `${filing.cik}:${filing.accession}`;
 
 export function SecExplorer() {
   const [query, setQuery] = useState("");
@@ -18,10 +21,11 @@ export function SecExplorer() {
   const [localStatus, setLocalStatus] = useState<Record<string, string>>({});
   const [jobIds, setJobIds] = useState<Record<string, string>>({});
   const [sections, setSections] = useState<Record<string, LocalSection[]>>({});
+  const [revisions, setRevisions] = useState<Record<string, string | null>>({});
 
   async function search(event: FormEvent) {
     event.preventDefault();
-    if (query.trim().length < 1) return;
+    if (busy || query.trim().length < 1) return;
     setBusy(true); setError(null); setSelected(null); setFilings([]); setCursor(null);
     try {
       const result = await searchIssuers(query.trim());
@@ -34,46 +38,48 @@ export function SecExplorer() {
   }
 
   async function checkLocalStatus(filing: FilingRef) {
-    setLocalStatus(previous => ({ ...previous, [filing.accession]: "Checking local index…" }));
+    setLocalStatus(previous => ({ ...previous, [filingKey(filing)]: "Checking local index…" }));
     try {
       const result = await localFilingStatus(filing.cik, filing.accession);
-      setLocalStatus(previous => ({ ...previous, [filing.accession]: result.research_revision_id
+      setRevisions(previous => ({ ...previous, [filingKey(filing)]: result.research_revision_id }));
+      setLocalStatus(previous => ({ ...previous, [filingKey(filing)]: result.research_revision_id
         ? "Research preview ready for operator review · public AI answers unavailable"
         : result.ready_revision_id
         ? "Locally indexed for diagnostics · AI answers unavailable"
         : "Queued or processing · AI answers unavailable" }));
     } catch {
-      setLocalStatus(previous => ({ ...previous, [filing.accession]: "No local index available" }));
+      setRevisions(previous => ({ ...previous, [filingKey(filing)]: null }));
+      setLocalStatus(previous => ({ ...previous, [filingKey(filing)]: "No local index available" }));
     }
   }
 
   async function indexLocally(filing: FilingRef) {
-    setLocalStatus(previous => ({ ...previous, [filing.accession]: "Submitting local job…" }));
+    setLocalStatus(previous => ({ ...previous, [filingKey(filing)]: "Submitting local job…" }));
     try {
       const job = await requestLocalIngestion(filing.cik, filing.accession);
-      setJobIds(previous => ({ ...previous, [filing.accession]: job.job_id }));
-      setLocalStatus(previous => ({ ...previous, [filing.accession]: `Job ${job.state.toLowerCase()} · ${job.job_id}` }));
+      setJobIds(previous => ({ ...previous, [filingKey(filing)]: job.job_id }));
+      setLocalStatus(previous => ({ ...previous, [filingKey(filing)]: `Job ${job.state.toLowerCase()} · ${job.job_id}` }));
     } catch (cause) {
-      setLocalStatus(previous => ({ ...previous, [filing.accession]: cause instanceof Error ? cause.message : "Ingestion unavailable" }));
+      setLocalStatus(previous => ({ ...previous, [filingKey(filing)]: cause instanceof Error ? cause.message : "Ingestion unavailable" }));
     }
   }
 
   async function refreshJob(filing: FilingRef) {
     try {
-      const job = await localJobStatus(jobIds[filing.accession]);
-      setLocalStatus(previous => ({ ...previous, [filing.accession]: job.error_code
+      const job = await localJobStatus(jobIds[filingKey(filing)]);
+      setLocalStatus(previous => ({ ...previous, [filingKey(filing)]: job.error_code
         ? `Failed: ${job.error_code}` : `${job.state} · ${job.progress.step || "queued"}` }));
     } catch {
-      setLocalStatus(previous => ({ ...previous, [filing.accession]: "Job status unavailable" }));
+      setLocalStatus(previous => ({ ...previous, [filingKey(filing)]: "Job status unavailable" }));
     }
   }
 
   async function showSections(filing: FilingRef) {
     try {
       const result = await localSections(filing.cik, filing.accession);
-      setSections(previous => ({ ...previous, [filing.accession]: result.sections }));
+      setSections(previous => ({ ...previous, [filingKey(filing)]: result.sections }));
     } catch {
-      setLocalStatus(previous => ({ ...previous, [filing.accession]: "Indexed sections unavailable" }));
+      setLocalStatus(previous => ({ ...previous, [filingKey(filing)]: "Indexed sections unavailable" }));
     }
   }
 
@@ -120,21 +126,24 @@ export function SecExplorer() {
         {filings.map(filing => <li key={`${filing.cik}-${filing.accession}`} className="flex flex-wrap items-center justify-between gap-2 py-2 text-sm">
           <span><strong>{filing.form}</strong> · filed {filing.filed_at} · period {filing.report_period || "not reported"}<br />
             <span className="font-mono text-xs text-slate-500">{filing.accession}</span> <span className="text-xs text-amber-700">Discovered · AI answers unavailable</span>
-            {localStatus[filing.accession] && <span role="status" className="block text-xs text-slate-600">{localStatus[filing.accession]}</span>}</span>
+            {localStatus[filingKey(filing)] && <span role="status" className="block text-xs text-slate-600">{localStatus[filingKey(filing)]}</span>}</span>
           <span className="flex flex-wrap items-center gap-3">
             {localIngestionEnabled && <button type="button" onClick={() => void indexLocally(filing)} className="text-xs text-slate-700 underline">Index filing locally</button>}
-            {jobIds[filing.accession] && <button type="button" onClick={() => void refreshJob(filing)} className="text-xs text-slate-700 underline">Refresh progress</button>}
+            {jobIds[filingKey(filing)] && <button type="button" onClick={() => void refreshJob(filing)} className="text-xs text-slate-700 underline">Refresh progress</button>}
             <button type="button" onClick={() => void checkLocalStatus(filing)} className="text-xs text-slate-700 underline">Check local status</button>
             <button type="button" onClick={() => void showSections(filing)} className="text-xs text-slate-700 underline">View local sections</button>
             {filing.primary_document_url && <a href={filing.primary_document_url} target="_blank" rel="noopener noreferrer"
               className="text-blue-700 underline">Original SEC filing ↗</a>}
           </span>
-          {sections[filing.accession] && <div className="w-full rounded-lg bg-slate-50 p-3 text-xs text-slate-700">
-            {sections[filing.accession].length === 0 ? "No published sections yet" :
-              <ul className="space-y-2">{sections[filing.accession].map(section => <li key={section.ordinal}>
+          {sections[filingKey(filing)] && <div className="w-full rounded-lg bg-slate-50 p-3 text-xs text-slate-700">
+            {sections[filingKey(filing)].length === 0 ? "No published sections yet" :
+              <ul className="space-y-2">{sections[filingKey(filing)].map(section => <li key={section.ordinal}>
                 <strong>{section.part} {section.item} {section.heading}</strong><p>{section.excerpt}</p>
               </li>)}</ul>}
           </div>}
+          {localQueryEnabled && revisions[filingKey(filing)] && <ResearchPreview
+            key={`${filingKey(filing)}:${revisions[filingKey(filing)]}`}
+            cik={filing.cik} accession={filing.accession} revision={revisions[filingKey(filing)]!} />}
         </li>)}
       </ul>
       {cursor && <button type="button" disabled={busy} onClick={() => void showFilings(selected, cursor)}

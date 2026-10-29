@@ -47,7 +47,7 @@ services:
       dockerfile: Dockerfile
     image: sec-insight-frontend:local
     ports:
-      - "${FRONTEND_PORT:-3000}:3000"
+      - "127.0.0.1:${FRONTEND_PORT:-3000}:3000"
     environment:
       NEXT_PUBLIC_API_BASE_URL: http://backend:8080
       NEXT_PUBLIC_SITE_URL: http://localhost:3000

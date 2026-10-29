@@ -1,10 +1,10 @@
-# Phase 3–5 release readiness (2026-10-27)
+# Phase 3–5 release readiness — 2026-10-27
 
-| Gate | Offline code | Staging/live evidence | Decision |
+| Gate | Implemented and checked locally | Remaining release evidence | Decision |
 | --- | --- | --- | --- |
-| G0 deployed provenance, authentic SEC smoke and ingestion | Baseline suite passes; CI expanded | Backend digest/mount unknown; SEC and container replacement not run | NO-GO |
-| G3 real local embedding, scoped retrieval, citation quality | Model adapter, pointer, retrieval and adversarial fixtures | Model artifact absent; no frozen multi-issuer benchmark, Groq staging review or measured latency | NO-GO |
-| G4 XBRL financial reasoning | SEC allowlist, exact-accession normalization and Decimal guardrails | No persisted raw facts, amendment precedence, verified table cells or held-out numeric suite | NO-GO |
-| G5 evaluation, observability, product readiness | Deterministic metric function and full offline CI configured | No adjudicated gold set, staging traces, alerts, backup/restore or rollback drill | NO-GO |
+| G0 provenance and SEC access | Merged source baseline and current Vercel main SHA reconciled; full-test workflow configured | Backend image/mount/instances unknown; authentic SEC contact/rate policy and live samples absent; native full-suite auto-review blocker | NO-GO |
+| G3 dense retrieval and citations | Pinned model ran offline, scoped BM25/dense/RRF, revision publication, generated citation rejection, protected local UI | Real multi-issuer held-out corpus, table attribution, Groq human review and container replacement | NO-GO |
+| G4 financial reasoning | Immutable XBRL snapshots, exact source pointers, explicit as-filed selection, Decimal preview and amendment isolation | Live numeric accuracy, reviewed wider concept map, table/custom-taxonomy fallback | NO-GO |
+| G5 evaluation and operation | Metric CLI, private trace records, durable call cap, status signals, local backup/restore tests | Native full regression, real staging traces/cost, adjudicated gold set, staged rollback and production sign-off | NO-GO |
 
-The public research query feature remains disabled. The local code is not a production Financial Research System. See the individual phase reports and [runbook](../research-operator-runbook.md) for exact missing checks and rollback. No remote push or deployment is included in this branch.
+Both research features remain disabled by default. Local synthetic integration is verified within the limits recorded in the phase reports. Nothing in this branch authorizes production deployment or a GitHub push. See [runbook](../research-operator-runbook.md).

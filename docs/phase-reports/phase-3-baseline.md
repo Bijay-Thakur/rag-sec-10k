@@ -14,3 +14,9 @@ Date 2026-10-27 UTC. Inspected `main` at `d71a25d6e52146e598ce8e27df122ecf715540
 The Phase 3 frozen multi-issuer benchmark is **not available**. Its version, labeled accession corpus, predeclared quality/latency thresholds and staging sample sizes remain BLOCKED. `tests/test_research_phases_3_5.py` is a synthetic safety fixture, not a benchmark. The old Apple metrics must not be reused as Phase 3 results.
 
 **G0 live verdict: NO-GO.** Continue offline code only. Before enabling research: verify backend image digest, index provenance and rollback target; configure authentic SEC contact and one aggregate limiter; run three-issuer historical discovery smoke; stage two unseen issuers, a 10-Q and amendment with a pinned local model; inspect table/footnote attribution and survive container replacement. No production flag or service was changed.
+
+## Follow-up observations during implementation
+
+Read-only Vercel project/deployment inspection returned `READY` production deployment `dpl_9561gKmQeUkWq6PzihSSc4MjPsug`, source `main` at `d71a25d6e52146e598ce8e27df122ecf715540c6`, Node 24. The public proxied catalog returned HTTP 200 with five filings; the health request timed out. Backend digest, mount and actual semantic provenance remain UNKNOWN. Configuration presence checks found no authentic `SEC_USER_AGENT`, SEC instance/rate settings or `GROQ_API_KEY` in this runtime or local `.env`; no values were printed. Docker is unavailable.
+
+The official public embedding artifact was subsequently reachable and downloaded at a fixed revision. The real local model integration smoke passed on synthetic source text with networking disabled; the earlier absent-model blocker is resolved for this workspace only. The live SEC and production gates remain blocked. Full-suite auto-review rejected unexpected Microsoft telemetry egress even after an explicit opt-out; this is recorded as a blocker rather than a passing regression result.

@@ -49,9 +49,14 @@ def verify_answer(answer: str, evidence: list[dict]) -> list[str]:
         raise DiscoveryError("citation_invalid", "Answer lacks verified evidence links", 502)
     if re.search(r"https?://|www\.", answer, re.I):
         raise DiscoveryError("citation_invalid", "Generated links are not verified evidence", 502)
-    uncited_text = re.sub(r"\[E\d+\]", "", answer)
-    numbers = set(re.findall(r"\b\d+(?:[.,]\d+)*%?\b", uncited_text))
-    supplied = " ".join(row["text"][:1200] for row in evidence)
-    if any(number not in supplied for number in numbers):
-        raise DiscoveryError("unsupported_number", "Answer contains a number absent from evidence", 502)
+    for claim in re.split(r"(?<=[.!?])\s+|\n+", answer):
+        claim_tags = CITATION.findall(claim)
+        text = re.sub(r"\[E\d+\]", "", claim)
+        if re.search(r"[a-z]", text, re.I) and not claim_tags:
+            raise DiscoveryError("citation_invalid", "Each claim requires evidence", 502)
+        numbers = set(re.findall(r"\b\d+(?:[.,]\d+)*\b", text))
+        supplied = " ".join(evidence[int(tag) - 1]["text"][:1200] for tag in claim_tags)
+        available = set(re.findall(r"\b\d+(?:[.,]\d+)*\b", supplied))
+        if not numbers.issubset(available):
+            raise DiscoveryError("unsupported_number", "Answer contains a number absent from cited evidence", 502)
     return list(dict.fromkeys(tags))

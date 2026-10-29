@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+import socket
 import sys
 from pathlib import Path
 
@@ -19,6 +20,22 @@ if str(ROOT / "src") not in sys.path:
 os.environ.setdefault("RATE_LIMIT_ENABLED", "false")
 os.environ.setdefault("ENFORCE_ACCESS_POLICY", "true")
 os.environ.setdefault("ANONYMOUS_DEMO_ONLY", "true")
+# The default test suite is offline, including third-party dependency telemetry.
+os.environ["ANONYMIZED_TELEMETRY"] = "false"
+os.environ["HF_HUB_DISABLE_TELEMETRY"] = "1"
+os.environ["HF_HUB_OFFLINE"] = "1"
+os.environ["TRANSFORMERS_OFFLINE"] = "1"
+os.environ["OTEL_SDK_DISABLED"] = "true"
+
+
+@pytest.fixture(autouse=True)
+def no_external_connections(monkeypatch):
+    def blocked(*args, **kwargs):
+        raise AssertionError("Default tests may not open network connections")
+    monkeypatch.setattr(socket.socket, "connect", blocked)
+    monkeypatch.setattr(socket.socket, "connect_ex", blocked)
+    monkeypatch.setattr(socket, "getaddrinfo", blocked)
+    yield
 
 
 @pytest.fixture(scope="module")

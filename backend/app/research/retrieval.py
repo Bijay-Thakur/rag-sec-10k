@@ -3,11 +3,13 @@
 from __future__ import annotations
 
 import json
+import hashlib
 import math
 import re
 from collections import Counter
 
 from .models import DiscoveryError, normalize_cik, validate_accession
+from .worker import validate_vectors
 
 WORDS = re.compile(r"[a-z0-9]+")
 
@@ -52,10 +54,14 @@ def retrieve(repo, cik: str, accession: str, revision_id: str, query: str,
                                    * (count * 2.2 / (count + 1.2 * (.25 + .75 * len(words) / average)))
                                    for word in q for count in [tf[word]] if count)
     query_vector = embedder.embed([query])[0]
-    if len(query_vector) != ready["dimensions"] or not all(math.isfinite(v) for v in query_vector):
-        raise DiscoveryError("vector_invalid", "Invalid query vector", 422)
+    validate_vectors([query_vector], 1, ready["dimensions"])
+    if abs(sum(v * v for v in query_vector) - 1) > .01:
+        raise DiscoveryError("vector_invalid", "Query vectors must be normalized", 422)
     for row in rows:
         vector = json.loads(row.pop("embedding_json"))
+        validate_vectors([vector], 1, ready["dimensions"])
+        if hashlib.sha256(row["text"].encode()).hexdigest() != row["sha256"]:
+            raise DiscoveryError("chunk_corrupt", "Published chunk checksum mismatch", 503)
         row["dense_score"] = sum(a * b for a, b in zip(query_vector, vector))
     lexical = sorted(rows, key=lambda r: (-r["lexical_score"], r["chunk_id"]))
     dense = sorted(rows, key=lambda r: (-r["dense_score"], r["chunk_id"]))
